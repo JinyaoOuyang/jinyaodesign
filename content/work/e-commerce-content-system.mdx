@@ -1,0 +1,179 @@
+---
+title: "Flexi-Casa Headless Shopify Storefront"
+description: "Rapidly Shipping a Production-Ready E-commerce Experience with AI-Assisted Development"
+date: "2026-01-30"
+tags: ["Product Design", "Web", "AI-powered"]
+role: "Sole Product Designer"
+timeline: "1 month"
+tools: ["Figma", "Photoshop", "Windsurf"]
+coverImage: "/work/fintech-cover.jpg"
+featuredOrder: 1
+metrics: ["40% increase in daily active users", "4.8 App Store rating", "50% faster onboarding"]
+---
+
+## Problem Statement
+
+The Challenge
+
+Flexi-Casa needed a custom, scalable e-commerce experience that:
+
+- Was not constrained by Shopify themes
+- Allowed full control over UX and branding
+- Could ship fast without rebuilding commerce infrastructure
+- Was maintainable by a small team
+
+<Callout>
+Traditional Shopify themes optimized for speed, but limited interaction design, layout flexibility, and long-term scalability.
+</Callout>
+
+## Why Headless Shopify
+
+### Design & Architecture Decision
+
+Instead of building a full custom backend, I chose a headless Shopify architecture:
+
+Shopify handles:
+- Inventory & variants
+- Cart & checkout
+- Payments & authentication
+
+The custom storefront focuses on:
+- UX
+- UI systems
+- Performance
+- Brand consistency
+
+<Callout>
+Decoupling the storefront allows designers to ship high-quality experiences without rebuilding commerce fundamentals.
+</Callout>
+
+<Figure
+  src="/work/flexi-casa-arch.png"
+  alt="Headless Shopify architecture overview"
+  caption="Headless Shopify architecture overview"
+/>
+
+## Process: From Local to Production
+
+### Phase 1 — Start with Data, Not Visuals
+
+I began with local development, prioritizing system integrity over polish.
+
+Validated early:
+- Product data fetching
+- Cart persistence
+- Checkout handoff
+- Account & signup flows
+
+**Why this matters:**
+
+Designing UI before validating data flow often leads to rework and brittle systems.
+
+<Figure
+  src="/work/flexi-casa-localrun.png"
+  alt="Local development workflow"
+  caption="Local development workflow"
+/>
+### Phase 2 — Shopify Integration
+
+Once the storefront could seamlessly connect to Shopify’s backend:
+
+- Product → Cart → Checkout worked end-to-end
+- Inventory and variants were reliable
+- Backend constraints were clear
+
+Only after this point did UI decisions begin.
+
+## UX & PDP System Design
+
+### Product Detail Page as a System
+
+Rather than designing a single PDP layout, I designed a PDP system:
+
+- Clear hierarchy for product information
+- Modular components for reuse
+- Flexible layouts to support future SKUs
+- Optimized CTA placement for clarity
+
+<Figure 
+  src="/work/flexi-casa-pdp.png" 
+  alt="PDP System Design" 
+  caption="PDP System Design"
+/>
+
+## Visual Design & Branding
+
+### Consistent Brand Experience
+
+After the system foundation was validated, I refined:
+
+- Typography
+- Color usage
+- Spacing and rhythm
+- Cross-page consistency
+
+The goal was to ensure the storefront felt intentionally designed, not theme-derived.
+
+<Figure 
+  src="/work/flexi-casa-brand.png" 
+  alt="Brand System Design" 
+  caption="Brand System Design"
+/>
+
+## AI-Assisted Development
+
+### How AI Changed the Workflow
+
+AI coding tools (including WinXurf) were used to:
+
+- Scaffold storefront components
+- Accelerate API integration
+- Reduce boilerplate setup
+- Iterate faster between design and implementation
+
+**Key takeaway:**
+AI didn’t replace design decisions — it reduced execution friction.
+
+This made it realistic for a designer to:
+
+- Prototype
+- Build
+- Validate
+- Ship
+
+## Deployment & Launch
+The storefront was deployed using Netlify:
+
+- Environment variables for Shopify APIs
+- Secure token handling
+- Custom domain connection
+- Production data validation
+
+<Figure 
+  src="/work/flexi-casa-deploy.png" 
+  alt="Deployment Process" 
+  caption="Deployment Process"
+/>
+
+## Impact & Outcomes
+
+### Results
+
+- Fully custom storefront without Shopify theme constraints
+- Faster iteration between UX and implementation
+- Scalable PDP and design system foundation
+- Production-ready deployment with minimal backend overhead
+
+## Reflection
+
+### What I Learned
+
+- Headless commerce works best when UX and system design are aligned
+- Validating data flow early saves significant design rework
+- Shopify is a designer-friendly backend when used headlessly
+- AI makes designer-led product development realistically achievable
+
+<Callout>
+This project was built as a production system for Flexi-Casa.
+The repository is currently private, but I’m happy to discuss architecture, tradeoffs, and workflows in detail.
+</Callout>

@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: 'Jinyao Ouyang',
   title: 'Jinyao Ouyang – UX/Product Designer',
-  description: 'Portfolio of Jinyao Ouyang, a UX/Product Designer crafting thoughtful digital experiences.',
-  tagline: 'Designing thoughtful digital experiences',
+  description: 'Portfolio of Jinyao Ouyang, a UX/Product Designer crafting AI-powered products.',
+  tagline: 'Designing systems, not just screens.',
   url: 'https://www.jinyaodesign.com',
-  email: 'katherine@ginouyang.com',
+  email: 'katherine@gmail.com',
   linkedin: 'https://www.linkedin.com/in/ginouyang/',
   medium: 'https://medium.com/@ginouyang',
   resumePath: '/Jinyao_Ouyang_Resume.pdf',
