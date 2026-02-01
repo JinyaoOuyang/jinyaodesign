@@ -4,8 +4,9 @@ export const siteConfig = {
   description: 'Portfolio of Jinyao Ouyang, a UX/Product Designer crafting thoughtful digital experiences.',
   tagline: 'Designing thoughtful digital experiences',
   url: 'https://www.jinyaodesign.com',
-  email: 'hello@jinyaodesign.com',
-  linkedin: 'https://www.linkedin.com/in/jinyaoouyang',
+  email: 'katherine@ginouyang.com',
+  linkedin: 'https://www.linkedin.com/in/ginouyang/',
+  medium: 'https://medium.com/@ginouyang',
   resumePath: '/Jinyao_Ouyang_Resume.pdf',
   navigation: [
     { name: 'Work', href: '/work' },
@@ -14,6 +15,6 @@ export const siteConfig = {
   ],
   externalLinks: [
     { name: 'Resume', href: '/Jinyao_Ouyang_Resume.pdf', external: true },
-    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/jinyaoouyang', external: true },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/ginouyang/', external: true },
   ],
 }
