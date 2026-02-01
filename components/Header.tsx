@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import Image from 'next/image'
 import { siteConfig } from '@/lib/config'
 
 export function Header() {
@@ -14,9 +15,21 @@ export function Header() {
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link 
           href="/" 
+          aria-label={siteConfig.name}
           className="text-lg font-medium tracking-tight hover:opacity-70 transition-opacity"
         >
-          {siteConfig.name}
+          {siteConfig.logoPath ? (
+            <Image
+              src={siteConfig.logoPath}
+              alt={siteConfig.name}
+              width={160}
+              height={40}
+              priority
+              style={{ height: '32px', width: 'auto' }}
+            />
+          ) : (
+            siteConfig.name
+          )}
         </Link>
 
         {/* Desktop Navigation */}
