@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getWorkPosts, getWorkBySlug, getAdjacentWork } from '@/lib/content'
-import { serializeMDX } from '@/lib/mdx'
 import { MDXContent } from '@/components/MDXContent'
 import { siteConfig } from '@/lib/config'
 
@@ -38,8 +37,7 @@ export default async function WorkDetailPage({ params }: Props) {
   if (!work) notFound()
 
   const { prev, next } = getAdjacentWork(params.slug)
-  const mdxSource = await serializeMDX(work.content)
-
+  
   const formattedDate = new Date(work.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -108,7 +106,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
       {/* Content */}
       <div className="prose prose-neutral max-w-none dark:prose-invert">
-        <MDXContent source={mdxSource} />
+        <MDXContent source={work.content} />
       </div>
 
       {/* Tags */}

@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getBlogPosts, getBlogBySlug } from '@/lib/content'
-import { serializeMDX } from '@/lib/mdx'
 import { MDXContent } from '@/components/MDXContent'
 import { siteConfig } from '@/lib/config'
 
@@ -36,8 +35,7 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getBlogBySlug(params.slug)
   if (!post) notFound()
 
-  const mdxSource = await serializeMDX(post.content)
-
+  
   const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -73,7 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Content */}
       <div className="prose prose-neutral max-w-none dark:prose-invert">
-        <MDXContent source={mdxSource} />
+        <MDXContent source={post.content} />
       </div>
 
       {/* Tags */}

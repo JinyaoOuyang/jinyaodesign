@@ -1,7 +1,9 @@
-'use client'
-
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { Figure, TwoColumn, Column, Callout, Divider, Stats } from './mdx'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { Figure } from './mdx/Figure'
+import { TwoColumn, Column } from './mdx/TwoColumn'
+import { Callout } from './mdx/Callout'
+import { Divider } from './mdx/Divider'
+import { Stats } from './mdx/Stats'
 
 const components = {
   Figure,
@@ -13,13 +15,13 @@ const components = {
 }
 
 interface MDXContentProps {
-  source: MDXRemoteSerializeResult
+  source: string
 }
 
 export function MDXContent({ source }: MDXContentProps) {
   return (
     <div className="prose prose-neutral max-w-none dark:prose-invert">
-      <MDXRemote {...source} components={components} />
+      <MDXRemote source={source} components={components} />
     </div>
   )
 }
