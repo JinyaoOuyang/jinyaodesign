@@ -12,16 +12,15 @@ export default function HomePage() {
     <div className="mx-auto max-w-5xl px-6">
       {/* Hero */}
       <section className="py-24 md:py-32">
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
           {siteConfig.name}
         </h1>
         <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
           {siteConfig.tagline}
         </p>
         <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
-          I&apos;m a UX/Product Designer focused on creating intuitive, user-centered 
-          digital experiences. I believe great design solves real problems while 
-          delighting users along the way.
+          I design and build AI-powered products with a focus on adaptive systems,
+restraint, and human-centered decision making.
         </p>
         <div className="mt-8 flex gap-4">
           <Link

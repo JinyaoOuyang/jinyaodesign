@@ -4,7 +4,7 @@ export const siteConfig = {
   description: 'Portfolio of Jinyao Ouyang, a UX/Product Designer crafting AI-powered products.',
   tagline: 'Designing systems, not just screens.',
   url: 'https://www.jinyaodesign.com',
-  email: 'katherine@gmail.com',
+  email: 'katherineoyjy@gmail.com',
   linkedin: 'https://www.linkedin.com/in/ginouyang/',
   medium: 'https://medium.com/@ginouyang',
   resumePath: '/Jinyao_Ouyang_Resume.pdf',

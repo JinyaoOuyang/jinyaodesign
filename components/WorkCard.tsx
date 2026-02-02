@@ -10,7 +10,7 @@ export function WorkCard({ work }: WorkCardProps) {
   return (
     <Link href={`/work/${work.slug}`} className="group block">
       <article className="space-y-4">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
+        <div className="relative aspect-video overflow-hidden rounded-lg bg-muted">
           <Image
             src={work.coverImage}
             alt={work.title}
