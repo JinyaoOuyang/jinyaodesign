@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
-import { WorkCard } from '@/components/WorkCard'
 import { BlogCard } from '@/components/BlogCard'
+import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { siteConfig } from '@/lib/config'
 
 export default function HomePage() {
@@ -39,22 +39,7 @@ restraint, and human-centered decision making.
       </section>
 
       {/* Featured Work */}
-      <section className="py-16 border-t border-border">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-2xl font-semibold">Featured Work</h2>
-          <Link
-            href="/work"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            View all →
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          {featuredWork.map((work) => (
-            <WorkCard key={work.slug} work={work} />
-          ))}
-        </div>
-      </section>
+      <FeaturedWorkSection works={featuredWork} />
 
       {/* Latest Writing */}
       {latestPosts.length > 0 && (
