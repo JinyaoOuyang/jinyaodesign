@@ -95,7 +95,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
       {/* Metrics */}
       {work.metrics && work.metrics.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 bg-muted rounded-lg px-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 metrics-surface rounded-lg px-6 mb-12">
           {work.metrics.map((metric, index) => (
             <div key={index} className="text-center">
               <p className="text-lg font-semibold">{metric}</p>
@@ -115,7 +115,7 @@ export default async function WorkDetailPage({ params }: Props) {
           {work.tags.map((tag) => (
             <span
               key={tag}
-              className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full"
+              className="text-sm text-muted-foreground tag-pill px-3 py-1 rounded-full"
             >
               {tag}
             </span>

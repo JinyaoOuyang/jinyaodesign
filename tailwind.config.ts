@@ -19,6 +19,11 @@ const config: Config = {
         'muted-foreground': 'var(--muted-foreground)',
         border: 'var(--border)',
         accent: 'var(--accent)',
+        primary: 'var(--primary)',
+        'primary-light': 'var(--primary-light)',
+        'primary-deep': 'var(--primary-deep)',
+        gold: 'var(--gold)',
+        'gold-amber': 'var(--gold-amber)',
       },
       typography: {
         DEFAULT: {
