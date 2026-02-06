@@ -2,16 +2,32 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { siteConfig } from '@/lib/config'
 
 export function Header() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isAtTop, setIsAtTop] = useState(true)
+
+  useEffect(() => {
+    const onScroll = () => setIsAtTop(window.scrollY <= 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const isHome = pathname === '/'
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-sm">
+    <header
+      className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-in-out ${
+        isHome && isAtTop
+          ? 'bg-transparent border-b border-transparent'
+          : 'bg-background/80 backdrop-blur-sm border-b border-border'
+      }`}
+    >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link 
           href="/" 
