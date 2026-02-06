@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
 import { BlogCard } from '@/components/BlogCard'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
+import { HeroBackground } from '@/components/HeroBackground'
 import { siteConfig } from '@/lib/config'
 
 export default function HomePage() {
@@ -9,35 +10,39 @@ export default function HomePage() {
   const latestPosts = getLatestBlogPosts(2)
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
-      {/* Hero */}
-      <section className="py-24 md:py-32">
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
-          {siteConfig.name}
-        </h1>
-        <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
-          {siteConfig.tagline}
-        </p>
-        <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
-          I design and build AI-powered products with a focus on adaptive systems,
+    <>
+      {/* Hero — full-width background, centered content */}
+      <section className="relative overflow-hidden py-24 md:py-32 cursor-none">
+        <HeroBackground />
+        <div className="relative mx-auto max-w-5xl px-6" style={{ zIndex: 1 }}>
+          <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
+            {siteConfig.name}
+          </h1>
+          <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
+            {siteConfig.tagline}
+          </p>
+          <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
+            I design and build AI-powered products with a focus on adaptive systems,
 restraint, and human-centered decision making.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
-          >
-            View Work
-          </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
-          >
-            About Me
-          </Link>
+          </p>
+          <div className="mt-8 flex gap-4">
+            <Link
+              href="/work"
+              className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+            >
+              View Work
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              About Me
+            </Link>
+          </div>
         </div>
       </section>
 
+    <div className="mx-auto max-w-5xl px-6">
       {/* Featured Work */}
       <FeaturedWorkSection works={featuredWork} />
 
@@ -61,5 +66,6 @@ restraint, and human-centered decision making.
         </section>
       )}
     </div>
+    </>
   )
 }
