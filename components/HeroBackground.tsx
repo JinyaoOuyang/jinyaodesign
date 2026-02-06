@@ -126,13 +126,11 @@ function draw4Star(
 export function HeroBackground() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const cursorRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const canvas = canvasRef.current
     const wrap = wrapRef.current
-    const cursorEl = cursorRef.current
     if (!canvas || !wrap) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -207,28 +205,9 @@ export function HeroBackground() {
     }
 
     /* ---- events ---- */
-    let cursorVisible = false
     function onMouse(e: MouseEvent) {
       tgt.mx = e.clientX / window.innerWidth
       tgt.my = e.clientY / window.innerHeight
-
-      // Update star cursor position relative to hero section
-      if (cursorEl && wrap) {
-        const rect = wrap.getBoundingClientRect()
-        const inHero = e.clientX >= rect.left && e.clientX <= rect.right &&
-                       e.clientY >= rect.top && e.clientY <= rect.bottom
-        if (inHero) {
-          cursorEl.style.left = `${e.clientX - rect.left}px`
-          cursorEl.style.top = `${e.clientY - rect.top}px`
-          if (!cursorVisible) {
-            cursorEl.style.opacity = '1'
-            cursorVisible = true
-          }
-        } else if (cursorVisible) {
-          cursorEl.style.opacity = '0'
-          cursorVisible = false
-        }
-      }
     }
     function onScroll() { tgt.sc = window.scrollY }
 
@@ -434,50 +413,16 @@ export function HeroBackground() {
   }, [])
 
   return (
-    <>
-      <div
-        ref={wrapRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        style={{ zIndex: 0, transformStyle: 'preserve-3d' }}
-      >
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 h-full w-full"
-        />
-      </div>
-
-      {/* Custom star cursor */}
-      <div
-        ref={cursorRef}
-        className="pointer-events-none absolute"
-        style={{
-          zIndex: 10,
-          width: 28,
-          height: 28,
-          marginLeft: -14,
-          marginTop: -14,
-          opacity: 0,
-          transition: 'opacity 0.2s ease',
-        }}
-      >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="animate-star-cursor"
-        >
-          {/* 4-point star */}
-          <path
-            d="M14 0 L16.5 11 L28 14 L16.5 17 L14 28 L11.5 17 L0 14 L11.5 11 Z"
-            fill="rgba(0,0,0,0.85)"
-          />
-          {/* Inner glow */}
-          <circle cx="14" cy="14" r="3" fill="rgba(0,0,0,0.15)" />
-        </svg>
-      </div>
-    </>
+    <div
+      ref={wrapRef}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      style={{ zIndex: 0, transformStyle: 'preserve-3d' }}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 h-full w-full"
+      />
+    </div>
   )
 }

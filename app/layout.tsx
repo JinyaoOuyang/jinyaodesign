@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { StarCursor } from '@/components/StarCursor'
 import { siteConfig } from '@/lib/config'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -45,7 +46,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${display.variable}`}>
-      <body className="min-h-screen bg-background font-sans antialiased">
+      <body className="min-h-screen bg-background font-sans antialiased cursor-none">
+        <StarCursor />
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>

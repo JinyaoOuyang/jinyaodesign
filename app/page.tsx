@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — full-width background, centered content */}
-      <section className="relative overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 -mt-[64px] cursor-none">
+      <section className="relative overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 -mt-[64px]">
         <HeroBackground />
         <div className="relative mx-auto max-w-5xl px-6" style={{ zIndex: 1 }}>
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
@@ -28,13 +28,13 @@ restraint, and human-centered decision making.
           <div className="mt-8 flex gap-4">
             <Link
               href="/work"
-              className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+              className="inline-flex items-center justify-center rounded-md btn-primary px-6 py-3 text-sm font-medium"
             >
               View Work
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
+              className="inline-flex items-center justify-center rounded-md btn-secondary px-6 py-3 text-sm font-medium"
             >
               About Me
             </Link>
