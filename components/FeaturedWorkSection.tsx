@@ -11,7 +11,7 @@ interface FeaturedWorkSectionProps {
 
 export function FeaturedWorkSection({ works }: FeaturedWorkSectionProps) {
   return (
-    <section className="py-16 border-t border-border">
+    <section className="py-16">
       <div className="flex items-center justify-between mb-12">
         <h2 className="text-2xl font-semibold">Featured Work</h2>
         <Link

@@ -417,7 +417,14 @@ export function HeroBackground() {
       ref={wrapRef}
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
-      style={{ zIndex: 0, transformStyle: 'preserve-3d' }}
+      style={{
+        zIndex: 0,
+        transformStyle: 'preserve-3d',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%), linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        WebkitMaskComposite: 'destination-in',
+        maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%), linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        maskComposite: 'intersect',
+      }}
     >
       <canvas
         ref={canvasRef}
