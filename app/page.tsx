@@ -58,7 +58,7 @@ restraint, and human-centered decision making.
               View all →
             </Link>
           </div>
-          <div>
+          <div className="flex flex-col gap-6">
             {latestPosts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}
