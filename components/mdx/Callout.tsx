@@ -8,8 +8,8 @@ interface CalloutProps {
 export function Callout({ children, type = 'default' }: CalloutProps) {
   const styles = {
     default: 'border-border bg-muted',
-    insight: 'border-foreground/20 bg-foreground/5',
-    warning: 'border-yellow-500/50 bg-yellow-500/10',
+    insight: 'border-primary/20 bg-primary/5',
+    warning: 'border-gold-amber/50 bg-gold-amber/10',
   }
 
   return (

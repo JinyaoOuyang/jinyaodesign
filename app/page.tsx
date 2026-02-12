@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
-import { WorkCard } from '@/components/WorkCard'
 import { BlogCard } from '@/components/BlogCard'
+import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
+import { HeroBackground } from '@/components/HeroBackground'
 import { siteConfig } from '@/lib/config'
 
 export default function HomePage() {
@@ -9,53 +10,41 @@ export default function HomePage() {
   const latestPosts = getLatestBlogPosts(2)
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
-      {/* Hero */}
-      <section className="py-24 md:py-32">
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-          {siteConfig.name}
-        </h1>
-        <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
-          {siteConfig.tagline}
-        </p>
-        <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
-          I&apos;m a UX/Product Designer focused on creating intuitive, user-centered 
-          digital experiences. I believe great design solves real problems while 
-          delighting users along the way.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
-          >
-            View Work
-          </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
-          >
-            About Me
-          </Link>
+    <>
+      {/* Hero — full-width background, centered content */}
+      <section className="relative overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 -mt-[64px]">
+        <HeroBackground />
+        <div className="relative mx-auto max-w-5xl px-6" style={{ zIndex: 1 }}>
+          <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
+            {siteConfig.name}
+          </h1>
+          <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
+            {siteConfig.tagline}
+          </p>
+          <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
+            I design and build AI-powered products with a focus on adaptive systems,
+restraint, and human-centered decision making.
+          </p>
+          <div className="mt-8 flex gap-4">
+            <Link
+              href="/work"
+              className="inline-flex items-center justify-center rounded-md btn-primary px-6 py-3 text-sm font-medium"
+            >
+              View Work
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center rounded-md btn-secondary px-6 py-3 text-sm font-medium"
+            >
+              About Me
+            </Link>
+          </div>
         </div>
       </section>
 
+    <div className="mx-auto max-w-5xl px-6">
       {/* Featured Work */}
-      <section className="py-16 border-t border-border">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-2xl font-semibold">Featured Work</h2>
-          <Link
-            href="/work"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            View all →
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          {featuredWork.map((work) => (
-            <WorkCard key={work.slug} work={work} />
-          ))}
-        </div>
-      </section>
+      <FeaturedWorkSection works={featuredWork} />
 
       {/* Latest Writing */}
       {latestPosts.length > 0 && (
@@ -69,7 +58,7 @@ export default function HomePage() {
               View all →
             </Link>
           </div>
-          <div>
+          <div className="flex flex-col gap-6">
             {latestPosts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}
@@ -77,5 +66,6 @@ export default function HomePage() {
         </section>
       )}
     </div>
+    </>
   )
 }

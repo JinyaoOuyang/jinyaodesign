@@ -29,6 +29,16 @@ export function Footer() {
             >
               LinkedIn
             </a>
+            {siteConfig.medium && (
+              <a
+                href={siteConfig.medium}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Medium
+              </a>
+            )}
             <a
               href={siteConfig.resumePath}
               target="_blank"

@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// Using a native img here to let the image keep its natural aspect ratio without any cropping.
 
 interface FigureProps {
   src: string
@@ -9,13 +9,12 @@ interface FigureProps {
 export function Figure({ src, alt, caption }: FigureProps) {
   return (
     <figure className="my-8">
-      <div className="relative aspect-video overflow-hidden rounded-lg bg-muted">
-        <Image
+      <div className="rounded-lg bg-transparent overflow-hidden">
+        <img
           src={src}
           alt={alt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 760px"
+          loading="lazy"
+          className="block w-full h-auto"
         />
       </div>
       {caption && (
