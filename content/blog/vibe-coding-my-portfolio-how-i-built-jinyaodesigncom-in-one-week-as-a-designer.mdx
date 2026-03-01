@@ -1,0 +1,413 @@
+---
+title: "Vibe Coding My Portfolio: How I Built jinyaodesign.com in One Week as a Designer"
+description: ""
+date: "2026-02-16"
+tags: []
+coverImage: "https://cdn-images-1.medium.com/max/1024/1*qIOM94UIaDhsvYX9Qjr-4w.png"
+readingTime: ""
+---
+
+> Originally published on Medium: https://medium.com/design-bootcamp/vibe-coding-my-portfolio-how-i-built-jinyaodesign-com-in-one-week-as-a-designer-1460cbaa303d?source=rss-6c5be1f9757d------2
+
+_This is Part 3 of my series on using AI tools as a designer. Previously, I wrote about_ [_how vibe coding changes how we think about building_](https://ginouyang.medium.com/vibe-coding-lowered-the-barrier-to-building-but-raised-the-bar-for-thinking-78ba08dbbb42) _and_ [_shipping a production Shopify storefront_](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81)_. This time, I’m building something more personal: my own portfolio._
+
+As a UX/Product Designer, I’ve always believed in “designing systems, not just screens.” But when it came to building my own portfolio website, I realized I needed to practice what I preach — and go beyond mockups to create a real, production-ready site.
+
+After shipping a [headless Shopify storefront](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81) for my e-commerce startup, I had the confidence to tackle my personal site. The result? [jinyaodesign.com](https://www.jinyaodesign.com/) — a Next.js portfolio that I built in 1 week using “vibe coding” with AI tools.
+
+In this article, I’ll walk you through my design thinking, AI collaboration workflow, and practical lessons learned that any designer can apply.
+
+![](https://cdn-images-1.medium.com/max/1024/1*qIOM94UIaDhsvYX9Qjr-4w.png)
+
+jinyaodesign.com
+
+### The Vision: What I Wanted to Build
+
+As a designer, I had clear requirements for my portfolio:
+
+#### Design Goals
+
+*   **Clean, minimal aesthetic** that puts work front and center
+*   **Fast loading** with optimized images
+*   **Responsive design** that works beautifully on all devices
+*   **Easy to update** — I wanted to add blog posts and projects without wrestling with code
+
+#### Technical Requirements
+
+*   Modern tech stack (Next.js for SEO and performance)
+*   Markdown-based content management for blog posts
+*   Image optimization
+*   Smooth animations and transitions
+*   Integration with Medium for blog syndication
+
+The challenge? I’m a designer, not a developer. Traditional routes would mean:
+
+1.  Spending months learning React and Next.js
+2.  Hiring a developer (expensive and slow iteration)
+3.  Using a no-code tool (what I used before, limited and often bloated)
+
+Instead, I chose vibe coding with AI.
+
+### My AI Toolkit: ChatGPT/GPT-4 + Windsurf
+
+For my [Shopify storefront project](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81), I relied heavily on Windsurf and ChatGPT. This time, I did the same combination:
+
+#### ChatGPT/GPT-4
+
+*   **Initial architecture decisions**: “Should I use Next.js or Gatsby? What’s the best way to handle markdown blog posts?”
+*   **Component logic**: Explaining what I wanted in plain English and getting React component code
+*   **Problem-solving**: When something broke, I’d paste the error and get debugging help
+*   **Design system decisions**: Discussing color schemes, typography scales, spacing systems
+
+#### Windsurf
+
+*   **Real-time coding assistance**: Windsurf helped me write and edit code directly in my editor
+*   **Contextual suggestions**: It understood the codebase structure and suggested relevant code
+*   **Rapid iteration**: I could make changes and see results immediately
+*   **Learning by doing**: Instead of reading documentation, I learned by seeing Windsurf’s suggestions
+
+The combination was powerful: ChatGPT for strategic thinking and architecture, Windsurf for tactical execution.
+
+**Key difference from my Shopify project**: The Shopify storefront required more API integration and data fetching logic. This portfolio was more frontend-focused, which made ChatGPT + Windsurf a perfect fit for rapid UI development.
+
+### The Design Process: Thinking in Systems
+
+Even with AI tools, good design thinking was essential. Here’s how I approached it:
+
+#### 1\. Content-First Structure
+
+I started by mapping out my content hierarchy:
+
+Homepage  
+├── Hero (Name + Tagline)  
+├── Featured Work (4 projects)  
+├── Latest Writing (2 blog posts)  
+└── Contact
+
+Work Page  
+├── Project Grid  
+└── Filter by Category
+
+Blog Page  
+├── Blog Post List  
+└── Individual Post Pages
+
+About Page  
+└── Personal Story
+
+This structure informed my component architecture. Each section became a reusable React component.
+
+#### 2\. Design System from Day One
+
+Rather than designing everything pixel-perfect in Figma first, I defined my design system in code:
+
+*   **Color palette**: 3 neutral grays + 1 accent color
+*   **Typography**: Two fonts (Inter for UI, system font stack for body)
+*   **Spacing scale**: 4px base unit (4, 8, 16, 24, 32, 48, 64, 96)
+*   **Breakpoints**: Mobile (< 640px), Tablet (< 1024px), Desktop (≥ 1024px)
+
+I prompted ChatGPT: _“Create a Tailwind config with this design system. Use semantic color names.”_
+
+The result was a consistent, maintainable design system that AI could reference throughout the project.
+
+#### 3\. Component-Driven Development
+
+I thought in components from the start:
+
+*   **ProjectCard**: Reusable for work grid
+*   **BlogCard**: For blog post previews
+*   **Navigation**: Responsive header with mobile menu
+*   **Footer**: Contact links and social media
+
+For each component, I’d describe the desired behavior:
+
+> _“Create a ProjectCard component with an image, title, description, and tags. On hover, the image should slightly zoom and the card should lift with a shadow. Make it responsive.”_
+
+ChatGPT would generate the structured prompts, I’d paste them into Windsurf, and iterate from there.
+
+### The AI Collaboration Workflow
+
+Here’s my actual workflow for building a feature — it’s more strategic than you might think:
+
+#### Step 1: Requirements Planning with ChatGPT
+
+I start by having a conversation with ChatGPT to clarify what I’m trying to build:
+
+**Me**: “I need a blog section for my homepage. It should show recent posts and integrate with my Medium feed.”
+
+**ChatGPT**: “Let me help you break this down. What do you need?”
+
+*   Data source (Medium RSS or local markdown?)
+*   Number of posts to display
+*   Information for each post (image, date, title, excerpt?)
+*   Layout (grid or list?)
+*   Responsive behavior
+
+Through this conversation, ChatGPT helps me think through edge cases and technical considerations I might have missed as a designer.
+
+#### Step 2: Generating Structured Prompts
+
+Once the requirements are clear, I ask ChatGPT to generate structured prompts for specific tasks:
+
+**Me**: “Create a structured prompt for building the blog card component.”
+
+**ChatGPT returns**:
+
+Create a BlogCard React component with the following requirements:  
+\- Props: image (string), date (string), title (string), excerpt (string), url (string)  
+\- Layout: Image at top (16:9 aspect ratio), date below (small gray text),   
+  title (h3, 2 lines max with ellipsis), excerpt (3 lines max)  
+\- Styling: Use Tailwind CSS, card should have subtle shadow and hover lift effect  
+\- Responsive: Full width on mobile, maintain aspect ratios  
+\- Accessibility: Proper alt text, semantic HTML
+
+This structured prompt becomes my specification. It’s detailed but flexible enough for implementation.
+
+#### Step 3: Tactical Execution in Windsurf
+
+Now I take that structured prompt to Windsurf. Here’s where it gets interesting — **I don’t just use one model**. I choose the right model for each specific problem:
+
+**For component structure and logic:**
+
+*   Paste the structured prompt into Windsurf
+*   Choose Claude (better at understanding component architecture)
+*   Get the initial implementation
+
+**For styling and animation details:**
+
+*   Select specific code sections
+*   Switch to GPT-4 (often better at CSS/Tailwind nuances)
+*   Ask: “Make the hover animation smoother and add a subtle scale effect”
+
+**For bug fixing:**
+
+*   When something breaks, I describe the issue
+*   Use Claude for complex logic bugs
+*   Use GPT-4 for styling issues
+
+This model-switching strategy is key. Different models have different strengths, and Windsurf makes it easy to use the right tool for each job.
+
+#### Step 4: Visual Iteration
+
+I run the dev server constantly and iterate based on what I see:
+
+*   “The spacing between cards feels too tight.” → Ask in Windsurf
+*   “The featured image needs more contrast.” → Adjust directly with AI suggestion
+*   “The date should be smaller and less prominent.” → Quick refinement
+
+The beauty of this workflow: **ChatGPT is my strategic partner for planning, Windsurf is my tactical partner for execution.**
+
+### Why This Workflow Works
+
+#### **ChatGPT’s role:**
+
+*   Broader context and architectural thinking
+*   Helps me structure my requirements clearly
+*   Generates reusable prompts I can adapt for similar tasks
+*   No context switching — I can have long planning sessions
+
+#### **Windsurf’s role:**
+
+*   Direct code manipulation in my actual project
+*   Model selection based on the specific problem
+*   Real-time feedback and syntax checking
+*   Sees my entire codebase for context-aware suggestions
+
+This separation of concerns makes the process incredibly efficient. I’m not asking ChatGPT to write code I then copy-paste. I’m using it to think, then using Windsurf to build.
+
+### Key Decisions and Tradeoffs
+
+#### Image Optimization
+
+I used **Next.js Image component** with a custom loader:
+
+*   Automatically generates responsive image sizes
+*   Lazy loading out of the box
+*   WebP format for better compression
+
+This was an area where AI really shone— I didn’t need to understand the intricacies of image optimization. I just described what I wanted, and ChatGPT configured it correctly.
+
+#### Animation Philosophy
+
+I kept animations **subtle and purposeful**:
+
+*   Hover states for interactive elements
+*   Smooth page transitions
+*   Loading states for images
+
+I asked ChatGPT: _“Give me a subtle hover animation for project cards using Tailwind and Framer Motion.”_
+
+The result was elegant and performant.
+
+### Practical Tips for Designers Who Want to Vibe Code
+
+Based on my experience, here’s what I’d recommend:
+
+#### 1\. Start with Design System Clarity
+
+Before writing any code, define:
+
+*   Color palette (give colors semantic names)
+*   Typography scale
+*   Spacing system
+*   Component inventory
+
+This gives AI clear constraints to work within.
+
+#### 2\. Use Design Language When Prompting
+
+Don’t say: _“Add a div with padding-top: 20px”_
+
+Instead, say: _“Add comfortable breathing room above this section.”_
+
+AI understands design intent better than you’d think.
+
+#### 3\. Use ChatGPT to Generate Structured Prompts
+
+This is a game-changer. Instead of directly asking AI to code, use ChatGPT to help you create detailed, structured prompts first.
+
+**Bad approach:** Going directly to Windsurf: “Make me a navigation bar.”
+
+**Better approach:**
+
+1.  Chat with ChatGPT: “I need a navigation bar. Help me think through the requirements.”
+2.  ChatGPT helps you define: mobile behavior, active states, dropdown menus, accessibility
+3.  Ask: “Create a structured prompt for this.”
+4.  Take that prompt to Windsurf
+
+This two-step process ensures you’ve thought through the problem before coding. ChatGPT becomes your requirements analyst, not just your code generator.
+
+### 4\. Choose the Right Model for Each Task
+
+In Windsurf, you can switch between different AI models. Use this to your advantage:
+
+*   **Claude**: Better for component architecture, complex logic, and understanding relationships between files
+*   **GPT-4**: Often better for styling details, CSS/Tailwind finesse, animation tweaks
+*   **Experiment**: Different models have different strengths. Try both and see what works
+
+Don’t feel locked into one model. The best builders know when to switch tools.
+
+#### 5\. Iterate Visually, Not Just Conceptually
+
+Run your dev server constantly. See the changes in the browser. Design is a visual medium — code is just the tool.
+
+#### 6\. Learn by Doing, Not by Tutorial
+
+I didn’t take a React course before starting. I learned by building, asking AI questions when stuck, and reading the code it generated.
+
+This “learn by necessity” approach was much faster than traditional learning.
+
+#### 7\. Version Control is Your Friend
+
+Use Git from day one. Commit often. When AI suggests something that breaks your site, you can easily roll back.
+
+#### 8\. Don’t Optimize Prematurely
+
+Get it working first. Make it pretty second. Optimize third.
+
+AI sometimes suggests complex optimizations early on. Ignore them until you need them.
+
+#### 9\. Trust Your Design Eye
+
+If something feels off visually, it probably is — even if the code is “correct.” Your design instincts are valuable. Use them.
+
+### The Results
+
+After 1–2 weeks of vibe coding, I had:
+
+*   A fully functional portfolio with 4 project case studies
+*   A blog integrated with Medium
+*   Optimized images and fast load times
+*   Responsive design that works on all devices
+*   SEO-friendly structure with proper meta tags
+*   A codebase I understand and can maintain
+
+**Load time**: < 1 second  
+**Lighthouse score**: 95+ across all metrics  
+**Mobile responsive**: Yes  
+**Easy to update**: Yes
+
+More importantly, I learned:
+
+*   React fundamentals
+*   Next.js architecture
+*   Modern CSS (Tailwind)
+*   How to collaborate effectively with AI
+*   How to ship products, not just designs
+
+### The Future of Design
+
+This experience — combined with my work on the [Shopify storefront](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81) and [daily AI workflow optimizations](https://ginouyang.medium.com/how-i-use-ai-to-speed-up-my-workflow-as-a-designer-in-an-e-commerce-startup-c8c80c164563) — has convinced me that the line between designer and developer is blurring faster than we think.
+
+AI doesn’t replace design thinking — it amplifies it. You still need to:
+
+*   Understand user needs
+*   Define clear information architecture
+*   Make aesthetic decisions
+*   Iterate based on feedback
+
+But now, designers can ship their own ideas without waiting for developers or learning to code the traditional way.
+
+**This is powerful.**
+
+It means:
+
+*   Faster iteration cycles
+*   More control over the final product
+*   Ability to experiment without risk
+*   Learning by building, not by studying
+
+As I mentioned in my article on [how vibe coding changes our thinking](https://ginouyang.medium.com/vibe-coding-lowered-the-barrier-to-building-but-raised-the-bar-for-thinking-78ba08dbbb42), the barrier to building is lower — but the bar for strategic thinking is higher. You need to know what you want to build and why, even if you don’t know how to build it.
+
+### Should You Try Vibe Coding?
+
+If you’re a designer who:
+
+*   Wants more control over your portfolio or side projects
+*   Is curious about code but intimidated by traditional learning paths
+*   Enjoys iterating quickly and seeing results
+*   Has clear design vision and wants to bring it to life
+
+Then yes, absolutely try vibe coding.
+
+Start small:
+
+1.  Build a single landing page
+2.  Add a contact form
+3.  Create a blog
+4.  Launch it
+
+You’ll be surprised how much you can accomplish with AI as your coding partner.
+
+### Final Thoughts
+
+Building [jinyaodesign.com](http://jinyaodesign.com) taught me that the best way to learn is by doing — and AI makes “doing” accessible to everyone.
+
+Over the past few months, I’ve gone from a designer who occasionally dabbled in code to someone who can:
+
+*   Ship a production [Shopify storefront](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81)
+*   Build and maintain a [portfolio site](https://www.jinyaodesign.com/)
+*   Use [AI to accelerate my daily design workflow](https://ginouyang.medium.com/how-i-use-ai-to-speed-up-my-workflow-as-a-designer-in-an-e-commerce-startup-c8c80c164563)
+
+I didn’t become a developer overnight. I’m still a designer first. But now I’m a designer who can ship functional products, iterate rapidly, and maintain my own codebase.
+
+That’s the power of vibe coding.
+
+**What’s next?** I’m exploring how to use AI for more complex interactions — things like real-time data visualization, interactive components, and even [building Figma plugins](https://ginouyang.medium.com/building-an-ai-figma-plugin-with-cursor-teaching-tools-to-think-like-designers-001c5bbdf393). Stay tuned for more in this series.
+
+If you’re interested in seeing the final result, check out [jinyaodesign.com](https://www.jinyaodesign.com/). And if you decide to try vibe coding your own project, I’d love to hear about it.
+
+### More from this series:
+
+*   [Vibe Coding Lowered the Barrier to Building — But Raised the Bar for Thinking](https://ginouyang.medium.com/vibe-coding-lowered-the-barrier-to-building-but-raised-the-bar-for-thinking-78ba08dbbb42)
+*   [How I Use AI to Speed Up My Workflow as a Designer in an E-commerce Startup](https://ginouyang.medium.com/how-i-use-ai-to-speed-up-my-workflow-as-a-designer-in-an-e-commerce-startup-c8c80c164563)
+*   [From UX Designer to Builder: Shipping a Headless Shopify Storefront with AI](https://ginouyang.medium.com/from-ux-designer-to-builder-shipping-a-headless-shopify-storefront-with-ai-bbca7f9b9f81)
+*   [Building an AI Figma Plugin with Cursor: Teaching Tools to Think Like Designers](https://ginouyang.medium.com/building-an-ai-figma-plugin-with-cursor-teaching-tools-to-think-like-designers-001c5bbdf393)
+
+_Jinyao Ouyang is a UX/Product Designer focused on AI-powered products and adaptive systems. Connect on_ [_LinkedIn_](https://www.linkedin.com/in/ginouyang/) _or read more on_ [_Medium_](https://medium.com/@ginouyang)_._
+
+![](https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=1460cbaa303d)
+
+* * *
+
+[Vibe Coding My Portfolio: How I Built jinyaodesign.com in One Week as a Designer](https://medium.com/design-bootcamp/vibe-coding-my-portfolio-how-i-built-jinyaodesign-com-in-one-week-as-a-designer-1460cbaa303d) was originally published in [Bootcamp](https://medium.com/design-bootcamp) on Medium, where people are continuing the conversation by highlighting and responding to this story.
