@@ -5,7 +5,7 @@ import { AboutStats } from '@/components/AboutStats'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: `Learn more about ${siteConfig.name}, a UX/Product Designer.`,
+  description: `Learn more about ${siteConfig.name}, a Design Engineer.`,
 }
 
 export default function AboutPage() {
@@ -29,7 +29,7 @@ export default function AboutPage() {
 
             <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                I&apos;m Jinyao Ouyang, a UX/Product Designer who designs and builds
+                I'm Jinyao Ouyang, a Design Engineer who designs and builds
                 AI-powered products with a focus on adaptive systems, restraint, and
                 human-centered decision making. I bring a holistic approach to solving
                 complex problems — from strategy through craft.

@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'Jinyao Ouyang',
-  title: 'Jinyao Ouyang – UX/Product Designer',
-  description: 'Portfolio of Jinyao Ouyang, a UX/Product Designer crafting AI-powered products.',
+  title: 'Jinyao Ouyang – Design Engineer',
+  description: 'Portfolio of Jinyao Ouyang, a Design Engineer crafting AI-powered products.',
   tagline: 'Designing systems, not just screens.',
   url: 'https://www.jinyaodesign.com',
   email: 'katherineoyjy@gmail.com',
