@@ -1,178 +1,65 @@
 ---
 title: "Flexi-Casa Headless Shopify Storefront"
-description: "Rapidly Shipping a Production-Ready E-commerce Experience with AI-Assisted Development"
-date: "2026-01-30"
+description: "How a Designer Shipped a Full Production Storefront in 3 Weeks — Without a Developer"
+date: "2026-01-15"
 tags: ["Product Design", "Web", "AI-powered"]
-role: "Sole Product Designer"
-timeline: "1 month"
-tools: ["Figma", "Photoshop", "Windsurf"]
+role: "Sole Product Designer & Engineer"
+timeline: "3 weeks"
+tools: ["Figma", "Next.js", "Windsurf", "Netlify"]
 coverImage: "/work/flexicasa-cover.png"
 featuredOrder: 1
 ---
 
-## Problem Statement
+## The Challenge
 
-The Challenge
+As the sole designer at a small e-commerce startup, I asked myself: what's the highest-leverage thing I can actually contribute here? The answer was brand integrity and UX quality — two things the existing Shopify theme was actively working against. Templates constrained layouts, homogenized the visual language, and made every interaction feel generic.
 
-Flexi-Casa needed a custom, scalable e-commerce experience that:
+I proposed switching to a headless architecture — not because it was the obvious solution, but because it was the only way to build the experience the brand actually needed.
 
-- Was not constrained by Shopify themes
-- Allowed full control over UX and branding
-- Could ship fast without rebuilding commerce infrastructure
-- Was maintainable by a small team
+## Architecture Decision
 
-<Callout>
-Traditional Shopify themes optimized for speed, but limited interaction design, layout flexibility, and long-term scalability.
-</Callout>
+**Stack:** Next.js · Shopify Storefront API · Netlify
 
-## Why Headless Shopify
+Rather than rebuilding commerce infrastructure from scratch, I chose a clear separation of concerns: Shopify handles inventory, cart, checkout, and authentication. Next.js owns the entire presentation layer — giving full control over UX, performance, and brand expression. This decoupling meant I could design and iterate on the storefront independently, without being constrained by theme limitations or backend dependencies.
 
-### Design & Architecture Decision
+## Process
 
-Instead of building a full custom backend, I chose a headless Shopify architecture:
+### Week 1 — Data first, visuals never
 
-Shopify handles:
-- Inventory & variants
-- Cart & checkout
-- Payments & authentication
+I started with local development, validating the full data flow before touching UI: product fetching, cart persistence, checkout handoff, account flows. Designing UI before validating data flow leads to rework and brittle systems. Nothing moved to visual design until the foundation was reliable.
 
-The custom storefront focuses on:
-- UX
-- UI systems
-- Performance
-- Brand consistency
+### Week 2 — Modular systems, not one-off layouts
 
-<Callout>
-Decoupling the storefront allows designers to ship high-quality experiences without rebuilding commerce fundamentals.
-</Callout>
+Rather than designing individual pages, I built a modular component system — PDP, collection grid, cart drawer, navigation — each designed to be reusable and composable. New product pages can be launched without writing new code. This directly addresses the scalability needs of a small, fast-moving team.
 
-<Figure
-  src="/work/flexi-casa-arch.png"
-  alt="Headless Shopify architecture overview"
-  caption="Headless Shopify architecture overview"
-/>
+### Week 3 — Content onboarding and production validation
 
-## Process: From Local to Production
-
-### Phase 1 — Start with Data, Not Visuals
-
-I began with local development, prioritizing system integrity over polish.
-
-Validated early:
-- Product data fetching
-- Cart persistence
-- Checkout handoff
-- Account & signup flows
-
-**Why this matters:**
-
-Designing UI before validating data flow often leads to rework and brittle systems.
-
-<Figure
-  src="/work/flexicasa-localrun.png"
-  alt="Local development workflow"
-  caption="Local development workflow"
-/>
-### Phase 2 — Shopify Integration
-
-Once the storefront could seamlessly connect to Shopify’s backend:
-
-- Product → Cart → Checkout worked end-to-end
-- Inventory and variants were reliable
-- Backend constraints were clear
-
-Only after this point did UI decisions begin.
-
-## UX & PDP System Design
-
-### Product Detail Page as a System
-
-Rather than designing a single PDP layout, I designed a PDP system:
-
-- Clear hierarchy for product information
-- Modular components for reuse
-- Flexible layouts to support future SKUs
-- Optimized CTA placement for clarity
-
-<Figure 
-  src="/work/flexi-casa-pdp.png" 
-  alt="PDP System Design" 
-  caption="PDP System Design"
-/>
-
-## Visual Design & Branding
-
-### Consistent Brand Experience
-
-After the system foundation was validated, I refined:
-
-- Typography
-- Color usage
-- Spacing and rhythm
-- Cross-page consistency
-
-The goal was to ensure the storefront felt intentionally designed, not theme-derived.
-
-<Figure 
-  src="/work/flexi-casa-brand.png" 
-  alt="Brand System Design" 
-  caption="Before vs After"
-/>
+Added new SKUs, tested edge cases with real inventory data, and refined typography, spacing, and visual rhythm across pages. Final deployment to Netlify with environment variables for secure API token handling.
 
 ## AI-Assisted Development
 
-### How AI Changed the Workflow
+I used Windsurf as a collaborator, not a code generator. The most valuable thing it did wasn't write code — it helped me understand what I was building at every step. When scaffolding a component or wiring up a Storefront API call, I'd work through it in real time: reading the output, understanding the reasoning, making actual architectural decisions.
 
-AI coding tools (including WinXurf) were used to:
+This meant I was never blocked waiting for an engineer, and never shipping code I didn't understand. AI reduced execution friction without replacing design judgment.
 
-- Scaffold storefront components
-- Accelerate API integration
-- Reduce boilerplate setup
-- Iterate faster between design and implementation
+## Visual Design
 
-**Key takeaway:**
-AI didn’t replace design decisions — it reduced execution friction.
+With a working system foundation, I refined the brand expression: typography hierarchy, color usage, spacing rhythm, and cross-page consistency. The goal was a storefront that felt intentionally designed — not theme-derived. Every layout decision was made in the context of the component system, ensuring visual consistency at scale.
 
-This made it realistic for a designer to:
+## Performance & Quality
 
-- Prototype
-- Build
-- Validate
-- Ship
+Built on Next.js with Netlify edge deployment, the storefront is optimized for Core Web Vitals: Next.js Image component for lazy loading and automatic image optimization, static generation for product pages, and minimal JavaScript overhead. Accessibility and readability were considered throughout — semantic HTML structure, contrast ratios, and clear CTA hierarchy.
 
-## Deployment & Launch
-The storefront was deployed using Netlify:
+## Impact
 
-- Environment variables for Shopify APIs
-- Secure token handling
-- Custom domain connection
-- Production data validation
+The storefront shipped to production in under 3 weeks — a timeline that would typically require a dedicated frontend engineer. The result is a fully custom storefront that reflects the brand rather than a template, with a modular component system flexible enough to support future product growth without additional engineering resources.
 
-<Figure 
-  src="/work/flexi-casa-deploy.png" 
-  alt="Deployment Process" 
-  caption="Deployment Process"
-/>
-
-## Impact & Outcomes
-
-### Results
-
-- Fully custom storefront without Shopify theme constraints
-- Faster iteration between UX and implementation
-- Scalable PDP and design system foundation
-- Production-ready deployment with minimal backend overhead
+Most importantly: this project proved that a designer with the right tools and architectural thinking can own the full stack of a production web experience.
 
 ## Reflection
 
-### What I Learned
-
-- Headless commerce works best when UX and system design are aligned
-- Validating data flow early saves significant design rework
-- Shopify is a designer-friendly backend when used headlessly
-- AI makes designer-led product development realistically achievable
+Headless commerce works best when UX and system design are aligned from day one. Validating data flow before visual design saved significant rework. And working with AI tools taught me something more valuable than speed — it taught me to read, understand, and own the code I ship.
 
 <Callout>
-This project was built as a production system for Flexi-Casa.
-The repository is currently private, but I’m happy to discuss architecture, tradeoffs, and workflows in detail.
+The repository is private, but I'm happy to discuss architecture decisions, API integration, and development workflow in detail.
 </Callout>
