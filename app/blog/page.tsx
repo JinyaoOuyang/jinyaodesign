@@ -11,15 +11,15 @@ export default function BlogPage() {
   const posts = getBlogPosts()
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="mb-8">
+    <div className="mx-auto max-w-5xl px-6 py-16">
+      <header className="mb-12">
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Blog</h1>
         <p className="mt-4 text-muted-foreground">
           Thoughts on design, technology, and building products.
         </p>
       </header>
 
-      <div>
+      <div className="flex flex-col gap-6">
         {posts.length > 0 ? (
           posts.map((post) => <BlogCard key={post.slug} post={post} />)
         ) : (

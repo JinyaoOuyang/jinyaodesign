@@ -1,0 +1,65 @@
+---
+title: "Flexi-Casa Headless Shopify Storefront"
+description: "How a Designer Shipped a Full Production Storefront in 3 Weeks — Without a Developer"
+date: "2026-01-15"
+tags: ["Product Design", "Web", "AI-powered"]
+role: "Sole Product Designer & Engineer"
+timeline: "3 weeks"
+tools: ["Figma", "Next.js", "Windsurf", "Netlify"]
+coverImage: "/work/flexicasa-cover.png"
+featuredOrder: 1
+---
+
+## The Challenge
+
+As the sole designer at a small e-commerce startup, I asked myself: what's the highest-leverage thing I can actually contribute here? The answer was brand integrity and UX quality — two things the existing Shopify theme was actively working against. Templates constrained layouts, homogenized the visual language, and made every interaction feel generic.
+
+I proposed switching to a headless architecture — not because it was the obvious solution, but because it was the only way to build the experience the brand actually needed.
+
+## Architecture Decision
+
+**Stack:** Next.js · Shopify Storefront API · Netlify
+
+Rather than rebuilding commerce infrastructure from scratch, I chose a clear separation of concerns: Shopify handles inventory, cart, checkout, and authentication. Next.js owns the entire presentation layer — giving full control over UX, performance, and brand expression. This decoupling meant I could design and iterate on the storefront independently, without being constrained by theme limitations or backend dependencies.
+
+## Process
+
+### Week 1 — Data first, visuals never
+
+I started with local development, validating the full data flow before touching UI: product fetching, cart persistence, checkout handoff, account flows. Designing UI before validating data flow leads to rework and brittle systems. Nothing moved to visual design until the foundation was reliable.
+
+### Week 2 — Modular systems, not one-off layouts
+
+Rather than designing individual pages, I built a modular component system — PDP, collection grid, cart drawer, navigation — each designed to be reusable and composable. New product pages can be launched without writing new code. This directly addresses the scalability needs of a small, fast-moving team.
+
+### Week 3 — Content onboarding and production validation
+
+Added new SKUs, tested edge cases with real inventory data, and refined typography, spacing, and visual rhythm across pages. Final deployment to Netlify with environment variables for secure API token handling.
+
+## AI-Assisted Development
+
+I used Windsurf as a collaborator, not a code generator. The most valuable thing it did wasn't write code — it helped me understand what I was building at every step. When scaffolding a component or wiring up a Storefront API call, I'd work through it in real time: reading the output, understanding the reasoning, making actual architectural decisions.
+
+This meant I was never blocked waiting for an engineer, and never shipping code I didn't understand. AI reduced execution friction without replacing design judgment.
+
+## Visual Design
+
+With a working system foundation, I refined the brand expression: typography hierarchy, color usage, spacing rhythm, and cross-page consistency. The goal was a storefront that felt intentionally designed — not theme-derived. Every layout decision was made in the context of the component system, ensuring visual consistency at scale.
+
+## Performance & Quality
+
+Built on Next.js with Netlify edge deployment, the storefront is optimized for Core Web Vitals: Next.js Image component for lazy loading and automatic image optimization, static generation for product pages, and minimal JavaScript overhead. Accessibility and readability were considered throughout — semantic HTML structure, contrast ratios, and clear CTA hierarchy.
+
+## Impact
+
+The storefront shipped to production in under 3 weeks — a timeline that would typically require a dedicated frontend engineer. The result is a fully custom storefront that reflects the brand rather than a template, with a modular component system flexible enough to support future product growth without additional engineering resources.
+
+Most importantly: this project proved that a designer with the right tools and architectural thinking can own the full stack of a production web experience.
+
+## Reflection
+
+Headless commerce works best when UX and system design are aligned from day one. Validating data flow before visual design saved significant rework. And working with AI tools taught me something more valuable than speed — it taught me to read, understand, and own the code I ship.
+
+<Callout>
+The repository is private, but I'm happy to discuss architecture decisions, API integration, and development workflow in detail.
+</Callout>
