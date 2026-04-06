@@ -1,0 +1,204 @@
+---
+title: "Tesla Charging Experience"
+description: "AI-Driven Product Strategy · PM Interview Case Study · 2025"
+date: "2025-09-15"
+tags: ["Product Strategy", "AI", "UX", "Systems Thinking"]
+role: "Product Manager (Case Study)"
+timeline: "2 weeks"
+tools: ["Figma", "Miro", "Google Sheets"]
+coverImage: "/work/tesla-charging-cover.svg"
+featuredOrder: 1
+---
+
+## Overview
+
+Redesigning Tesla's charging experience with AI to reduce driver anxiety, optimize routing, and increase network throughput.
+
+<Callout type="insight">
+This case study was produced for Tesla's PM final-round interview. I treated it as a real product initiative — full research, strategy, metrics framework, hi-fi wireframes, and system architecture. Fully self-produced.
+</Callout>
+
+<Divider />
+
+## Problem Statement
+
+### User Problem
+
+Charging a Tesla today still carries friction that undermines the ownership experience:
+
+- **Range anxiety persists** — even experienced EV drivers feel uncertainty about whether they'll reach a charger in time
+- **Wait time is unpredictable** — arriving at a Supercharger with no visibility into queue length or estimated wait creates frustration
+- **Route planning is manual** — drivers must mentally balance charge level, destination distance, and charger availability without real-time guidance
+
+### Business Problem
+
+Tesla's Supercharger network is a competitive advantage, but utilization is uneven:
+
+- **Peak congestion** at popular stations drives users to third-party networks or delays trips entirely
+- **Underutilized stations** nearby go unnoticed because routing doesn't account for real-time demand
+- **Retention risk** — charging friction is one of the top reasons cited in EV owner dissatisfaction surveys
+
+### Constraints
+
+- **Tesla ecosystem only** — solution must work within the existing Tesla App and in-car interface
+- **No new hardware** — leverage existing Supercharger infrastructure and vehicle telemetry
+- **AI feasibility** — predictions must be grounded in data Tesla already collects (fleet telemetry, charger status, navigation patterns)
+
+<Divider />
+
+## Process
+
+<TwoColumn>
+<Column>
+
+### Phase 1 — Research
+
+Mapped the current charging journey end-to-end. Analyzed competitive approaches from ChargePoint, Rivian, and Google Maps EV routing.
+
+Key findings:
+- Drivers make charging decisions based on anxiety, not optimization
+- Real-time charger availability is the single most requested feature in EV forums
+- Existing in-app routing underweights time-of-day demand patterns
+
+</Column>
+<Column>
+
+### Phase 2 — Strategy
+
+Defined the AI product vision: **predictive charging that eliminates decision burden**.
+
+Opportunity sizing based on fleet scale (~5M vehicles), average charging sessions per week, and estimated session abandonment rates. Prioritized three intervention points using an impact/effort matrix.
+
+</Column>
+</TwoColumn>
+
+<TwoColumn>
+<Column>
+
+### Phase 3 — Design
+
+Created Tesla App-style wireframes for three core flows:
+1. **Smart Route Planner** — AI-optimized charging stops based on real-time demand, battery state, and driver preferences
+2. **Live Station Dashboard** — queue prediction, estimated wait, and alternative station suggestions
+3. **Proactive Notifications** — push alerts when a nearby station is about to become available
+
+<Figure
+  src="/work/tesla-charging-wireframes.png"
+  alt="Tesla App wireframes showing smart route planner, live station dashboard, and proactive notifications"
+  caption="Hi-fi wireframes: Smart Route Planner, Live Station Dashboard, Proactive Notifications"
+/>
+
+</Column>
+<Column>
+
+### Phase 4 — Architecture
+
+Designed the system architecture connecting vehicle telemetry, charger network data, and the AI prediction layer.
+
+Key components:
+- **Fleet Telemetry Ingestion** — real-time battery state, location, and destination from active vehicles
+- **Demand Prediction Model** — time-series forecasting of station utilization using historical patterns + live fleet data
+- **Routing Optimization Engine** — multi-objective optimization balancing driver convenience, charge speed, and network load
+
+<Figure
+  src="/work/tesla-charging-architecture.png"
+  alt="System architecture diagram showing data flow between vehicle fleet, AI prediction layer, and Tesla App"
+  caption="System architecture: Fleet telemetry → AI prediction layer → Tesla App"
+/>
+
+</Column>
+</TwoColumn>
+
+<Divider />
+
+## Key Decisions
+
+<Callout>
+**Decision 1: Predictive routing vs. reactive status updates**
+
+Options considered: (A) Show real-time charger availability only, (B) Predict availability 15–30 min ahead and pre-route drivers.
+
+Chose B — reactive status helps at the moment of arrival, but predictive routing solves the problem upstream. Drivers decide their route before they need a charger, not after. This also distributes load across the network proactively.
+</Callout>
+
+<Callout>
+**Decision 2: In-app experience vs. in-car-only**
+
+Options considered: (A) Build entirely within the in-car display, (B) Build within the Tesla mobile app, (C) Both with app as primary.
+
+Chose C with app as primary — trip planning happens before getting in the car. The mobile app is where drivers make route decisions. In-car display mirrors and adapts the plan in real time. This avoids the constraint of in-car UI iteration cycles.
+</Callout>
+
+<Callout>
+**Decision 3: AI confidence transparency**
+
+Options considered: (A) Show predictions as definitive ("3 min wait"), (B) Show predictions with confidence ranges ("3–8 min wait, 85% confidence").
+
+Chose B — trust is critical for adoption. Showing confidence ranges sets appropriate expectations and reduces frustration when predictions aren't exact. Over time, as model accuracy improves, ranges tighten and user trust compounds.
+</Callout>
+
+<Divider />
+
+## Metrics Framework
+
+Defined success metrics across three layers — user experience, network efficiency, and AI performance:
+
+<Stats items={[
+  { value: "↑ Target", label: "Charger Utilization Rate" },
+  { value: "↓ Target", label: "Session Abandonment Rate" },
+  { value: "≥ 85%", label: "AI Prediction Accuracy" },
+  { value: "↓ Target", label: "Avg. Driver Wait Time" }
+]} />
+
+**User Experience**
+- Reduction in average wait time at Superchargers
+- Increase in route plan adoption rate (drivers following AI-suggested routes)
+- Net Promoter Score improvement for charging experience
+
+**Network Efficiency**
+- Charger utilization rate across the network (target: more even distribution)
+- Session abandonment rate (drivers leaving a station without charging)
+- Peak-to-average load ratio at high-traffic stations
+
+**AI Performance**
+- Prediction accuracy for station availability (target: ≥85% within 5-min window)
+- Route optimization acceptance rate
+- Model latency (predictions served within 200ms)
+
+<Divider />
+
+## Reflection
+
+With more time and access to Tesla's internal data, I would:
+
+- Run a simulation against historical fleet telemetry to validate demand prediction accuracy before any UI work
+- Conduct rider interviews focused specifically on charging decision-making under uncertainty
+- Explore dynamic pricing as a demand-shaping lever (controversial but high-impact)
+- Design the escalation path for edge cases — what happens when the AI is wrong and a driver arrives at a full station
+
+<Callout type="insight">
+Passed the final round. Declined the offer to pursue US-based opportunities.
+</Callout>
+
+<Divider />
+
+## Artifacts
+
+This case study was presented as a full product strategy deck with hi-fi wireframes and system architecture diagrams.
+
+<TwoColumn>
+<Column>
+
+**View Figma Prototype →**
+
+Interactive prototype of the Smart Route Planner and Live Station Dashboard flows. Available on request.
+
+</Column>
+<Column>
+
+**Request Full Deck →**
+
+The complete strategy deck includes market analysis, competitive landscape, technical feasibility assessment, and implementation roadmap. Happy to walk through it.
+
+</Column>
+</TwoColumn>

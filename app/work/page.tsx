@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getFeaturedWork } from '@/lib/content'
+import { getWorkPosts } from '@/lib/content'
 import { WorkCard } from '@/components/WorkCard'
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function WorkPage() {
-  const work = getFeaturedWork()
+  const work = getWorkPosts()
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
