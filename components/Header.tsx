@@ -28,11 +28,11 @@ export function Header() {
           : 'bg-background/80 backdrop-blur-sm border-b border-border'
       }`}
     >
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link 
-          href="/" 
+      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-[18px]">
+        <Link
+          href="/"
           aria-label={siteConfig.name}
-          className="text-lg font-medium tracking-tight hover:opacity-70 transition-opacity"
+          className="hover:opacity-70 transition-opacity"
         >
           {siteConfig.logoPath ? (
             <Image
@@ -44,34 +44,48 @@ export function Header() {
               style={{ height: '32px', width: 'auto' }}
             />
           ) : (
-            siteConfig.name
+            <span
+              className="font-display text-[22px] leading-none tracking-tight text-foreground"
+            >
+              {siteConfig.name.split(/(\s+)/).map((part, i, arr) => {
+                // italicize the last non-space segment for the "accent" treatment
+                const isLast = i === arr.length - 1 || (i === arr.length - 2 && /^\s+$/.test(arr[arr.length - 1]))
+                if (/^\s+$/.test(part)) return part
+                return isLast ? (
+                  <em key={i} className="italic text-primary not-italic-off" style={{ fontStyle: 'italic' }}>{part}</em>
+                ) : (
+                  <span key={i}>{part}</span>
+                )
+              })}
+            </span>
           )}
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {siteConfig.navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`text-sm tracking-wide transition-opacity hover:opacity-70 ${
-                pathname === item.href || pathname.startsWith(item.href + '/')
-                  ? 'text-foreground'
-                  : 'text-muted-foreground'
-              }`}
-            >
-              {item.name.toUpperCase()}
-            </Link>
-          ))}
+        <div className="hidden md:flex items-center gap-9">
+          {siteConfig.navigation.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(item.href + '/')
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`font-mono text-[12px] font-medium tracking-[0.12em] uppercase relative transition-colors ${
+                  active ? 'text-foreground nav-active' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {item.name}
+              </Link>
+            )
+          })}
           {siteConfig.externalLinks.map((item) => (
             <a
               key={item.name}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm tracking-wide text-muted-foreground transition-opacity hover:opacity-70"
+              className="font-mono text-[12px] font-medium tracking-[0.12em] uppercase text-muted-foreground hover:text-foreground transition-colors"
             >
-              {item.name.toUpperCase()}
+              {item.name}
             </a>
           ))}
         </div>

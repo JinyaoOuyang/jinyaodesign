@@ -5,27 +5,27 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-5xl px-6 py-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">
+    <footer className="border-t border-border mt-10">
+      <div className="mx-auto max-w-5xl px-8 py-10 pb-12">
+        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-3">
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
               Let&apos;s connect
             </p>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="text-lg font-medium hover:opacity-70 transition-opacity"
+              className="font-display text-2xl md:text-3xl leading-none text-foreground hover:text-primary transition-colors"
             >
               {siteConfig.email}
             </a>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-7">
             <a
               href={siteConfig.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors"
             >
               LinkedIn
             </a>
@@ -34,7 +34,7 @@ export function Footer() {
                 href={siteConfig.medium}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors"
               >
                 Medium
               </a>
@@ -43,16 +43,19 @@ export function Footer() {
               href={siteConfig.resumePath}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors"
             >
               Resume
             </a>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border">
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} {siteConfig.name}. All rights reserved.
+        <div className="mt-10 pt-6 border-t border-border flex items-center justify-between">
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+            © {currentYear} {siteConfig.name}
+          </p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+            Designed &amp; built with care
           </p>
         </div>
       </div>

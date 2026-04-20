@@ -20,11 +20,11 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 gap-16 md:grid-cols-[1fr_auto] md:gap-20">
           {/* Left — About Me */}
           <div>
-            <h2
-              className="text-3xl font-semibold tracking-tight md:text-4xl"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              About Me
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
+              About / Intro
+            </div>
+            <h2 className="font-display font-normal text-[clamp(36px,4.5vw,56px)] leading-[1.05] tracking-[-0.02em]">
+              About <em className="italic text-primary">me</em>
             </h2>
 
             <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">

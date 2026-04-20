@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import { Header } from '@/components/Header'
@@ -8,7 +8,8 @@ import { StarCursor } from '@/components/StarCursor'
 import { siteConfig } from '@/lib/config'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const display = Playfair_Display({ subsets: ['latin'], variable: '--font-display' })
+const display = Instrument_Serif({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-display' })
+const mono = JetBrains_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -46,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${display.variable}`}>
-      <body className="min-h-screen bg-background font-sans antialiased cursor-none">
+    <html lang="en" className={`${inter.variable} ${display.variable} ${mono.variable}`}>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-9WWV08C6KQ"
           strategy="afterInteractive"

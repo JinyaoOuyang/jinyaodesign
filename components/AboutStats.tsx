@@ -18,13 +18,10 @@ export function AboutStats({ stats = defaultStats }: AboutStatsProps) {
     <div className="flex gap-10 md:gap-12">
       {stats.map((stat) => (
         <div key={stat.label} className="flex flex-col">
-          <span
-            className="text-3xl font-semibold tracking-tight md:text-4xl"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
+          <span className="font-display text-4xl md:text-5xl leading-none tracking-[-0.015em] text-foreground">
             {stat.value}
           </span>
-          <span className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          <span className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
             {stat.label}
           </span>
         </div>
