@@ -16,9 +16,8 @@ export default function AboutPage() {
 
       {/* Content block */}
       <div className="mx-auto max-w-[1100px] px-6 py-20 md:py-28">
-        {/* Two-column: About text + Stats */}
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-[1fr_auto] md:gap-20">
-          {/* Left — About Me */}
+        {/* Upper section: title (left) + credentials (right) */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-[auto_1fr] md:items-end md:gap-20">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
               About / Intro
@@ -26,27 +25,37 @@ export default function AboutPage() {
             <h2 className="font-display font-normal text-[clamp(36px,4.5vw,56px)] leading-[1.05] tracking-[-0.02em]">
               About <em className="italic text-primary">me</em>
             </h2>
-
-            <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
-              <p>
-                I'm Jinyao Ouyang, a Design Engineer who designs and builds
-                AI-powered products with a focus on adaptive systems, restraint, and
-                human-centered decision making. I bring a holistic approach to solving
-                complex problems — from strategy through craft.
-              </p>
-              <p>
-                My process is grounded in curiosity and collaboration. I start by asking
-                questions, listening carefully, and synthesizing insights into actionable
-                directions. I value simplicity, accessibility, and attention to detail —
-                every interaction should feel intentional, every flow should feel natural.
-              </p>
-            </div>
           </div>
 
-          {/* Right — Stats */}
-          <div className="flex items-start pt-0 md:pt-14">
-            <AboutStats />
+          <div className="flex md:justify-end">
+            <AboutStats
+              stats={[
+                { value: 'MS HCI', label: 'University of Washington' },
+                { value: 'TEAGUE', label: 'Product Design Studio' },
+                { value: 'FLEXI-CASA', label: 'Sole Designer & Engineer' },
+              ]}
+            />
           </div>
+        </div>
+
+        {/* Lower section: bio paragraphs, single column */}
+        <div className="mt-12 md:mt-16 max-w-[720px] space-y-5 text-base leading-relaxed text-muted-foreground">
+          <p>
+            I&apos;m Jinyao Ouyang, a Design Engineer with 4+ years spanning UX/Product
+            design, HCI research, and full-stack product development. I hold an MS in
+            Technology Innovation (HCI) from the University of Washington and a BE in
+            Interaction Design from South China University of Technology.
+          </p>
+          <p>
+            I&apos;ve designed across health, travel, and automotive — and most recently,
+            I built and shipped FLEXI-CASA&apos;s headless Shopify storefront
+            (Next.js/TypeScript) solo in three weeks, including AI agent infrastructure,
+            Etsy integrations, and Amazon tooling.
+          </p>
+          <p>
+            I design and build AI-powered products with a focus on adaptive systems,
+            restraint, and human-centered decision making.
+          </p>
         </div>
 
         {/* Divider */}
@@ -78,6 +87,10 @@ export default function AboutPage() {
                   <li>Windsurf</li>
                   <li>Notion</li>
                   <li>HTML / CSS / JS</li>
+                  <li>React / TypeScript</li>
+                  <li>Next.js</li>
+                  <li>Supabase</li>
+                  <li>Cursor / Claude</li>
                 </ul>
               </div>
             </div>
