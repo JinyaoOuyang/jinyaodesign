@@ -1,85 +1,129 @@
 import { Metadata } from 'next'
 import { siteConfig } from '@/lib/config'
+import { AboutHero } from '@/components/AboutHero'
+import { AboutStats } from '@/components/AboutStats'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: `Learn more about ${siteConfig.name}, a UX/Product Designer.`,
+  description: `Learn more about ${siteConfig.name}, a Design Engineer.`,
 }
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="mb-12">
-        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">About</h1>
-      </header>
+    <article>
+      {/* Hero */}
+      <AboutHero />
 
-      <div className="prose prose-neutral max-w-none dark:prose-invert">
-        <p className="text-xl text-muted-foreground leading-relaxed">
-          I&apos;m Jinyao Ouyang, a UX/Product Designer passionate about creating 
-          intuitive and meaningful digital experiences.
-        </p>
-
-        <h2>Background</h2>
-        <p>
-          With a background spanning product design, user research, and design systems, 
-          I bring a holistic approach to solving complex problems. I believe that great 
-          design emerges from understanding people deeply and iterating relentlessly.
-        </p>
-        <p>
-          Currently, I focus on designing products that balance business goals with 
-          genuine user needs. I enjoy working at the intersection of strategy and craft, 
-          where thoughtful decisions create lasting impact.
-        </p>
-
-        <h2>Approach</h2>
-        <p>
-          My design process is grounded in curiosity and collaboration. I start by 
-          asking questions, listening carefully, and synthesizing insights into 
-          actionable directions. From there, I prototype, test, and refine until 
-          the solution feels right.
-        </p>
-        <p>
-          I value simplicity, accessibility, and attention to detail. Every interaction 
-          should feel intentional, every flow should feel natural.
-        </p>
-
-        <h2>Skills & Tools</h2>
-        <div className="grid grid-cols-2 gap-4 not-prose mt-6">
+      {/* Content block */}
+      <div className="mx-auto max-w-[1100px] px-6 py-20 md:py-28">
+        {/* Upper section: title (left) + credentials (right) */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-[auto_1fr] md:items-end md:gap-20">
           <div>
-            <h3 className="font-medium mb-2">Design</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>Product Design</li>
-              <li>UX Research</li>
-              <li>Interaction Design</li>
-              <li>Design Systems</li>
-              <li>Prototyping</li>
-            </ul>
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
+              About / Intro
+            </div>
+            <h2 className="font-display font-normal text-[clamp(36px,4.5vw,56px)] leading-[1.05] tracking-[-0.02em]">
+              About <em className="italic text-primary">me</em>
+            </h2>
           </div>
-          <div>
-            <h3 className="font-medium mb-2">Tools</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>Figma</li>
-              <li>Framer</li>
-              <li>Principle</li>
-              <li>Notion</li>
-              <li>HTML/CSS/JS</li>
-            </ul>
+
+          <div className="flex md:justify-end">
+            <AboutStats
+              stats={[
+                { value: 'MS HCI', label: 'University of Washington' },
+                { value: 'TEAGUE', label: 'Product Design Studio' },
+                { value: 'FLEXI-CASA', label: 'Sole Designer & Engineer' },
+              ]}
+            />
           </div>
         </div>
 
-        <h2>Connect</h2>
-        <p>
-          I&apos;m always open to discussing new projects, creative ideas, or 
-          opportunities to collaborate.
-        </p>
-        <p>
-          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-          <br />
-          <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer">
-            LinkedIn
-          </a>
-        </p>
+        {/* Lower section: bio paragraphs, single column */}
+        <div className="mt-12 md:mt-16 max-w-[720px] space-y-5 text-base leading-relaxed text-muted-foreground">
+          <p>
+            I&apos;m Jinyao Ouyang, a Design Engineer with 4+ years spanning UX/Product
+            design, HCI research, and full-stack product development. I hold an MS in
+            Technology Innovation (HCI) from the University of Washington and a BE in
+            Interaction Design from South China University of Technology.
+          </p>
+          <p>
+            I&apos;ve designed across health, travel, and automotive — and most recently,
+            I built and shipped FLEXI-CASA&apos;s headless Shopify storefront
+            (Next.js/TypeScript) solo in three weeks, including AI agent infrastructure,
+            Etsy integrations, and Amazon tooling.
+          </p>
+          <p>
+            I design and build AI-powered products with a focus on adaptive systems,
+            restraint, and human-centered decision making.
+          </p>
+        </div>
+
+        {/* Divider */}
+        <hr className="my-16 border-border md:my-20" />
+
+        {/* Skills & Connect — two-column */}
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
+          {/* Skills */}
+          <div>
+            <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Skills &amp; Tools
+            </h3>
+            <div className="mt-6 grid grid-cols-2 gap-8">
+              <div>
+                <h4 className="text-sm font-medium">Design</h4>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  <li>Product Design</li>
+                  <li>UX Research</li>
+                  <li>Interaction Design</li>
+                  <li>Design Systems</li>
+                  <li>Prototyping</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium">Tools</h4>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  <li>Figma</li>
+                  <li>Framer</li>
+                  <li>Windsurf</li>
+                  <li>Notion</li>
+                  <li>HTML / CSS / JS</li>
+                  <li>React / TypeScript</li>
+                  <li>Next.js</li>
+                  <li>Supabase</li>
+                  <li>Cursor / Claude</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Connect */}
+          <div>
+            <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Connect
+            </h3>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
+              I&apos;m always open to discussing new projects, creative ideas, or
+              opportunities to collaborate.
+            </p>
+            <div className="mt-6 flex flex-col gap-3">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-sm font-medium underline underline-offset-4 transition-opacity hover:opacity-70"
+              >
+                {siteConfig.email}
+              </a>
+              <a
+                href={siteConfig.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium underline underline-offset-4 transition-opacity hover:opacity-70"
+              >
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </article>
   )
 }

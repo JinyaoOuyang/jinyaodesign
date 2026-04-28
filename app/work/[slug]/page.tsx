@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getWorkPosts, getWorkBySlug, getAdjacentWork } from '@/lib/content'
 import { MDXContent } from '@/components/MDXContent'
+import { CaseStudyTOC } from '@/components/CaseStudyTOC'
+import { extractHeadings } from '@/lib/toc'
 import { siteConfig } from '@/lib/config'
 
 interface Props {
@@ -44,58 +46,61 @@ export default async function WorkDetailPage({ params }: Props) {
   })
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
-      {/* Header */}
-      <header className="mb-12">
-        <Link
-          href="/work"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-        >
-          ← Back to Work
-        </Link>
-        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
-          {work.title}
-        </h1>
-        <p className="mt-4 text-xl text-muted-foreground">
-          {work.description}
-        </p>
+    <article className="mx-auto max-w-5xl px-6 pt-10 pb-16">
+      {/* Back link */}
+      <Link
+        href="/work"
+        className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors mb-10"
+      >
+        <span aria-hidden="true">←</span> Back to work
+      </Link>
+
+      {/* Header: tag row + title + desc on left, meta side on right */}
+      <header className="grid gap-10 md:grid-cols-[2fr_1fr] md:gap-12 items-end pb-8 border-b border-border">
+        <div>
+          <div className="cs-tag-row">
+            {work.tags.slice(0, 4).map((tag) => (
+              <span key={tag} className="tag">{tag}</span>
+            ))}
+          </div>
+          <h1 className="cs-title">{work.title}</h1>
+          <p className="cs-desc">{work.description}</p>
+        </div>
+        <div className="cs-side">
+          <div className="row">
+            <span className="k">Role</span>
+            <span className="v">{work.role}</span>
+          </div>
+          <div className="row">
+            <span className="k">Timeline</span>
+            <span className="v">{work.timeline}</span>
+          </div>
+          <div className="row">
+            <span className="k">Date</span>
+            <span className="v">{formattedDate}</span>
+          </div>
+          <div className="row">
+            <span className="k">Tools</span>
+            <span className="v">{work.tools.join(', ')}</span>
+          </div>
+        </div>
       </header>
 
-      {/* Cover Image */}
-      <div className="relative aspect-video overflow-hidden rounded-lg bg-muted mb-12">
+      {/* Cover */}
+      <div className="cs-cover-wrap my-12 md:my-16">
         <Image
           src={work.coverImage}
           alt={work.title}
           fill
           className="object-cover"
           priority
-          sizes="(max-width: 768px) 100vw, 760px"
+          sizes="(max-width: 768px) 100vw, 1024px"
         />
       </div>
 
-      {/* Meta Info */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-border mb-12">
-        <div>
-          <h3 className="text-sm text-muted-foreground mb-1">Role</h3>
-          <p className="font-medium">{work.role}</p>
-        </div>
-        <div>
-          <h3 className="text-sm text-muted-foreground mb-1">Timeline</h3>
-          <p className="font-medium">{work.timeline}</p>
-        </div>
-        <div>
-          <h3 className="text-sm text-muted-foreground mb-1">Date</h3>
-          <p className="font-medium">{formattedDate}</p>
-        </div>
-        <div>
-          <h3 className="text-sm text-muted-foreground mb-1">Tools</h3>
-          <p className="font-medium">{work.tools.join(', ')}</p>
-        </div>
-      </div>
-
-      {/* Metrics */}
+      {/* Metrics (optional) */}
       {work.metrics && work.metrics.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 bg-muted rounded-lg px-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 metrics-surface rounded-lg px-6 mb-12">
           {work.metrics.map((metric, index) => (
             <div key={index} className="text-center">
               <p className="text-lg font-semibold">{metric}</p>
@@ -104,18 +109,24 @@ export default async function WorkDetailPage({ params }: Props) {
         </div>
       )}
 
-      {/* Content */}
-      <div className="prose prose-neutral max-w-none dark:prose-invert">
-        <MDXContent source={work.content} />
+      {/* Content with sticky TOC sidebar */}
+      <div className="cs-body">
+        <CaseStudyTOC headings={extractHeadings(work.content)} />
+        <div className="min-w-0 max-w-[720px]">
+          <MDXContent
+            source={work.content}
+            headings={extractHeadings(work.content)}
+          />
+        </div>
       </div>
 
       {/* Tags */}
-      <div className="mt-12 pt-8 border-t border-border">
+      <div className="mx-auto max-w-3xl mt-16 pt-8 border-t border-border">
         <div className="flex flex-wrap gap-2">
           {work.tags.map((tag) => (
             <span
               key={tag}
-              className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full"
+              className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground tag-pill px-3 py-1 rounded-full"
             >
               {tag}
             </span>
@@ -124,26 +135,24 @@ export default async function WorkDetailPage({ params }: Props) {
       </div>
 
       {/* Navigation */}
-      <nav className="mt-12 pt-8 border-t border-border">
-        <div className="flex justify-between">
+      <nav className="mx-auto max-w-3xl mt-12 pt-8 border-t border-border">
+        <div className="flex justify-between gap-6">
           {prev && (
-            <Link
-              href={`/work/${prev.slug}`}
-              className="group"
-            >
-              <span className="text-sm text-muted-foreground">Previous</span>
-              <p className="font-medium group-hover:opacity-70 transition-opacity">
+            <Link href={`/work/${prev.slug}`} className="group flex-1">
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                ← Previous
+              </span>
+              <p className="mt-2 font-display text-2xl leading-tight group-hover:text-primary transition-colors">
                 {prev.title}
               </p>
             </Link>
           )}
           {next && (
-            <Link
-              href={`/work/${next.slug}`}
-              className="group text-right ml-auto"
-            >
-              <span className="text-sm text-muted-foreground">Next</span>
-              <p className="font-medium group-hover:opacity-70 transition-opacity">
+            <Link href={`/work/${next.slug}`} className="group flex-1 text-right ml-auto">
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                Next →
+              </span>
+              <p className="mt-2 font-display text-2xl leading-tight group-hover:text-primary transition-colors">
                 {next.title}
               </p>
             </Link>

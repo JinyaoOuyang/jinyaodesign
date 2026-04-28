@@ -1,81 +1,113 @@
 import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
-import { WorkCard } from '@/components/WorkCard'
-import { BlogCard } from '@/components/BlogCard'
+import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
+import { HeroBackground } from '@/components/HeroBackground'
+import { GlyphRise } from '@/components/GlyphRise'
+import { CapabilitiesStrip } from '@/components/CapabilitiesStrip'
+import { WritingList } from '@/components/WritingList'
 import { siteConfig } from '@/lib/config'
 
 export default function HomePage() {
   const featuredWork = getFeaturedWork()
-  const latestPosts = getLatestBlogPosts(2)
+  const latestPosts = getLatestBlogPosts(3)
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
-      {/* Hero */}
-      <section className="py-24 md:py-32">
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-          {siteConfig.name}
-        </h1>
-        <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
-          {siteConfig.tagline}
-        </p>
-        <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
-          I&apos;m a UX/Product Designer focused on creating intuitive, user-centered 
-          digital experiences. I believe great design solves real problems while 
-          delighting users along the way.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
-          >
-            View Work
-          </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
-          >
-            About Me
-          </Link>
-        </div>
-      </section>
+    <>
+      {/* Hero — full-width background, eyebrow + glyph-rise headline */}
+      <section className="relative overflow-hidden pt-36 pb-28 md:pt-44 md:pb-32 -mt-[64px]">
+        <HeroBackground />
+        <div className="relative mx-auto max-w-5xl px-6" style={{ zIndex: 1 }}>
+          <div className="max-w-[820px]">
+            <span className="eyebrow">
+              <span className="dot" aria-hidden="true" />
+              <span>Portfolio · 2026</span>
+            </span>
 
-      {/* Featured Work */}
-      <section className="py-16 border-t border-border">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-2xl font-semibold">Featured Work</h2>
-          <Link
-            href="/work"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            View all →
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          {featuredWork.map((work) => (
-            <WorkCard key={work.slug} work={work} />
-          ))}
-        </div>
-      </section>
+            <GlyphRise
+              className="mt-7 font-display font-normal text-[clamp(48px,7.2vw,96px)] leading-[1.05] tracking-[-0.02em] text-foreground"
+              segments={[
+                { text: 'Product design' },
+                { break: true },
+                { text: 'for ' },
+                { text: 'adaptive', italic: true },
+                { text: ' systems' },
+              ]}
+            />
 
-      {/* Latest Writing */}
-      {latestPosts.length > 0 && (
-        <section className="py-16 border-t border-border">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold">Latest Writing</h2>
-            <Link
-              href="/blog"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            <p
+              className="mt-8 max-w-[560px] text-[20px] md:text-[22px] leading-[1.55] text-muted-foreground"
+              style={{ animation: 'fade-up 0.7s var(--ease-precise) 0.7s both' }}
             >
-              View all →
+              I design and build AI-powered products with a focus on restraint,
+              adaptive systems, and human-centered decision making.
+            </p>
+            <p
+              className="mt-6 max-w-[560px] text-[14px] leading-[1.7] text-muted-foreground/80"
+              style={{ animation: 'fade-up 0.7s var(--ease-precise) 0.85s both' }}
+            >
+              Currently shipping design + engineering at a small e-commerce startup.
+              Previously at studios working on health, travel, and automotive.
+            </p>
+
+            <div
+              className="mt-9 flex gap-3"
+              style={{ animation: 'fade-up 0.7s var(--ease-precise) 1s both' }}
+            >
+              <Link
+                href="/work"
+                className="inline-flex items-center justify-center gap-[10px] rounded-[8px] btn-primary px-[22px] py-[14px] text-sm font-medium"
+              >
+                View Work <span aria-hidden="true">→</span>
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center gap-[10px] rounded-[8px] btn-secondary px-[22px] py-[14px] text-sm font-medium text-foreground"
+              >
+                About Me
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-5xl px-6">
+        {/* Capabilities strip */}
+        <CapabilitiesStrip />
+
+        {/* Featured Work */}
+        <section className="py-24">
+          <div className="section-head">
+            <div>
+              <div className="num">01 / Work</div>
+              <h2 className="mt-2">
+                Selected <em>case studies</em>
+              </h2>
+            </div>
+            <Link href="/work" className="view-all">
+              View all <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div>
-            {latestPosts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
-          </div>
+          <FeaturedWorkSection works={featuredWork} />
         </section>
-      )}
-    </div>
+
+        {/* Latest Writing */}
+        {latestPosts.length > 0 && (
+          <section className="py-16 pb-24">
+            <div className="section-head">
+              <div>
+                <div className="num">02 / Writing</div>
+                <h2 className="mt-2">
+                  Latest <em>notes</em>
+                </h2>
+              </div>
+              <Link href="/blog" className="view-all">
+                View all <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <WritingList posts={latestPosts} />
+          </section>
+        )}
+      </div>
+    </>
   )
 }

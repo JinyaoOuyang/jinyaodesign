@@ -1,0 +1,126 @@
+---
+title: "Tesla Charging Experience"
+description: "AI-Driven Product Strategy · PM Interview Case Study · 2026"
+date: "2026-03-30"
+tags: ["Product Strategy", "AI", "UX", "Systems Thinking"]
+role: "Product Manager (Case Study)"
+timeline: "2 weeks"
+tools: ["Figma", "Claude Code"]
+coverImage: "/work/tesla-charging-cover.png"
+featuredOrder: 1
+---
+
+## Overview
+
+Redesigning Tesla's charging experience with AI to reduce driver anxiety, optimize routing, and increase network throughput.
+
+<Callout type="insight">
+This case study was produced for Tesla's(China) PM final-round interview. I treated it as a real product initiative — full research, strategy, metrics framework, hi-fi wireframes, and system architecture. Fully self-produced.
+</Callout>
+
+<Divider />
+
+## The Problem
+
+China's EV charging network has won the coverage battle (12.8M devices, 98% expressway coverage) but lost the experience one. Drivers face a simple, repeating problem: **too much information, too much uncertainty, too many decisions, made alone.**
+
+User research surfaced three uncertainties present in every charging session:
+
+- **Availability** — When I get there, can I actually charge?
+- **Time** — Should I wait? How long?
+- **Value** — Is this the best choice?
+
+<Divider />
+
+## The Insight
+
+The real problem isn't missing information. It's that drivers are forced to repeatedly make complex decisions under high uncertainty without help.
+
+**The product opportunity is reframing charging from an information lookup tool into a decision system that has an opinion** — explainable, accountable, and always dismissible.
+
+<Divider />
+
+## The Solution
+
+A five-stage AI-driven journey:
+
+1. **Sense the need** — predict when the user needs to charge from commute and battery patterns; surface a low-interruption recommendation
+2. **Find & decide** — generate 2–3 explainable options, ranked by time/cost/fit
+3. **During charging** — real-time progress, dynamic strategy hints, move-your-car reminders
+4. **Pay & leave** — show the user the value of the recommendation vs. the alternatives they didn't take
+5. **Operations loop** — feed behavior back into demand forecasting and dynamic pricing
+
+The UI auto-adapts between **simple mode** (one recommendation, big "Go" button) and **detailed mode** (three-option comparison, charging power curves) based on user behavior.
+
+<Figure 
+  src="/work/tesla-charging-solution-CarPlay.png" 
+  alt="Tesla charging solution on CarPlay" 
+  caption="Tesla charging solution on CarPlay"
+/>
+
+<Figure 
+  src="/work/tesla-charging-solution-Mobile-App.png" 
+  alt="Tesla charging solution on mobile app" 
+  caption="Tesla charging solution on mobile app"
+/>
+
+<Divider />
+
+## Key Metrics
+
+<Stats items={[
+  { value: "<3 min", label: "Decision Time (–40%)" },
+  { value: ">40%", label: "Recommendation Acceptance" },
+  { value: ">60%", label: "AI Option Selection Rate" },
+  { value: "45–55", label: "NPS (+15)" },
+  { value: "~70%", label: "Monthly Retention" },
+  { value: "2:1", label: "Peak/Off-Peak Ratio" }
+]} />
+
+**North Star:** decision time in Stage 2. Cleanest proxy for the underlying user pain.
+
+<Divider />
+
+## Feasibility
+
+MVP is buildable on existing data with a rules engine. ML and LLM layers come later. Real-time station data already exists; the proactive trigger and ranking layers can ship with rule-based logic on day one.
+
+<Divider />
+
+## Roadmap
+
+- **0–3 mo · MVP** — recommendation card + rules engine + A/B infrastructure
+- **3–6 mo · Recommendation engine** — multi-option, real-time prediction
+- **6–12 mo · Adaptive UI** — server-driven, density auto-adaptation
+- **12+ mo · AI ecosystem** — FSD and energy ecosystem integration
+
+<Divider />
+
+## What I'd Do Differently
+
+The metrics need real baselines from internal data, not industry estimates. The simple/detailed mode split is a hypothesis I'd validate with a smaller test before building auto-switching. The operations-side feedback loop (Stage 5) deserved more space in the original deck — that closed loop is the actual product moat.
+
+<Callout type="insight">
+Self-initiated case study built independently for a PM final-round interview. No proprietary information used; not affiliated with or endorsed by any EV manufacturer.
+</Callout>
+
+<Divider />
+
+## Artifacts
+
+<TwoColumn>
+<Column>
+
+**<a href="https://www.figma.com/design/NWOm8fs7LwkBCOzGAVvvmM/tesla-charging-experience?node-id=0-1&t=ZpF2UTBAFzGr4ewS-1" target="_blank" rel="noopener noreferrer">View Figma Prototype →</a>**
+
+Interactive prototype of the Smart Route Planner and Live Station Dashboard flows.
+
+</Column>
+<Column>
+
+**<a href="https://docs.google.com/presentation/d/1u0SLzmb5Kcgm9sJAE6pWD1hKlyXz9wkS/edit?usp=sharing&ouid=109890548563448317242&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Request Full Deck →</a>**
+
+The complete strategy deck includes market analysis, competitive landscape, technical feasibility assessment, and implementation roadmap. Happy to walk through it.
+
+</Column>
+</TwoColumn>

@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRef } from 'react'
 import { Work } from '@/lib/types'
 
 interface WorkCardProps {
@@ -7,36 +10,55 @@ interface WorkCardProps {
 }
 
 export function WorkCard({ work }: WorkCardProps) {
+  const ref = useRef<HTMLAnchorElement>(null)
+
+  // Spotlight follows cursor via CSS variables
+  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
+    el.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`)
+  }
+
   return (
-    <Link href={`/work/${work.slug}`} className="group block">
-      <article className="space-y-4">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
+    <Link
+      ref={ref}
+      href={`/work/${work.slug}`}
+      className="work-card group block h-full"
+      data-variant="orbital-magnet"
+      onMouseMove={onMove}
+    >
+      <article className="flex h-full flex-col">
+        <div className="cover">
           <Image
             src={work.coverImage}
             alt={work.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
+          <span className="label-overlay" aria-hidden="true">
+            <span className="label-dot" />
+            {work.role || 'Case Study'}
+          </span>
+          <span className="orbit-ring" aria-hidden="true" />
+          <span className="corner-frame" aria-hidden="true" />
         </div>
-        <div className="space-y-2">
-          <h3 className="text-lg font-medium group-hover:opacity-70 transition-opacity">
-            {work.title}
-          </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {work.description}
-          </p>
-          <div className="flex flex-wrap gap-2">
+        <div className="body flex flex-1 flex-col">
+          <h3 className="title">{work.title}</h3>
+          <p className="desc">{work.description}</p>
+          <div className="tags mt-auto">
             {work.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded"
-              >
-                {tag}
-              </span>
+              <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
+          <span className="meta-row" aria-hidden="true">
+            <span>Read case</span>
+            <span className="arrow" />
+          </span>
         </div>
+        <span className="spotlight" aria-hidden="true" />
       </article>
     </Link>
   )
