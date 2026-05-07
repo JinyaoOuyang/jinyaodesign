@@ -96,9 +96,9 @@ This is where Trail goes from “a nice web app” to “something I actually us
 
 The extension uses Manifest V3 with content scripts injected into LinkedIn, Greenhouse, Lever, Ashby, and other common ATS domains. When you navigate to a job posting, the extension badge lights up, and the pop-up shows “JD Detected.”
 
-The tricky part was **extracting the right text from LinkedIn.** My first attempt grabbed document.body.innerText, which included my own profile information from the sidebar. The AI analyzed _my profile_ instead of the JD — it told me I was a great fit for my own current job.
+The tricky part was **extracting the right text from LinkedIn.** My first attempt grabbed `document.body.innerText`, which included my own profile information from the sidebar. The AI analyzed _my profile_ instead of the JD — it told me I was a great fit for my own current job.
 
-The fix was surgical: target LinkedIn’s specific DOM selectors for job descriptions (jobs-description\_\_content, job-details), with fallbacks for other platforms and a generic <main> or <article> fallback for unknown sites.
+The fix was surgical: target LinkedIn's specific DOM selectors for job descriptions (`jobs-description\_\_content`, `job-details`), with fallbacks for other platforms and a generic `<main>` or `<article>` fallback for unknown sites.
 
 ![](https://cdn-images-1.medium.com/max/1024/1*GLR4rQNW9fjMARQ1KeX2Kw.png)
 
