@@ -3,7 +3,6 @@ import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { HeroBackground } from '@/components/HeroBackground'
 import { GlyphRise } from '@/components/GlyphRise'
-import { CapabilitiesStrip } from '@/components/CapabilitiesStrip'
 import { WritingList } from '@/components/WritingList'
 import { siteConfig } from '@/lib/config'
 
@@ -71,9 +70,6 @@ export default function HomePage() {
       </section>
 
       <div className="mx-auto max-w-5xl px-6">
-        {/* Capabilities strip */}
-        <CapabilitiesStrip />
-
         {/* Featured Work */}
         <section className="py-24">
           <div className="section-head">
