@@ -30,7 +30,7 @@ export function WorkCard({ work }: WorkCardProps) {
       onMouseMove={onMove}
     >
       <article className="flex h-full flex-col">
-        <div className="cover">
+        <div className="cover relative aspect-[16/10] overflow-hidden bg-muted">
           <Image
             src={work.coverImage}
             alt={work.title}

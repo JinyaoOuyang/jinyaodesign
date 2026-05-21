@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const display = Instrument_Serif({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-display' })
 const mono = JetBrains_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-mono' })
 
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -47,7 +48,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${display.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${display.variable} ${mono.variable}`}
+    >
       <body className="min-h-screen bg-background font-sans antialiased">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-9WWV08C6KQ"

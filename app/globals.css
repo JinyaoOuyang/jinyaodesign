@@ -1081,6 +1081,40 @@ body {
 /* ============================================================ */
 
 
+/*  Hero — AI chat typing dots                                   */
+
+
+/* ============================================================ */
+
+.hero-typing-dot {
+    animation: hero-typing-bounce 1.2s ease-in-out infinite;
+}
+
+.hero-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes hero-typing-bounce {
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.35;
+    }
+    40% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+
+/* ============================================================ */
+
+
 /*  Reduced motion                                               */
 
 
@@ -1100,5 +1134,10 @@ body {
     }
     .eyebrow .dot {
         animation: none !important;
+    }
+    .hero-typing-dot {
+        animation: none !important;
+        opacity: 0.6 !important;
+        transform: none !important;
     }
 }
