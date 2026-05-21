@@ -3,7 +3,7 @@ title: "I Built an AI Job Copilot in 4 Days Using Paper, Windsurf, and OpenRoute
 description: ""
 date: "2026-04-27"
 tags: []
-coverImage: "https://cdn-images-1.medium.com/max/1024/1*Q2IM6sZwrOk2zkee-96slg.png"
+coverImage: "https://cdn-images-1.medium.com/max/1024/1%2AQ2IM6sZwrOk2zkee-96slg.png"
 readingTime: ""
 ---
 
@@ -26,7 +26,7 @@ Here’s how I built it in 4 days, shipping a deployed web app, a Chrome Extensi
 
 Before diving into the build, here’s what powers Trail:
 
-![](https://cdn-images-1.medium.com/max/1024/1*Q2IM6sZwrOk2zkee-96slg.png)
+![](https://cdn-images-1.medium.com/max/1024/1%2AQ2IM6sZwrOk2zkee-96slg.png)
 
 Trail structure
 
@@ -48,11 +48,11 @@ Then came the magical part: I told Windsurf to read the Paper design and generat
 
 **Total time from blank file to running dashboard in the browser: about 3 hours.** That includes project scaffolding, Supabase setup, and environment configuration.
 
-![](https://cdn-images-1.medium.com/max/1024/1*wkeSULsvQSRjd_rgGUe73A.png)
+![](https://cdn-images-1.medium.com/max/1024/1%2AwkeSULsvQSRjd_rgGUe73A.png)
 
 Trail Design in Paper
 
-![](https://cdn-images-1.medium.com/max/1024/1*9IfYytprqamMA9_03O8JuQ.png)
+![](https://cdn-images-1.medium.com/max/1024/1%2A9IfYytprqamMA9_03O8JuQ.png)
 
 Trail Launched UI
 
@@ -98,9 +98,9 @@ The extension uses Manifest V3 with content scripts injected into LinkedIn, Gree
 
 The tricky part was **extracting the right text from LinkedIn.** My first attempt grabbed document.body.innerText, which included my own profile information from the sidebar. The AI analyzed _my profile_ instead of the JD — it told me I was a great fit for my own current job.
 
-The fix was surgical: target LinkedIn’s specific DOM selectors for job descriptions (jobs-description\_\_content, job-details), with fallbacks for other platforms and a generic <main> or <article> fallback for unknown sites.
+The fix was surgical: target LinkedIn’s specific DOM selectors for job descriptions (jobs-description\_\_content, job-details), with fallbacks for other platforms and a generic `<main>` or `<article>` fallback for unknown sites.
 
-![](https://cdn-images-1.medium.com/max/1024/1*GLR4rQNW9fjMARQ1KeX2Kw.png)
+![](https://cdn-images-1.medium.com/max/1024/1%2AGLR4rQNW9fjMARQ1KeX2Kw.png)
 
 Trail Chrome extension
 
@@ -110,7 +110,7 @@ Rather than implementing authentication inside the extension (which would mean m
 
 This is a deliberate product choice. The extension is a _capture tool_ — lightweight, fast, minimal UI. The web app is where you manage, review, and reflect. Different tools for different modes of interaction.
 
-![](https://cdn-images-1.medium.com/max/1024/1*Or1tBSNkKUyGKA8jg-nOYg.png)
+![](https://cdn-images-1.medium.com/max/1024/1%2AOr1tBSNkKUyGKA8jg-nOYg.png)
 
 Analysis Result
 
