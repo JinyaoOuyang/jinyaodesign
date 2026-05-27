@@ -1,0 +1,77 @@
+---
+title: "FLEXI-CASA Listing Image Pipeline"
+description: "Building a Scalable AI Content System for Amazon Listings"
+date: "2026-05-01"
+tags: ["Product Design", "AI-powered", "Systems"]
+role: "Sole PM & Design Engineer"
+timeline: "Ongoing"
+tools: ["Gemini", "Figma", "Amazon Seller Central"]
+coverImage: "/work/listing-image-pipeline-cover.png"
+featuredOrder: 0
+---
+
+A templated system for generating 6-slot Amazon product images at scale — without a design team.
+
+## The Constraint
+
+6 images per SKU. Manual production, no repeatable process, bottlenecked by one person. The problem wasn't bandwidth — it was the absence of a system.
+
+## Key Decisions
+
+**Gemini multimodal over text-only models**
+Text-prompt-only generation hallucinates the product. Passing the actual product image as input was the only path to fidelity.
+
+**Figma over Paper MCP for the design layer**
+Paper MCP was faster to iterate in, but Figma's component control and export reliability won at production scale.
+
+**Fixed slot schema, not free-form generation**
+Each slot has a defined job. This is what makes the output auditable and the process repeatable.
+
+## 6-Slot Template
+
+- **01 — White bg hero:** Full product set, Amazon-compliant
+- **02 — Dimensions:** Annotated measurements
+- **03 — Fiberglass surface:** Material close-up + callouts
+- **04 — Comfort grip:** Material + feel descriptors
+- **05 — Pro credibility:** Brand + tournament positioning
+- **06 — Lifestyle:** User scenarios, on-court context
+
+<Figure 
+  src="/work/listing-template.png" 
+  alt="Listing template" 
+  caption="Listing template" 
+/>
+
+## Shipped
+
+- **36 images** — 6 SKUs × 6 slots (PP-A14 through PP-A19)
+- **Days → hours** per-SKU production time
+- Figma file: slot wireframe templates, lifestyle references, batch output page
+
+<Figure 
+  src="/work/listings-in-figma.png" 
+  alt="Listing in figma" 
+  caption="Listing in Figma"
+/>
+
+<Figure 
+  src="/work/Amazon-showcase.png" 
+  alt="Amazon showcase" 
+  caption="Amazon showcase"
+/>
+
+## Active Problems
+
+**Output quality inconsistent across SKUs**
+Hypothesis: prompt constraints aren't tight enough per slot; source image lighting variance bleeding through.
+
+**Slot copy drifts across a listing**
+Each slot is generated independently. Fix in design: a structured per-SKU product brief generated first, feeding all 6 slots from one source of truth.
+
+## The Takeaway
+
+AI handles structure and volume. Humans own consistency and judgment. The pipeline works — the next problem is making QA a spot-check, not a rewrite.
+
+<Callout>
+This system runs in parallel with the Flexi-Casa headless storefront — same brand, different surface. Happy to walk through the Figma structure, Gemini prompt patterns, and QA workflow in detail.
+</Callout>
