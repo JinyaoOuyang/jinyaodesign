@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Inter, Instrument_Serif, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import { Header } from '@/components/Header'
@@ -10,6 +10,7 @@ import { siteConfig } from '@/lib/config'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const display = Instrument_Serif({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-display' })
 const mono = JetBrains_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-mono' })
+const playfair = Playfair_Display({ weight: ['700'], style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-playfair' })
 
 
 export const metadata: Metadata = {
@@ -50,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${display.variable} ${mono.variable}`}
+      className={`${inter.variable} ${display.variable} ${mono.variable} ${playfair.variable}`}
     >
       <body className="min-h-screen bg-background font-sans antialiased">
         <Script

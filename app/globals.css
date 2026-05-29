@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-    --background: #faf8ff;
+    --background: #f5f3ee;
     --foreground: #1a1033;
     --muted: #f0ecf9;
     --muted-foreground: #7c6f9b;
@@ -1075,6 +1075,29 @@ body {
 
 .fig.in .cover-sweep {
     transform: translateY(-102%);
+}
+
+
+/* ============================================================ */
+
+
+/*  Hero — typographic display lines                             */
+
+
+/* ============================================================ */
+
+.hero-line {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(72px, 11vw, 128px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.hero-line.italic {
+    font-style: italic;
+    font-weight: 400;
 }
 
 

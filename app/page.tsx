@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
-import { HeroBackground } from '@/components/HeroBackground'
-import { HeroSection } from '@/components/HeroSection'
 import { WritingList } from '@/components/WritingList'
 
 export default function HomePage() {
@@ -11,11 +9,31 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero — full-width background, eyebrow + glyph-rise headline */}
-      <section className="relative isolate overflow-hidden pt-36 pb-28 md:pt-44 md:pb-32 -mt-[64px]">
-        <HeroBackground />
-        <div className="relative z-10 mx-auto max-w-5xl px-6">
-          <HeroSection />
+      {/* Hero — full viewport, typographic only, content anchored bottom-left */}
+      <section
+        className="relative -mt-[64px] flex min-h-dvh flex-col"
+        style={{ background: '#f5f3ee' }}
+      >
+        <div className="flex-1" />
+        <div className="mx-auto w-full max-w-5xl px-6 pb-32 md:pb-40">
+          <p
+            className="hero-line"
+            style={{ color: '#1a1535' }}
+          >
+            I design it.
+          </p>
+          <p
+            className="hero-line"
+            style={{ color: '#1a1535' }}
+          >
+            I build it.
+          </p>
+          <p
+            className="hero-line italic font-normal"
+            style={{ color: '#6b5ce7' }}
+          >
+            I ship it.
+          </p>
         </div>
       </section>
 

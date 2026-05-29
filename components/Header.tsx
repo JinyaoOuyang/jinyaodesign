@@ -34,44 +34,37 @@ export function Header() {
           aria-label={siteConfig.name}
           className="hover:opacity-70 transition-opacity"
         >
-          {siteConfig.logoPath ? (
-            <Image
-              src={siteConfig.logoPath}
-              alt={siteConfig.name}
-              width={160}
-              height={40}
-              priority
-              style={{ height: '32px', width: 'auto' }}
-            />
-          ) : (
-            <span
-              className="font-display text-[22px] leading-none tracking-tight text-foreground"
-            >
-              {siteConfig.name.split(/(\s+)/).map((part, i, arr) => {
-                // italicize the last non-space segment for the "accent" treatment
-                const isLast = i === arr.length - 1 || (i === arr.length - 2 && /^\s+$/.test(arr[arr.length - 1]))
-                if (/^\s+$/.test(part)) return part
-                return isLast ? (
-                  <em key={i} className="italic text-primary not-italic-off" style={{ fontStyle: 'italic' }}>{part}</em>
-                ) : (
-                  <span key={i}>{part}</span>
-                )
-              })}
-            </span>
-          )}
+          <span
+            style={{
+              fontFamily: 'var(--font-playfair), Georgia, serif',
+              fontWeight: 700,
+              fontSize: '20px',
+              lineHeight: 1,
+              letterSpacing: '-0.01em',
+              color: '#1a1535',
+            }}
+          >
+            Jinyao Design
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-9">
+        <div className="hidden md:flex items-center gap-10">
           {siteConfig.navigation.map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + '/')
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`font-mono text-[12px] font-medium tracking-[0.12em] uppercase relative transition-colors ${
-                  active ? 'text-foreground nav-active' : 'text-muted-foreground hover:text-foreground'
-                }`}
+                className="transition-colors"
+                style={{
+                  fontFamily: 'var(--font-inter), sans-serif',
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: active ? '#1a1535' : '#9993a8',
+                }}
               >
                 {item.name}
               </Link>
@@ -83,7 +76,15 @@ export function Header() {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[12px] font-medium tracking-[0.12em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+              className="transition-colors"
+              style={{
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#9993a8',
+              }}
             >
               {item.name}
             </a>
