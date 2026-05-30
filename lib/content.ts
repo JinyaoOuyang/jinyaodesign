@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { Work, WorkFrontmatter, BlogPost, BlogFrontmatter } from './types'
+import { sanitizeMdx } from './sanitize-mdx'
 
 const workDirectory = path.join(process.cwd(), 'content/work')
 const blogDirectory = path.join(process.cwd(), 'content/blog')
@@ -20,7 +21,7 @@ export function getWorkPosts(): Work[] {
 
       return {
         slug,
-        content,
+        content: sanitizeMdx(content),
         ...(data as WorkFrontmatter),
       }
     })
@@ -38,7 +39,7 @@ export function getWorkBySlug(slug: string): Work | null {
 
   return {
     slug,
-    content,
+    content: sanitizeMdx(content),
     ...(data as WorkFrontmatter),
   }
 }
@@ -73,7 +74,7 @@ export function getBlogPosts(): BlogPost[] {
 
       return {
         slug,
-        content,
+        content: sanitizeMdx(content),
         ...(data as BlogFrontmatter),
       }
     })
@@ -91,7 +92,7 @@ export function getBlogBySlug(slug: string): BlogPost | null {
 
   return {
     slug,
-    content,
+    content: sanitizeMdx(content),
     ...(data as BlogFrontmatter),
   }
 }
