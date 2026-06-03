@@ -11,7 +11,7 @@ export function AboutHero({
   portraitAlt = `Portrait of ${siteConfig.name}`,
 }: AboutHeroProps) {
   return (
-    <section className="pt-24 md:pt-32 pb-0">
+    <section className="pb-0">
       <div className="mx-auto max-w-5xl px-6">
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
           <Image
