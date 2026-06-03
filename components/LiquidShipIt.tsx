@@ -4,6 +4,8 @@ import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from
 import { LiquidMetal } from '@paper-design/shaders-react'
 import { LiquidShipItCanvas } from '@/components/LiquidShipItCanvas'
 import {
+  ACCENT_PURPLE,
+  ACCENT_PURPLE_LIGHT,
   HERO_BG,
   LIQUID_TEXT,
   buildTextMask,
@@ -37,12 +39,12 @@ function LiquidMetalFill({
       fit="contain"
       scale={1}
       colorBack={HERO_BG}
-      colorTint="#ffffff"
+      colorTint={ACCENT_PURPLE}
       repetition={2}
-      shiftRed={0.35}
-      shiftBlue={0.35}
+      shiftRed={0.3}
+      shiftBlue={0.3}
       contour={0.45}
-      softness={0.12}
+      softness={0.18}
       distortion={0.08}
       angle={45}
       speed={0.45}
@@ -119,7 +121,7 @@ function LiquidShipItWebGL() {
         style={{
           ...(ready
             ? { color: 'transparent', WebkitTextFillColor: 'transparent' }
-            : { color: '#6b5ce7' }),
+            : { color: ACCENT_PURPLE }),
           minWidth: size.w > 1 ? size.w : undefined,
         }}
       >
@@ -147,7 +149,7 @@ export function LiquidShipIt() {
       <span
         className="hero-line italic font-normal hero-line--liquid"
         aria-label={LIQUID_TEXT}
-        style={{ color: '#6b5ce7' }}
+        style={{ color: ACCENT_PURPLE }}
       >
         {LIQUID_TEXT}
       </span>

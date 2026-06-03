@@ -1,7 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { HERO_BG, LIQUID_TEXT, measureLiquidTextBox } from '@/components/liquid-ship-it-utils'
+import {
+  ACCENT_PURPLE,
+  ACCENT_PURPLE_DEEP,
+  ACCENT_PURPLE_LIGHT,
+  LIQUID_TEXT,
+  measureLiquidTextBox,
+} from '@/components/liquid-ship-it-utils'
 
 // Canvas 2D liquid-metal fallback for browsers without WebGL.
 export function LiquidShipItCanvas() {
@@ -64,14 +70,15 @@ export function LiquidShipItCanvas() {
       const cy = (1 - s) * H
       const ang = -Math.PI / 4
 
-      const DEEP = HERO_BG
-      const PURPLE = '#6b5ce7'
+      const DEEP = ACCENT_PURPLE_DEEP
+      const PURPLE = ACCENT_PURPLE
+      const PURPLE_LIGHT = ACCENT_PURPLE_LIGHT
       const base = ctx.createLinearGradient(0, H, W, 0)
       const stops: Array<[number, string]> = [
         [0, DEEP],
         [s - 0.62, DEEP],
         [s - 0.45, PURPLE],
-        [s - 0.06, PURPLE],
+        [s - 0.06, PURPLE_LIGHT],
         [s + 0.05, DEEP],
         [1, DEEP],
       ]

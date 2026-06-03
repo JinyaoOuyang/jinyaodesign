@@ -1,5 +1,8 @@
 export const LIQUID_TEXT = 'I ship it.'
 export const HERO_BG = '#f5f3ee'
+export const ACCENT_PURPLE = '#a78bfa' // lighter soft purple (💜)
+export const ACCENT_PURPLE_LIGHT = '#c4b5fd'
+export const ACCENT_PURPLE_DEEP = '#8b7cf8'
 
 /** Extra room on the right for italic overshoot + the trailing period. */
 export const LIQUID_TEXT_PAD_RIGHT = 20
