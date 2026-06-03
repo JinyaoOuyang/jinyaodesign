@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getWorkPosts, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { WritingList } from '@/components/WritingList'
+import { LiquidShipIt } from '@/components/LiquidShipIt'
 
 export default function HomePage() {
   const featuredWork = getWorkPosts()
@@ -135,12 +136,7 @@ export default function HomePage() {
           >
             I build it.
           </p>
-          <p
-            className="hero-line italic font-normal"
-            style={{ color: '#6b5ce7' }}
-          >
-            I ship it.
-          </p>
+          <LiquidShipIt />
         </div>
       </section>
 

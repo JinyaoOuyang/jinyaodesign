@@ -1184,6 +1184,33 @@ body {
     font-weight: 400;
 }
 
+/* Liquid-metal "I ship it." — Paper Shaders LiquidMetal (LiquidShipIt.tsx).
+   Text stays in layout; the shader canvas is absolutely positioned on top. */
+.hero-line--liquid {
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+}
+
+.hero-line--liquid-shader {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none;
+}
+
+.hero-line--liquid-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+
 
 /* ============================================================ */
 

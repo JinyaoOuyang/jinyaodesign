@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@next/mdx": "^14.2.0",
+        "@paper-design/shaders-react": "^0.0.76",
         "@tailwindcss/typography": "^0.5.15",
         "gray-matter": "^4.0.3",
         "next": "^14.2.0",
