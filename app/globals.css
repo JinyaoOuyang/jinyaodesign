@@ -1039,6 +1039,90 @@ body {
 /* ============================================================ */
 
 
+/*  Work gallery — horizontal scroll with expanding active card  */
+
+
+/* ============================================================ */
+
+.work-gallery-stage {
+    position: relative;
+}
+
+.work-gallery {
+    /* Full-width stage. The first card aligns with the page content edge
+       (the max-w-5xl + px-6 gutter), then cards scroll across the screen. */
+    --gallery-edge: max(24px, calc((100vw - 64rem) / 2 + 24px));
+    width: 100%;
+    padding: 24px var(--gallery-edge) 96px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Fade the bottom so the card shadow dissolves to transparent instead of
+       being clipped into a hard line by the scroll container's edge. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 80px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 80px), transparent 100%);
+}
+
+.work-gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.work-gallery-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    width: max-content;
+}
+
+.work-gallery-item {
+    flex: 0 0 auto;
+    width: clamp(260px, 30vw, 320px);
+    scroll-snap-align: center;
+    border-radius: 16px;
+    opacity: 0.78;
+    filter: saturate(0.92);
+    transition: width 0.6s var(--ease-precise), opacity 0.45s var(--ease-precise), filter 0.45s var(--ease-precise), box-shadow 0.5s var(--ease-precise), transform 0.5s var(--ease-precise);
+}
+
+.work-gallery-item > .work-card {
+    height: 100%;
+}
+
+.work-gallery-item[data-active="true"] {
+    width: clamp(380px, 50vw, 520px);
+    opacity: 1;
+    filter: saturate(1);
+    box-shadow: 0 0 0 2px var(--primary), 0 26px 64px var(--card-shadow-hover);
+}
+
+/* On touch / no-hover devices, don't dim the inactive cards. */
+@media (hover: none) {
+    .work-gallery-item {
+        opacity: 1;
+        filter: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .work-gallery-item {
+        width: clamp(240px, 78vw, 300px);
+    }
+    .work-gallery-item[data-active="true"] {
+        width: clamp(300px, 86vw, 360px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .work-gallery-item {
+        transition: opacity 0.2s linear, box-shadow 0.2s linear;
+    }
+}
+
+
+/* ============================================================ */
+
+
 /*  Figure reveal (clip-sweep default)                           */
 
 

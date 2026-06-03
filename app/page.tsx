@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
+import { getWorkPosts, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { WritingList } from '@/components/WritingList'
 
 export default function HomePage() {
-  const featuredWork = getFeaturedWork()
+  const featuredWork = getWorkPosts()
   const latestPosts = getLatestBlogPosts(3)
 
   return (
@@ -144,9 +144,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-5xl px-6">
-        {/* Featured Work */}
-        <section className="py-24">
+      {/* Featured Work — full-width gallery, heading stays aligned with content */}
+      <section className="py-24">
+        <div className="mx-auto max-w-5xl px-6">
           <div className="section-head">
             <div>
               <div className="num">01 / Work</div>
@@ -158,9 +158,11 @@ export default function HomePage() {
               View all <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <FeaturedWorkSection works={featuredWork} />
-        </section>
+        </div>
+        <FeaturedWorkSection works={featuredWork} />
+      </section>
 
+      <div className="mx-auto max-w-5xl px-6">
         {/* Latest Writing */}
         {latestPosts.length > 0 && (
           <section className="py-16 pb-24">

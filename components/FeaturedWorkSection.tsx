@@ -1,4 +1,4 @@
-import { WorkCard } from '@/components/WorkCard'
+import { WorkGallery } from '@/components/WorkGallery'
 import { Reveal } from '@/components/Reveal'
 import type { Work } from '@/lib/types'
 
@@ -8,10 +8,8 @@ interface FeaturedWorkSectionProps {
 
 export function FeaturedWorkSection({ works }: FeaturedWorkSectionProps) {
   return (
-    <Reveal stagger className="grid gap-8 md:grid-cols-2">
-      {works.map((work) => (
-        <WorkCard key={work.slug} work={work} />
-      ))}
+    <Reveal>
+      <WorkGallery works={works} />
     </Reveal>
   )
 }
