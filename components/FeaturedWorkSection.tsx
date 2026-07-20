@@ -1,5 +1,4 @@
-import { WorkGallery } from '@/components/WorkGallery'
-import { Reveal } from '@/components/Reveal'
+import { ClayStage } from '@/components/clay/ClayStage'
 import type { Work } from '@/lib/types'
 
 interface FeaturedWorkSectionProps {
@@ -7,9 +6,6 @@ interface FeaturedWorkSectionProps {
 }
 
 export function FeaturedWorkSection({ works }: FeaturedWorkSectionProps) {
-  return (
-    <Reveal>
-      <WorkGallery works={works} />
-    </Reveal>
-  )
+  // No Reveal wrapper — CSS filter on .reveal breaks WebGL canvas clipping.
+  return <ClayStage works={works} />
 }

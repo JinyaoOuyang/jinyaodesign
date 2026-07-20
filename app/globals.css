@@ -1113,6 +1113,21 @@ body {
     position: relative;
 }
 
+.work-gallery-stage--deep-space {
+    overflow: visible;
+    perspective: 620px;
+    perspective-origin: 50% 40%;
+}
+
+.work-gallery-stage--deep-space .work-gallery {
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.work-gallery-stage--deep-space .work-gallery-track {
+    overflow: visible;
+}
+
 .work-gallery {
     /* Full-width stage. The first card aligns with the page content edge
        (the max-w-5xl + px-6 gutter), then cards scroll across the screen. */
@@ -1145,30 +1160,45 @@ body {
     width: clamp(260px, 30vw, 320px);
     scroll-snap-align: center;
     border-radius: 16px;
-    opacity: 0.78;
-    filter: saturate(0.92);
-    transition: width 0.6s var(--ease-precise), opacity 0.45s var(--ease-precise), filter 0.45s var(--ease-precise), box-shadow 0.5s var(--ease-precise), transform 0.5s var(--ease-precise);
 }
 
 .work-gallery-item > .work-card {
     height: 100%;
 }
 
-.work-gallery-item[data-active="true"] {
+.work-gallery-stage:not(.work-gallery-stage--deep-space) .work-gallery-item {
+    opacity: 0.78;
+    filter: saturate(0.92);
+    transition: width 0.6s var(--ease-precise), opacity 0.45s var(--ease-precise), filter 0.45s var(--ease-precise), box-shadow 0.5s var(--ease-precise), transform 0.5s var(--ease-precise);
+}
+
+.work-gallery-stage:not(.work-gallery-stage--deep-space) .work-gallery-item[data-active="true"] {
     width: clamp(380px, 50vw, 520px);
     opacity: 1;
     filter: saturate(1);
     box-shadow: none;
 }
 
-.work-gallery-item[data-active="true"] > .work-card {
+.work-gallery-stage--deep-space .work-gallery-item {
+    transition: width 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-gallery-stage--deep-space .work-gallery-item[data-focused='true'] {
+    width: clamp(380px, 50vw, 520px);
+    z-index: 10;
+    position: relative;
+}
+
+.work-gallery-item[data-active="true"] > .work-card,
+.work-gallery-stage--deep-space .work-gallery-item[data-focused="true"] > .work-card {
     box-shadow:
         0 26px 64px rgba(45, 27, 105, 0.14),
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         inset 0 -1px 0 rgba(109, 76, 255, 0.1);
 }
 
-.work-gallery-item[data-active="true"] > .work-card::before {
+.work-gallery-item[data-active="true"] > .work-card::before,
+.work-gallery-stage--deep-space .work-gallery-item[data-focused="true"] > .work-card::before {
     padding: 2px;
     background: linear-gradient(
         145deg,
@@ -1180,19 +1210,19 @@ body {
     );
 }
 
-/* On touch / no-hover devices, don't dim the inactive cards. */
+/* On touch / no-hover devices, don't dim the inactive cards (non deep-space). */
 @media (hover: none) {
-    .work-gallery-item {
+    .work-gallery-stage:not(.work-gallery-stage--deep-space) .work-gallery-item {
         opacity: 1;
         filter: none;
     }
 }
 
 @media (max-width: 640px) {
-    .work-gallery-item {
+    .work-gallery-stage:not(.work-gallery-stage--deep-space) .work-gallery-item {
         width: clamp(240px, 78vw, 300px);
     }
-    .work-gallery-item[data-active="true"] {
+    .work-gallery-stage:not(.work-gallery-stage--deep-space) .work-gallery-item[data-active="true"] {
         width: clamp(300px, 86vw, 360px);
     }
 }
@@ -1207,6 +1237,307 @@ body {
     .work-card {
         background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), var(--muted));
         border: 1px solid rgba(109, 76, 255, 0.1);
+    }
+}
+
+
+/*  Clay Selected Work stage  */
+
+.clay-stage {
+    --clay-edge: max(24px, calc((100vw - 64rem) / 2 + 24px));
+    width: 100%;
+    padding: 12px var(--clay-edge) 28px;
+}
+
+/* Case rows: model on the left, huge serif title on the right.
+   Idle shows only the title; hover reveals description, tags, CTA. */
+.clay-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(56px, 9vw, 128px);
+}
+
+.clay-row {
+    min-width: 0;
+}
+
+.clay-row-link {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(24px, 5vw, 88px);
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    border-radius: 6px;
+    transition: transform 0.5s var(--ease-precise);
+}
+
+.clay-row-link:focus-visible {
+    box-shadow: 0 0 0 2px #f5f3ee, 0 0 0 4px var(--primary);
+}
+
+/* Oversized outline index behind the model */
+.clay-row-index {
+    position: absolute;
+    top: 50%;
+    left: -0.06em;
+    transform: translateY(-58%);
+    z-index: 0;
+    font-family: var(--font-display), 'Times New Roman', serif;
+    font-size: clamp(88px, 13vw, 190px);
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1.4px rgba(26, 21, 53, 0.14);
+    pointer-events: none;
+    user-select: none;
+    transition: -webkit-text-stroke-color 0.45s var(--ease-precise);
+}
+
+.clay-row-link[data-hovered='true'] .clay-row-index {
+    -webkit-text-stroke-color: color-mix(in srgb, var(--row-accent) 40%, transparent);
+}
+
+/* Alternate sides: even rows mirror model ↔ title */
+.clay-row:nth-child(even) .clay-row-link {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+
+.clay-row:nth-child(even) .clay-row-model {
+    order: 2;
+}
+
+.clay-row:nth-child(even) .clay-row-info {
+    order: 1;
+    text-align: right;
+    align-items: flex-end;
+}
+
+.clay-row:nth-child(even) .clay-row-index {
+    left: auto;
+    right: -0.06em;
+}
+
+.clay-row-model {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    contain: paint;
+    /* Seamless with page — no card/plate edge. */
+    background: transparent;
+}
+
+.clay-row-fallback {
+    opacity: 0.92;
+}
+
+.clay-row-info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    /* Overlap the title into the model zone for depth. */
+    margin-left: clamp(-56px, -3vw, -20px);
+}
+
+.clay-row:nth-child(even) .clay-row-info {
+    margin-left: 0;
+    margin-right: clamp(-56px, -3vw, -20px);
+}
+
+.clay-row-title {
+    font-family: var(--font-display), 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.4vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--foreground);
+    transition: color 0.4s var(--ease-precise), font-style 0s;
+}
+
+.clay-row-link[data-hovered='true'] .clay-row-title,
+.clay-row-link:focus-visible .clay-row-title {
+    font-style: italic;
+    color: var(--row-accent, var(--primary));
+}
+
+/* Always-visible mono metadata: timeline · category */
+.clay-row-meta {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    margin: 2px 0 0;
+}
+
+/* Height reveal via grid-template-rows 0fr → 1fr (smooth, no fixed max). */
+.clay-row-detail {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: grid-template-rows 0.5s var(--ease-precise), opacity 0.35s var(--ease-precise), transform 0.45s var(--ease-precise);
+}
+
+.clay-row-link[data-hovered='true'] .clay-row-detail,
+.clay-row-link:focus-visible .clay-row-detail {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.clay-row-detail-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 6px;
+}
+
+.clay-row-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    margin: 0;
+    max-width: 42ch;
+}
+
+.clay-row-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.clay-row-tag {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--muted-foreground);
+    border: 1px solid rgba(26, 21, 53, 0.1);
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.clay-row-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--row-accent, var(--primary));
+}
+
+/* Even rows are right-aligned — mirror the detail block too. */
+.clay-row:nth-child(even) .clay-row-detail-inner {
+    align-items: flex-end;
+}
+
+.clay-row:nth-child(even) .clay-row-tags {
+    justify-content: flex-end;
+}
+
+.clay-row:nth-child(even) .clay-row-desc {
+    margin-left: auto;
+}
+
+.clay-row-arrow {
+    display: inline-block;
+    width: 12px;
+    height: 1.5px;
+    background: currentColor;
+    position: relative;
+}
+
+.clay-row-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-right: 1.5px solid currentColor;
+    border-top: 1.5px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+@media (max-width: 720px) {
+    .clay-stage {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .clay-row-link,
+    .clay-row:nth-child(even) .clay-row-link {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .clay-row-title {
+        font-size: clamp(30px, 8vw, 46px);
+    }
+
+    /* Stack model over title, single side — undo the desktop mirroring. */
+    .clay-row-model,
+    .clay-row:nth-child(even) .clay-row-model {
+        order: 0;
+    }
+
+    .clay-row-info,
+    .clay-row:nth-child(even) .clay-row-info {
+        order: 1;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .clay-row:nth-child(even) .clay-row-detail-inner {
+        align-items: flex-start;
+    }
+
+    .clay-row:nth-child(even) .clay-row-tags {
+        justify-content: flex-start;
+    }
+
+    .clay-row:nth-child(even) .clay-row-desc {
+        margin-left: 0;
+    }
+
+    .clay-row-index,
+    .clay-row:nth-child(even) .clay-row-index {
+        left: -0.04em;
+        right: auto;
+        font-size: clamp(64px, 20vw, 110px);
+    }
+
+    /* No hover on touch — always reveal the details. */
+    .clay-row-detail {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clay-row-link,
+    .clay-row-title,
+    .clay-row-detail {
+        transition: none;
     }
 }
 

@@ -1,11 +1,28 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getWorkPosts, getLatestBlogPosts } from '@/lib/content'
+import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { WritingList } from '@/components/WritingList'
 import { LiquidShipIt } from '@/components/LiquidShipIt'
 
+const homeDescription =
+  'PM and Design Engineer building AI-native products. Shipped Trail, a headless Shopify storefront, and AI content pipelines — solo.'
+
+export const metadata: Metadata = {
+  description: homeDescription,
+  openGraph: {
+    description: homeDescription,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'I design it. I build it. I ship it.' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    description: homeDescription,
+    images: ['/opengraph-image'],
+  },
+}
+
 export default function HomePage() {
-  const featuredWork = getWorkPosts()
+  const featuredWork = getFeaturedWork()
   const latestPosts = getLatestBlogPosts(3)
 
   return (
@@ -140,21 +157,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Work — full-width gallery, heading stays aligned with content */}
+      {/* Featured Work — full-width case rows: model left, title right */}
       <section className="py-24">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="section-head">
-            <div>
-              <div className="num">01 / Work</div>
-              <h2 className="mt-2">
-                Selected <em>case studies</em>
-              </h2>
-            </div>
-            <Link href="/work" className="view-all">
-              View all <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
         <FeaturedWorkSection works={featuredWork} />
       </section>
 

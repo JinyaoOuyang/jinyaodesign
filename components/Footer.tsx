@@ -39,6 +39,16 @@ export function Footer() {
                 Medium
               </a>
             )}
+            {siteConfig.twitter && (
+              <a
+                href={siteConfig.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                X
+              </a>
+            )}
             <a
               href={siteConfig.resumePath}
               target="_blank"

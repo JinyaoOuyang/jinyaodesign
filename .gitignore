@@ -40,3 +40,7 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
+
+# Blender
+__pycache__/
+*.blend1

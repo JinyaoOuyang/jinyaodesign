@@ -7,6 +7,7 @@ export const siteConfig = {
   email: 'katherineoyjy@gmail.com',
   linkedin: 'https://www.linkedin.com/in/ginouyang/',
   medium: 'https://medium.com/@ginouyang',
+  twitter: 'https://x.com/Kjinyao18',
   resumePath: '/Jinyao_Ouyang_Resume.pdf',
   // Optional logo path relative to /public. If provided, the header will show the logo instead of the text name.
   logoPath: '/logo.png',
