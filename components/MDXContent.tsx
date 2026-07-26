@@ -2,8 +2,10 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Figure } from './mdx/Figure'
 import { TwoColumn, Column } from './mdx/TwoColumn'
 import { Callout } from './mdx/Callout'
+import { Decision } from './mdx/Decision'
 import { Divider } from './mdx/Divider'
 import { Stats } from './mdx/Stats'
+import { WorkflowFlow } from './mdx/WorkflowFlow'
 import { slugify, type TocHeading } from '@/lib/toc'
 
 function childrenToString(children: React.ReactNode): string {
@@ -31,8 +33,10 @@ function makeComponents(headings: TocHeading[]) {
     TwoColumn,
     Column,
     Callout,
+    Decision,
     Divider,
     Stats,
+    WorkflowFlow,
     h2: ({ children, ...props }: any) => {
       const text = childrenToString(children)
       const slug = slugify(text)

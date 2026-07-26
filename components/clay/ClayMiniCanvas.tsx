@@ -21,7 +21,7 @@ type ClayMiniCanvasProps = {
  * a soft warm key gives just enough form. Sum stays ≈1.2 so top faces
  * barely clip under NoToneMapping.
  */
-function SoftStudioLights() {
+export function SoftStudioLights() {
   return (
     <>
       {/* three r155+ physical lights: ×π so ambient 0.95 ≈ full albedo */}

@@ -3,9 +3,11 @@ import { ReactNode } from 'react'
 interface CalloutProps {
   children: ReactNode
   type?: 'default' | 'insight' | 'warning'
+  /** Optional eyebrow, e.g. "Why this" or "Trade-off" — omit for a plain note. */
+  label?: string
 }
 
-export function Callout({ children, type = 'default' }: CalloutProps) {
+export function Callout({ children, type = 'default', label }: CalloutProps) {
   const styles = {
     default: 'border-border bg-muted',
     insight: 'border-primary/20 bg-primary/5',
@@ -17,6 +19,7 @@ export function Callout({ children, type = 'default' }: CalloutProps) {
       className={`my-6 rounded-lg border-l-4 p-4 ${styles[type]}`}
       role="note"
     >
+      {label && <span className="callout-label">{label}</span>}
       <div className="text-sm leading-relaxed [&>p]:m-0">{children}</div>
     </aside>
   )

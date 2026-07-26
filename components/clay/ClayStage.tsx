@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import type { Work } from '@/lib/types'
 import { getClayAsset } from '@/lib/clay'
+import { usePrefersReducedMotion } from '@/lib/useReducedMotion'
 
 const ClayMiniCanvas = dynamic(
   () =>
@@ -15,20 +16,6 @@ const ClayMiniCanvas = dynamic(
 
 type ClayStageProps = {
   works: Work[]
-}
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => setReduced(mq.matches)
-    sync()
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
-  }, [])
-
-  return reduced
 }
 
 function useInViewOnce<T extends HTMLElement>(rootMargin = '240px') {
