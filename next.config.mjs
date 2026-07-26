@@ -18,6 +18,15 @@ const nextConfig = {
             hostname: 'cdn-images-1.medium.com',
         }, ],
     },
+    // Serves the standalone Antioch client concept verbatim from public/.
+    // Next.js does not resolve directory index files in public/, so /antioch
+    // is rewritten to the static file rather than nested as antioch/index.html.
+    async rewrites() {
+        return [{
+            source: '/antioch',
+            destination: '/antioch.html',
+        }, ]
+    },
 }
 
 export default nextConfig
