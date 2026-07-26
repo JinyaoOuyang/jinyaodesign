@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { siteConfig } from '@/lib/config'
-import { AboutHero } from '@/components/AboutHero'
-import { AboutStats } from '@/components/AboutStats'
+import { AboutWordCloud } from '@/components/AboutWordCloud'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -12,56 +11,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <article>
-      {/* Intro — above portrait */}
-      <div className="mx-auto max-w-[1100px] px-6 pb-12 pt-24 md:pb-16 md:pt-32">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[auto_1fr] md:items-end md:gap-20">
-          <div>
-            <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-              About / Intro
-            </div>
-            <h2 className="font-display text-[clamp(36px,4.5vw,56px)] font-normal leading-[1.05] tracking-[-0.02em]">
-              About <em className="italic text-primary">me</em>
-            </h2>
-          </div>
-
-          <div className="flex md:justify-end">
-            <AboutStats
-              stats={[
-                { value: 'MS HCI', label: 'University of Washington' },
-                { value: 'FLEXI-CASA', label: 'PM & Design Engineer' },
-                { value: 'Imagine Cup', label: 'Americas Regional Champion' },
-              ]}
-            />
-          </div>
-        </div>
-
-        <div className="mt-12 max-w-[720px] md:mt-16">
-          <p className="text-lg leading-[1.65] text-foreground md:text-xl">
-            I&apos;m Jinyao — a PM and builder at the intersection of AI, product, and
-            engineering.
-          </p>
-
-          <div className="mt-8 space-y-5 text-base leading-[1.75] text-muted-foreground">
-            <p>
-              I don&apos;t hand things off. I design it, build it, and ship it — from system
-              architecture to the final pixel. Currently, I&apos;m the sole PM and Design
-              Engineer at{' '}
-              <span className="text-foreground">FLEXI-CASA</span>, a multi-channel DTC brand
-              spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full
-              stack: product strategy, conversion funnel, experimentation, and the code that
-              makes it run.
-            </p>
-            <p>
-              Outside of work, I build things because the problem is worth solving.{' '}
-              <span className="text-foreground">Trail</span>, an AI-powered job search copilot,
-              went from idea to live product in ~4 days — designed, built, and shipped solo.
-              That&apos;s how I work.
-            </p>
-          </div>
-        </div>
+      {/* Intro — interactive word-cloud portrait + story panel */}
+      <div className="mx-auto max-w-[1100px] px-6 pb-16 pt-10 md:pb-24 md:pt-14">
+        <AboutWordCloud />
       </div>
-
-      <AboutHero />
 
       <div className="mx-auto max-w-[1100px] px-6 py-20 md:py-28">
         {/* What I'm looking for */}
