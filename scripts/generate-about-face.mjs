@@ -119,7 +119,7 @@ function tone(x0, x1, y0, y1) {
   vals.sort((a, b) => a - b)
   const p90 = vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.9))]
   const avg = s / n
-  return Math.max(avg, p90 * 0.72)
+  return Math.max(avg, p90 * 0.82)
 }
 
 // ---------- vocabulary ----------
@@ -160,36 +160,38 @@ function textW(t, size) {
     else if (ch === '.') u += 0.3
     else if (ch === '-') u += 0.42
     else if (ch === '&') u += 0.72
-    else if (/[A-Z0-9]/.test(ch)) u += 0.68
-    else u += 0.54
+    else if (/[A-Z0-9]/.test(ch)) u += 0.8
+    else u += 0.64
   }
   return u * size
 }
 
 // tone level → filler style
 function fillerStyle(t) {
-  if (t < 0.26) return { s: 7.5, l: 1 }
-  if (t < 0.42) return { s: 9, l: 2 }
-  if (t < 0.60) return { s: 11, l: 3 }
-  if (t < 0.78) return { s: 13.5, l: 4 }
-  return { s: 16, l: 5 }
+  if (t < 0.40) return { s: 8, l: 1 }
+  if (t < 0.55) return { s: 9.5, l: 2 }
+  if (t < 0.68) return { s: 11, l: 3 }
+  if (t < 0.80) return { s: 12, l: 4 }
+  return { s: 12.5, l: 5 }
 }
 
-const KEY_SIZE = { c1: 18, c2: 16, c3: 14.5 }
-
 // ---------- row-run packing ----------
-const CUTOFF = 0.16
+const CUTOFF = 0.1
+const AIR = 0.3 // below this, leave open paper instead of placing a word
 const SLICE = 4
-const placed = [] // {t, x, y, s, l | k}
+const WORD_GAP = 12
+const KEY_GAP = 14
+const placed = [] // {t, x, y, row, s, l | k}
 let keyIdx = 0
 let lastKeyRow = -9
 let fillerIdx = 0
+
+const KEY_SIZE = { c1: 13, c2: 12, c3: 11 }
 
 // fillers sorted by length for gap best-fit
 const byLen = [...new Set(FILLER)].sort((a, b) => textW(a, 10) - textW(b, 10))
 
 function nextFiller(maxWpx, size) {
-  // prefer stream order, fall back to best-fit shorter word
   for (let tries = 0; tries < FILLER.length; tries++) {
     const cand = FILLER[(fillerIdx + tries) % FILLER.length]
     if (textW(cand, size) <= maxWpx) {
@@ -203,16 +205,12 @@ function nextFiller(maxWpx, size) {
   return null
 }
 
-for (let r = 0; r < ROWS; r++) {
+function computeRuns(r) {
   const y0 = r * PITCH
   const y1 = y0 + PITCH
-  // slice tones across the row
   const nSlices = Math.floor(W / SLICE)
   const tones = []
-  for (let i = 0; i < nSlices; i++) {
-    tones.push(tone(i * SLICE, (i + 1) * SLICE, y0, y1))
-  }
-  // runs of tone ≥ CUTOFF, closing gaps < 2 slices
+  for (let i = 0; i < nSlices; i++) tones.push(tone(i * SLICE, (i + 1) * SLICE, y0, y1))
   const runs = []
   let start = -1
   let gap = 0
@@ -231,44 +229,76 @@ for (let r = 0; r < ROWS; r++) {
       gap = 0
     }
   }
-  // pack words into runs
-  for (const [rx0, rx1] of runs) {
+  return runs
+}
+
+for (let r = 0; r < ROWS; r++) {
+  const y0 = r * PITCH
+  const y1 = y0 + PITCH
+  for (const [rx0, rx1] of computeRuns(r)) {
+    // Short runs are feature lines (brows, eyes, lips) — long runs are broad
+    // shading. Features skip the air gate and always render in dark ink so
+    // the face actually reads.
+    const isFeature = rx1 - rx0 < 90
     let x = rx0
     while (x < rx1 - 14) {
       const remain = rx1 - x
       // try a key word first: needs room + solid tone under it
-      if (keyIdx < KEY.length && r - lastKeyRow >= 3) {
+      if (!isFeature && keyIdx < KEY.length && r - lastKeyRow >= 2) {
         const kw = KEY[keyIdx]
         const kwW = textW(kw.w, KEY_SIZE[kw.c])
-        if (kwW <= remain) {
-          const t = tone(x, x + kwW, y0, y1)
-          if (t >= 0.34) {
-            placed.push({ t: kw.w, x, y: y0, s: KEY_SIZE[kw.c], k: keyIdx, c: kw.c })
-            x += kwW + 12
-            keyIdx++
-            lastKeyRow = r
-            continue
-          }
+        if (kwW <= remain && tone(x, x + kwW, y0, y1) >= 0.3) {
+          placed.push({ t: kw.w, x, y: y0, row: r, s: KEY_SIZE[kw.c], k: keyIdx, c: kw.c })
+          x += kwW + KEY_GAP
+          keyIdx++
+          lastKeyRow = r
+          continue
         }
       }
-      // filler sized/colored by local tone
-      const probe = tone(x, Math.min(x + 60, rx1), y0, y1)
-      const st = fillerStyle(probe)
+      // light shading stays as open paper — air is what makes the face read
+      const probe = tone(x, Math.min(x + 56, rx1), y0, y1)
+      if (!isFeature && probe < AIR) {
+        x += 30
+        continue
+      }
+      const st = isFeature ? { s: 9.5, l: 5 } : fillerStyle(probe)
       const word = nextFiller(remain - 4, st.s)
       if (!word) break
       const ww = textW(word, st.s)
-      const t = tone(x, x + ww, y0, y1)
-      const st2 = fillerStyle(t)
-      placed.push({ t: word, x, y: y0, s: st2.s, l: st2.l })
-      x += ww + 11
+      const st2 = isFeature
+        ? { s: 9.5, l: 5 }
+        : fillerStyle(tone(x, x + ww, y0, y1))
+      placed.push({ t: word, x, y: y0, row: r, s: st2.s, l: st2.l })
+      x += ww + WORD_GAP
     }
   }
 }
 
-// key words that never found a slot: force into the densest remaining rows
+// Second pass for unplaced keys: claim a spot inside a dark run by evicting
+// the filler words there — never stack, never overlap.
+const keyRows = new Set(placed.filter((p) => p.k !== undefined).map((p) => p.row))
 while (keyIdx < KEY.length) {
   const kw = KEY[keyIdx]
-  placed.push({ t: kw.w, x: 40, y: (ROWS - 2 - (KEY.length - keyIdx)) * PITCH, s: KEY_SIZE[kw.c], k: keyIdx, c: kw.c })
+  const kwW = textW(kw.w, KEY_SIZE[kw.c])
+  let done = false
+  for (let r = ROWS - 3; r >= 2 && !done; r--) {
+    if (keyRows.has(r) || keyRows.has(r - 1) || keyRows.has(r + 1)) continue
+    for (const [rx0, rx1] of computeRuns(r)) {
+      if (rx1 - rx0 < kwW + 8) continue
+      if (tone(rx0, rx0 + kwW, r * PITCH, (r + 1) * PITCH) < 0.25) continue
+      for (let i = placed.length - 1; i >= 0; i--) {
+        const p = placed[i]
+        if (p.row === r && p.k === undefined && p.x < rx0 + kwW + WORD_GAP && p.x + textW(p.t, p.s) > rx0 - WORD_GAP) {
+          placed.splice(i, 1)
+        }
+      }
+      placed.push({ t: kw.w, x: rx0, y: r * PITCH, row: r, s: KEY_SIZE[kw.c], k: keyIdx, c: kw.c })
+      keyRows.add(r)
+      done = true
+      break
+    }
+  }
+  if (!done) console.warn('could not place key:', kw.w)
   keyIdx++
 }
 
@@ -365,3 +395,95 @@ for (const p of placed) {
 }
 fs.writeFileSync('/tmp/face-cloud-debug.png', encPNG(W, H, dbg))
 console.log('debug: /tmp/face-cloud-debug.png')
+
+// ---------- luminance mask: the words ARE the portrait ----------
+// Alpha follows ink density, so a dense field of words masked by this shows
+// type in the hair/features and open paper on the skin. No photo is visible;
+// remove the words and nothing remains.
+{
+  const CW = 1400
+  const CH = Math.round(CW / ASPECT)
+  const img = Buffer.alloc(CW * CH * 4)
+  // Supersample, then blend mean with a high percentile. A plain mean erases
+  // the thin strokes that ARE the face (brows, lash line, nostrils, lips);
+  // biasing toward the darkest samples keeps those features alive.
+  const SS = 4
+  const buf = new Array(SS * SS)
+  for (let py = 0; py < CH; py++) {
+    for (let px = 0; px < CW; px++) {
+      let acc = 0
+      let n = 0
+      for (let oy = 0; oy < SS; oy++) {
+        for (let ox = 0; ox < SS; ox++) {
+          const sx = Math.floor(minX + ((px + ox / SS) / CW) * SRC_W)
+          const sy = Math.floor(minY + ((py + oy / SS) / CH) * SRC_H)
+          const d = ink(sx, sy)
+          buf[n++] = d
+          acc += d
+        }
+      }
+      const sorted = buf.slice(0, n).sort((a, b) => a - b)
+      const hi = sorted[Math.min(n - 1, Math.floor(n * 0.82))]
+      const mean = acc / n
+      let v = Math.max(mean, hi * 0.9)
+      // lift midtones so shading carries type, clamp the deepest to solid
+      v = Math.pow(Math.min(1, v * 1.9), 0.45)
+      const i = (py * CW + px) * 4
+      img[i] = 255
+      img[i + 1] = 255
+      img[i + 2] = 255
+      img[i + 3] = Math.round(v * 255)
+    }
+  }
+  fs.writeFileSync('public/about-face-mask.png', encPNG(CW, CH, img))
+  console.log('mask: public/about-face-mask.png', CW + 'x' + CH)
+}
+
+// ---------- feature layer: only the strokes that ARE the face ----------
+// A word is 40-90px wide; an eye is ~30px. The word field can never resolve
+// one. So extract just the high-local-contrast marks (lash line, iris, brow,
+// nostril, lip seam) and lay them over the type. Broad shading is excluded,
+// so the portrait still reads as built from words.
+{
+  // Displayed ~620px wide; 1000px keeps it crisp on retina at a third the bytes.
+  const CW = 1000
+  const CH = Math.round(CW / ASPECT)
+  const tone2 = new Float32Array(CW * CH)
+  for (let py = 0; py < CH; py++) {
+    for (let px = 0; px < CW; px++) {
+      const sx = Math.floor(minX + (px / CW) * SRC_W)
+      const sy = Math.floor(minY + (py / CH) * SRC_H)
+      tone2[py * CW + px] = ink(sx, sy)
+    }
+  }
+  const img = Buffer.alloc(CW * CH * 4)
+  const R = 9
+  for (let py = 0; py < CH; py++) {
+    for (let px = 0; px < CW; px++) {
+      const v = tone2[py * CW + px]
+      let sum = 0
+      let cnt = 0
+      for (let dy = -R; dy <= R; dy += 3) {
+        const yy = py + dy
+        if (yy < 0 || yy >= CH) continue
+        for (let dx = -R; dx <= R; dx += 3) {
+          const xx = px + dx
+          if (xx < 0 || xx >= CW) continue
+          sum += tone2[yy * CW + xx]
+          cnt++
+        }
+      }
+      const local = cnt ? sum / cnt : v
+      // how much darker than the neighbourhood — this isolates fine strokes
+      const detail = Math.max(0, v - local)
+      const a = Math.pow(Math.min(1, detail * 3.4), 0.75)
+      const i = (py * CW + px) * 4
+      img[i] = 26
+      img[i + 1] = 16
+      img[i + 2] = 51
+      img[i + 3] = Math.round(a * 255)
+    }
+  }
+  fs.writeFileSync('public/about-face-features.png', encPNG(CW, CH, img))
+  console.log('features: public/about-face-features.png', CW + 'x' + CH)
+}

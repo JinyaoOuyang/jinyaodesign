@@ -2529,73 +2529,99 @@ body {
     user-select: none;
 }
 
-.about-face-art span {
+
+/* The portrait is the type: a dense word field carved by a luminance mask
+   of the sketch. Dark areas (hair, brows, lips) keep the words; skin fades
+   to open paper. No photograph is composited — remove the words and the
+   likeness disappears with them. */
+.face-fill {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 0px 5px;
+    padding: 1% 1.5%;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: url('/about-face-mask.png');
+    mask-image: url('/about-face-mask.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+.face-fill span {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 1.72cqw;
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    color: var(--foreground);
+    white-space: nowrap;
+}
+
+/* Keywords sit above the mask so they stay readable and clickable */
+.face-keys {
+    position: absolute;
+    inset: 0;
+}
+
+/* Keywords wear the same face as the field so they read as part of the
+   portrait — colour and a hairline rule are the only tells until hover. */
+/* Keywords share the field's typeface so they belong to the portrait; a soft
+   page-tinted wash clears the type beneath them so they stay readable, and
+   colour is the only cue that they're live. */
+/* Fine facial strokes over the type — the eyes/brows/lips the word grid
+   is too coarse to draw. Never intercepts pointer events. */
+.face-features {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+}
+
+.face-keys .kw {
     position: absolute;
     white-space: nowrap;
-    line-height: 1;
-}
-
-/* Non-interactive fill: sans, tonal levels paint the portrait —
-   light haze on skin through deep ink in the hair. */
-.about-face-art .fw {
+    line-height: 1.06;
     font-family: var(--font-inter), system-ui, sans-serif;
-    letter-spacing: -0.01em;
-    pointer-events: none;
-}
-
-.about-face-art .fw.l1 { color: #d5cfe2; font-weight: 400; }
-.about-face-art .fw.l2 { color: #b3a9c9; font-weight: 500; }
-.about-face-art .fw.l3 { color: #7d6fa4; font-weight: 600; }
-.about-face-art .fw.l4 { color: #3f3268; font-weight: 700; }
-.about-face-art .fw.l5 { color: #150c2b; font-weight: 800; }
-
-/* Interactive keywords: serif display face + dotted underline so they read
-   as "clickable" against the sans fill, before any hover. */
-.about-face-art .kw {
-    font-family: var(--font-playfair), Georgia, serif;
-    font-weight: 700;
+    font-size: 2.05cqw;
+    font-weight: 800;
+    letter-spacing: -0.015em;
     cursor: pointer;
     outline: none;
-    padding: 0.08em 0.26em;
+    padding: 0.1em 0.32em;
     border-radius: 3px;
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 0.22em;
-    text-decoration-thickness: 1px;
-    text-decoration-color: currentColor;
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--background) 88%, transparent);
     transition: color 0.2s var(--ease-precise),
         background-color 0.2s var(--ease-precise),
-        transform 0.2s var(--ease-precise);
+        box-shadow 0.2s var(--ease-precise);
 }
 
-.about-face-art .kw.c1 { color: #241548; }
-.about-face-art .kw.c2 { color: var(--primary); }
-.about-face-art .kw.c3 { color: #b8770a; }
+.face-keys .kw.c1 { color: #241548; }
+.face-keys .kw.c2 { color: var(--primary); }
+.face-keys .kw.c3 { color: #b8770a; }
 
-/* Hover / focus / active — unmistakable: filled pill, light text, lifts. */
-.about-face-art .kw:hover,
-.about-face-art .kw:focus-visible,
-.about-face-art .kw.active {
+.face-keys .kw:hover,
+.face-keys .kw:focus-visible,
+.face-keys .kw.active {
     color: #ffffff;
     background-color: var(--primary);
-    text-decoration-color: transparent;
-    transform: scale(1.12);
+    box-shadow: 0 0 0 3px var(--primary);
     z-index: 5;
-    box-shadow: 0 4px 14px rgba(109, 76, 255, 0.35);
-}
-
-.about-face-art .kw:focus-visible {
-    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .about-face-art .kw {
+    .face-keys .kw {
         transition: none;
-    }
-    .about-face-art .kw:hover,
-    .about-face-art .kw:focus-visible,
-    .about-face-art .kw.active {
-        transform: none;
     }
 }
 
@@ -2606,23 +2632,20 @@ body {
     color: color-mix(in srgb, var(--muted-foreground) 75%, var(--background));
 }
 
+/* No card — the story sits on the page, flush with the headline above it. */
 .about-cloud-panel {
     position: sticky;
     top: 96px;
-    background: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 38px 40px;
-    min-height: 340px;
+    padding: 0;
+    min-height: 260px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 @media (max-width: 860px) {
     .about-cloud-panel {
         position: static;
-        padding: 28px 26px;
+        min-height: 0;
     }
 }
 
