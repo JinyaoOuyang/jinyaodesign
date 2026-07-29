@@ -6,7 +6,6 @@ import { MDXContent } from '@/components/MDXContent'
 import { CaseStudyTOC } from '@/components/CaseStudyTOC'
 import { CaseStudyCover } from '@/components/CaseStudyCover'
 import { MetricsBand } from '@/components/MetricsBand'
-import { IsleoStory } from '@/components/clay/IsleoStory'
 import { extractHeadings } from '@/lib/toc'
 import { siteConfig } from '@/lib/config'
 
@@ -48,78 +47,6 @@ export default async function WorkDetailPage({ params }: Props) {
   })
 
   const headings = extractHeadings(work.content)
-
-  // Isleo gets the pinned, scroll-driven island story as its hero, then the
-  // detailed case study (workflow + Figma UI) below with the TOC on the left.
-  if (work.slug === 'isleo') {
-    return (
-      <>
-        <div className="mx-auto max-w-5xl px-6 pt-10">
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span aria-hidden="true">←</span> Back to work
-          </Link>
-        </div>
-
-        <IsleoStory />
-
-        <article className="mx-auto max-w-5xl px-6 pb-16 pt-4">
-          {/* Compact meta strip — the reference facts, story carries the rest */}
-          <div className="cs-meta-strip">
-            <div className="cs-meta-item">
-              <span className="k">Role</span>
-              <span className="v">{work.role}</span>
-            </div>
-            <div className="cs-meta-item">
-              <span className="k">Timeline</span>
-              <span className="v">{work.timeline}</span>
-            </div>
-            <div className="cs-meta-item">
-              <span className="k">Tools</span>
-              <span className="v">{work.tools.join(', ')}</span>
-            </div>
-          </div>
-
-          <div className="cs-body">
-            <CaseStudyTOC headings={headings} />
-            <div className="min-w-0 max-w-[720px]">
-              <MDXContent source={work.content} headings={headings} />
-            </div>
-          </div>
-
-          <nav className="mx-auto max-w-3xl mt-12 pt-8 border-t border-border">
-            <div className="flex justify-between gap-6">
-              {prev && (
-                <Link href={`/work/${prev.slug}`} className="group flex-1">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                    ← Previous
-                  </span>
-                  <p className="mt-2 font-display text-2xl leading-tight group-hover:text-primary transition-colors">
-                    {prev.title}
-                  </p>
-                </Link>
-              )}
-              {next && (
-                <Link
-                  href={`/work/${next.slug}`}
-                  className="group flex-1 text-right ml-auto"
-                >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                    Next →
-                  </span>
-                  <p className="mt-2 font-display text-2xl leading-tight group-hover:text-primary transition-colors">
-                    {next.title}
-                  </p>
-                </Link>
-              )}
-            </div>
-          </nav>
-        </article>
-      </>
-    )
-  }
 
   return (
     <article className="mx-auto max-w-5xl px-6 pt-10 pb-16">
