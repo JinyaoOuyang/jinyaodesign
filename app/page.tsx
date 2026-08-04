@@ -1,81 +1,186 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
-import { WorkCard } from '@/components/WorkCard'
-import { BlogCard } from '@/components/BlogCard'
-import { siteConfig } from '@/lib/config'
+import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
+import { WritingList } from '@/components/WritingList'
+import { LiquidShipIt } from '@/components/LiquidShipIt'
+
+const homeDescription =
+  'PM and Design Engineer building AI-native products. Shipped Trail, a headless Shopify storefront, and AI content pipelines — solo.'
+
+export const metadata: Metadata = {
+  description: homeDescription,
+  openGraph: {
+    description: homeDescription,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'I design it. I build it. I ship it.' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    description: homeDescription,
+    images: ['/opengraph-image'],
+  },
+}
 
 export default function HomePage() {
   const featuredWork = getFeaturedWork()
-  const latestPosts = getLatestBlogPosts(2)
+  const latestPosts = getLatestBlogPosts(3)
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
-      {/* Hero */}
-      <section className="py-24 md:py-32">
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-          {siteConfig.name}
-        </h1>
-        <p className="mt-4 text-xl text-muted-foreground md:text-2xl">
-          {siteConfig.tagline}
-        </p>
-        <p className="mt-6 max-w-2xl text-muted-foreground leading-relaxed">
-          I&apos;m a UX/Product Designer focused on creating intuitive, user-centered 
-          digital experiences. I believe great design solves real problems while 
-          delighting users along the way.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+    <>
+      {/* Hero — full viewport, typographic only, content anchored bottom-left */}
+      <section
+        className="relative -mt-[64px] flex min-h-dvh flex-col overflow-hidden"
+        style={{ background: '#f5f3ee' }}
+      >
+        {/* Orbital star system — right half, SVG-native left-edge fade */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1120 1000"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          className="pointer-events-none absolute right-0 top-0 h-full w-[78%]"
+        >
+          <defs>
+            {/*
+              gradientUnits="userSpaceOnUse" → x1/x2 are in viewBox px.
+              Fade: x=0 (left edge of SVG) transparent → x=460 fully opaque.
+            */}
+            <linearGradient id="orbitFade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="460" y2="0">
+              <stop offset="0%"   stopColor="white" stopOpacity="0" />
+              <stop offset="100%" stopColor="white" stopOpacity="1" />
+            </linearGradient>
+            {/*
+              maskUnits="userSpaceOnUse" → mask region in viewBox px.
+              The rect fills the entire viewBox with the gradient.
+            */}
+            <mask id="orbitMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1120" height="1000">
+              <rect x="0" y="0" width="1120" height="1000" fill="url(#orbitFade)" />
+            </mask>
+          </defs>
+
+          {/*
+            Three elliptical orbits, center (560, 480) in a 1120×1000 viewBox.
+            Orbit endpoints: P = center ± (a·cosθ, a·sinθ)
+
+            Orbit 1: a=540 b=215 θ=−20° → P1=(1067.4,295.3) P2=(52.6,664.7)
+            Orbit 2: a=400 b=160 θ=+15° → P1=(946.4,583.5) P2=(173.6,376.5)
+            Orbit 3: a=640 b=130 θ=−45° → P1=(1012.5,27.5) P2=(107.5,932.5)
+          */}
+          <g mask="url(#orbitMask)">
+            {/* ── Orbit strokes (also referenced by animateMotion via id) ── */}
+            <path
+              id="op1"
+              d="M 1067.4 295.3 A 540 215 -20 0 1 52.6 664.7 A 540 215 -20 0 1 1067.4 295.3"
+              fill="none"
+              stroke="#1a1535"
+              strokeWidth="0.6"
+              opacity="0.12"
+            />
+            <path
+              id="op2"
+              d="M 946.4 583.5 A 400 160 15 0 1 173.6 376.5 A 400 160 15 0 1 946.4 583.5"
+              fill="none"
+              stroke="#1a1535"
+              strokeWidth="0.6"
+              opacity="0.12"
+            />
+            <path
+              id="op3"
+              d="M 1012.5 27.5 A 640 130 -45 0 1 107.5 932.5 A 640 130 -45 0 1 1012.5 27.5"
+              fill="none"
+              stroke="#1a1535"
+              strokeWidth="0.6"
+              opacity="0.12"
+            />
+
+            {/* ── Stars: 4-point ✦ centered at (0,0), moved by animateMotion ── */}
+
+            {/* Orbit 1 — 34 s — dark, 12 px */}
+            <path d="M 0,-6 L 1.35,-1.35 L 6,0 L 1.35,1.35 L 0,6 L -1.35,1.35 L -6,0 L -1.35,-1.35 Z" fill="#1a1535" opacity="0.5">
+              <animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="0s" calcMode="linear">
+                <mpath href="#op1" />
+              </animateMotion>
+            </path>
+
+            {/* Orbit 1 — 34 s — dark, 9 px, half-cycle offset */}
+            <path d="M 0,-4.5 L 0.9,-0.9 L 4.5,0 L 0.9,0.9 L 0,4.5 L -0.9,0.9 L -4.5,0 L -0.9,-0.9 Z" fill="#1a1535" opacity="0.35">
+              <animateMotion dur="34s" repeatCount="indefinite" rotate="0" begin="-17s" calcMode="linear">
+                <mpath href="#op1" />
+              </animateMotion>
+            </path>
+
+            {/* Orbit 2 — 24 s — dark, 10 px */}
+            <path d="M 0,-5.25 L 1.05,-1.05 L 5.25,0 L 1.05,1.05 L 0,5.25 L -1.05,1.05 L -5.25,0 L -1.05,-1.05 Z" fill="#1a1535" opacity="0.5">
+              <animateMotion dur="24s" repeatCount="indefinite" rotate="0" begin="-6s" calcMode="linear">
+                <mpath href="#op2" />
+              </animateMotion>
+            </path>
+
+            {/* Orbit 2 — 24 s — PURPLE accent, 15 px */}
+            <path d="M 0,-7.5 L 1.65,-1.65 L 7.5,0 L 1.65,1.65 L 0,7.5 L -1.65,1.65 L -7.5,0 L -1.65,-1.65 Z" fill="#6b5ce7" opacity="0.65">
+              <animateMotion dur="24s" repeatCount="indefinite" rotate="0" begin="-14s" calcMode="linear">
+                <mpath href="#op2" />
+              </animateMotion>
+            </path>
+
+            {/* Orbit 3 — 16 s — dark, 9 px */}
+            <path d="M 0,-4.5 L 0.9,-0.9 L 4.5,0 L 0.9,0.9 L 0,4.5 L -0.9,0.9 L -4.5,0 L -0.9,-0.9 Z" fill="#1a1535" opacity="0.45">
+              <animateMotion dur="16s" repeatCount="indefinite" rotate="0" begin="-4s" calcMode="linear">
+                <mpath href="#op3" />
+              </animateMotion>
+            </path>
+
+            {/* Orbit 3 — 16 s — dark, 10 px, offset */}
+            <path d="M 0,-5.25 L 1.05,-1.05 L 5.25,0 L 1.05,1.05 L 0,5.25 L -1.05,1.05 L -5.25,0 L -1.05,-1.05 Z" fill="#1a1535" opacity="0.38">
+              <animateMotion dur="16s" repeatCount="indefinite" rotate="0" begin="-10s" calcMode="linear">
+                <mpath href="#op3" />
+              </animateMotion>
+            </path>
+          </g>
+        </svg>
+
+        <div className="flex-1" />
+        <div className="mx-auto w-full max-w-5xl px-6 pb-32 md:pb-40">
+          <p
+            className="hero-line"
+            style={{ color: '#1a1535' }}
           >
-            View Work
-          </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted"
+            I design it.
+          </p>
+          <p
+            className="hero-line"
+            style={{ color: '#1a1535' }}
           >
-            About Me
-          </Link>
+            I build it.
+          </p>
+          <LiquidShipIt />
         </div>
       </section>
 
-      {/* Featured Work */}
-      <section className="py-16 border-t border-border">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-2xl font-semibold">Featured Work</h2>
-          <Link
-            href="/work"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            View all →
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          {featuredWork.map((work) => (
-            <WorkCard key={work.slug} work={work} />
-          ))}
-        </div>
+      {/* Featured Work — full-width case rows: model left, title right */}
+      <section className="py-24">
+        <FeaturedWorkSection works={featuredWork} />
       </section>
 
-      {/* Latest Writing */}
-      {latestPosts.length > 0 && (
-        <section className="py-16 border-t border-border">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold">Latest Writing</h2>
-            <Link
-              href="/blog"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              View all →
-            </Link>
-          </div>
-          <div>
-            {latestPosts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
+      <div className="mx-auto max-w-5xl px-6">
+        {/* Latest Writing */}
+        {latestPosts.length > 0 && (
+          <section className="py-16 pb-24">
+            <div className="section-head">
+              <div>
+                <div className="num">02 / Writing</div>
+                <h2 className="mt-2">
+                  Latest <em>notes</em>
+                </h2>
+              </div>
+              <Link href="/blog" className="view-all">
+                View all <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <WritingList posts={latestPosts} />
+          </section>
+        )}
+      </div>
+    </>
   )
 }

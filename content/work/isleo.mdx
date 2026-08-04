@@ -1,0 +1,220 @@
+---
+title: "Isleo"
+description: "Building an AI-native clay world for focus — Figma → Blender → compose → generate"
+date: "2026-07-13"
+tags: ["Design Engineering", "AI-Native", "React Native", "Systems", "0→1"]
+role: "Sole design engineer — product, systems, assets, and implementation"
+timeline: "2026 — ongoing"
+tools: ["React Native", "Expo", "TypeScript", "Zustand", "MMKV", "Supabase", "Figma", "Blender", "Replicate Flux", "Cursor"]
+coverImage: "/work/isleo-cover.png"
+featuredOrder: 0
+metrics:
+  - "0→1 product"
+  - "Clay tile kit + layered reveal"
+  - "Figma → Blender → RN pipeline"
+  - "Optional Flux month-world generation"
+---
+
+## Overview
+
+Habit apps usually sell streaks. Isleo sells a **world**: each month is a hex map, each day a tile. Focus time grows paradise land; missed days leave fog or cursed ground. The product is React Native (Expo bare), local-first with Supabase — but the real work is the **AI-native pipeline** that lets one design engineer maintain a clay world.
+
+<Callout type="insight" label="Why this">
+I did not use AI to "make the app look cool." I put AI inside replaceable pipeline nodes — asset rendering and optional generation — while keeping product rules, state machines, and quality gates human-owned.
+</Callout>
+
+<Figure
+  src="/work/isleo-cover.png"
+  alt="Isleo clay paradise hex tile"
+  caption="Clay paradise hex — the visual atom of the product language"
+/>
+
+<Divider />
+
+## The Workflow
+
+Before the pipeline below gets into asset schemas and hit-testing, here is the whole thing end to end — how one person frames a problem, orchestrates a stack of tools, and lands it on a real device. Every stage marks what I owned versus where AI was doing the labor.
+
+<WorkflowFlow />
+
+<Divider />
+
+## The Problem
+
+Habit trackers optimize for logging — a number goes up, then you forget why you cared. The real constraints for a solo builder were sharper:
+
+- A **world metaphor** strong enough that opening the app feels like returning somewhere.
+- Assets that are **composable** — 31 handmade illustrations a month doesn't scale for one person.
+- Core behavior — what today can open, what counts complete, what happens mid-session — **auditable**, not outsourced to a prompt.
+
+<div className="figure-phone">
+<Figure
+  src="/work/isleo/figma-moodboard.png"
+  alt="Research moodboard — isometric island references and AI concept variations"
+  caption="Where it started: isometric references + AI-generated variations, screened against the target mood before a single production tile got modeled"
+/>
+</div>
+
+<Divider />
+
+## The Pipeline: Figma → Blender → Compose → (Optional) Generate
+
+Isleo is a chain of nodes. Each node has a job, an owner, and a failure mode.
+
+### A. Experience skeleton — Cursor + React Native
+
+<Decision
+  ai={{ label: "AI accelerated", text: "navigation shell, timer UI scaffolding, store patterns, Supabase client boilerplate." }}
+  human={{ label: "I owned", text: "information architecture, what \"a day\" means, screen flow, and which states are legal." }}
+/>
+
+Classic design-engineering leverage: agents write the obvious structure; you write the product law.
+
+### B. Map system — Figma coordinates into code
+
+Monthly map slots aren't hand-tweaked in JS — layout comes straight from Figma frames into typed slot specs: positions, centers, frame width.
+
+<Decision
+  ai={{ label: "AI / tooling helped", text: "move numbers and wire UI." }}
+  human={{ label: "I owned", text: "pan/zoom behavior, today-first hit priority, and the closest-center hit test that fixed overlapping paradise tiles stealing taps." }}
+/>
+
+<div className="figure-phone">
+<Figure
+  src="/work/isleo/figma-monthly-map.png"
+  alt="Figma monthly map screen with paradise, fog, and cursed hex tiles"
+  caption="Same hex grid, three terrain states — the coordinate spec this screen exports drives real tap targets in the app"
+/>
+</div>
+
+### C. Clay kit — Blender as a factory
+
+Tiles aren't single PNGs forever — the kit path renders **separate layers**: ground, pond, trees, bushes, shadows, low-poly pastel, matched against the Figma mood board.
+
+<Decision
+  ai={{ label: "Automation", text: "Blender scripts / MCP-assisted batch render into assets/tiles/..." }}
+  human={{ label: "I owned", text: "polygon budget, color language, layer taxonomy, export conventions — the schema that makes composition possible." }}
+/>
+
+<Figure
+  src="/work/clay/concepts/isleo-blender-workbench.png"
+  alt="Raw Blender workbench render of tree geometry"
+  caption="Day one — workbench shading, block-out geometry, no material pass yet"
+/>
+
+<Figure
+  src="/work/clay/concepts/isleo-vs-concept.png"
+  alt="Blender render compared side-by-side with the pastel concept target"
+  caption="Iterating the Blender output against the concept target — same taxonomy, converging palette"
+/>
+
+### D. Runtime composition — the app as compositor
+
+The client stacks layers per date and plays staggered reveals — ground → pond → flora → shadows for paradise; a different rhythm for cursed. The "delight" isn't a one-off After Effects clip. It's a **timeline over a layer schema**.
+
+<TwoColumn>
+<Column>
+<Figure
+  src="/work/isleo/figma-day-paradise.png"
+  alt="Day detail sheet in paradise state, showing focus time and goal reached"
+  caption="Paradise — goal reached, reward extension"
+/>
+</Column>
+<Column>
+<Figure
+  src="/work/isleo/figma-day-cursed.png"
+  alt="Day detail sheet in cursed state, showing low focus time"
+  caption="Cursed — missed goal, not a dead end"
+/>
+</Column>
+</TwoColumn>
+
+### E. Month-world generation — Replicate Flux (optional node)
+
+For continuous month-end islands, a color-block **guide** built from the month spec feeds Flux img2img, with clay mood refs in the prompt.
+
+<Decision
+  ai={{ label: "Model does", text: "stylistic fill of a constrained silhouette." }}
+  human={{ label: "I do", text: "guide construction, strength/seed policy, style refs, and the gate for whether a generated plate ships — or falls back to Blender / kit assets." }}
+/>
+
+<div className="figure-phone">
+<Figure
+  src="/work/isleo/figma-world-reveal.png"
+  alt="Full month-end world reveal, a continuous island generated from the tile spec"
+  caption="June 2026, resolved — the same hex spec that renders individual tiles also builds this month-end island"
+/>
+</div>
+
+### F. Persistence — MMKV + Supabase
+
+Local-first cache, cloud sync when configured, profile bootstrap, session repositories.
+
+<Decision
+  ai={{ label: "AI helped", text: "with CRUD and wiring." }}
+  human={{ label: "I owned", text: "offline semantics: partial vs cursed, background auto-save, orphan merge, paradise re-entry with preserved progress." }}
+/>
+
+<Callout label="Principle">
+AI is allowed to produce materials. Humans define schemas, thresholds, and fallbacks. If a node fails, the product still has a legal path.
+</Callout>
+
+<div className="figure-phone">
+<Figure
+  src="/work/isleo/figma-your-worlds.png"
+  alt="Your Worlds archive screen showing a grid of month cards, some locked"
+  caption="Every finished month becomes a card — the archive that turns the stat below into a product you can revisit"
+/>
+</div>
+
+<Stats items={[
+  { value: "31", label: "Hex slots per monthly map" },
+  { value: "5", label: "Clay layers composited per tile" },
+  { value: "6", label: "Pipeline nodes, human-owned schema" },
+  { value: "1", label: "Design engineer, end to end" }
+]} />
+
+<Divider />
+
+## Three Problems That Taught the System
+
+**1. Overlapping tiles lied about what you tapped.** Paradise land overflows the hex outline, so naïve hit boxes let day 5 steal day 1. Fix: closest-center hit testing plus today-slot priority. Lesson: world UI fails as geometry before it fails as visual design.
+
+**2. Reveal only works if layers can appear on different beats.** A flat PNG can't stage "pond forms, then trees grow." Splitting pond, shadows, and per-tree layers unlocked choreography that reads as birth, not a fade-in sticker. Lesson: author for animation in the asset pipeline, not only the component tree.
+
+**3. Session continuity is the real product.** Leaving mid-focus, restarting, re-entering after goal met — these paths define trust. Progress accumulates; interrupted sessions become partial; today stays retryable until the goal is met. Lesson: for AI-era products, the state machine is often more "designed" than the screens.
+
+<Divider />
+
+## How I'd Build AI-Native Products After Isleo
+
+1. **Put models in replaceable nodes** (generate, render, draft). Keep rules, scoring thresholds, and recovery paths in code you can explain.
+2. **Design the schema before the prompt.** Layer names, slot jobs, guide colors — structure is what makes AI output composable.
+3. **Ship a fallback for every generative step.** Kit tiles without Flux still make a product; Flux without a kit is a demo.
+4. **Optimize for re-entry.** Delight is cheap; continuity is the moat.
+5. **Taste is a constraint file.** Mood boards and polygon rules beat "make it clay" in a chat box.
+
+Isleo is my proof that a design engineer can own product judgment *and* the factory that produces the world — with AI as labor inside the factory, not as the architect.
+
+<Divider />
+
+## Status & Links
+
+**Status:** Actively building. Runnable on iOS Simulator and Personal Team devices. App Store / TestFlight handoff is a later phase.
+
+<TwoColumn>
+<Column>
+
+**<a href="https://github.com/JinyaoOuyang/buyahabbit" target="_blank" rel="noopener noreferrer">View on GitHub →</a>**
+
+Source for the React Native app, tile kits, Blender tooling, and month-world generation scripts.
+
+</Column>
+<Column>
+
+**Stack snapshot**
+
+React Native + Expo bare · TypeScript · Zustand + MMKV · Supabase · Reanimated · Figma · Blender · Replicate Flux
+
+</Column>
+</TwoColumn>

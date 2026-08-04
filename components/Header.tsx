@@ -2,47 +2,91 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { siteConfig } from '@/lib/config'
 
 export function Header() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isAtTop, setIsAtTop] = useState(true)
+
+  useEffect(() => {
+    const onScroll = () => setIsAtTop(window.scrollY <= 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const isHome = pathname === '/'
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-sm">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link 
-          href="/" 
-          className="text-lg font-medium tracking-tight hover:opacity-70 transition-opacity"
+    <header
+      className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-in-out ${
+        isHome && isAtTop
+          ? 'bg-transparent border-b border-transparent'
+          : 'bg-background/80 backdrop-blur-sm border-b border-border'
+      }`}
+    >
+      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-[18px]">
+        <Link
+          href="/"
+          aria-label={siteConfig.name}
+          className="hover:opacity-70 transition-opacity"
         >
-          {siteConfig.name}
+          <span
+            style={{
+              fontFamily: 'var(--font-playfair), Georgia, serif',
+              fontWeight: 700,
+              fontSize: '20px',
+              lineHeight: 1,
+              letterSpacing: '-0.01em',
+              color: '#1a1535',
+            }}
+          >
+            Jinyao Design
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {siteConfig.navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`text-sm tracking-wide transition-opacity hover:opacity-70 ${
-                pathname === item.href || pathname.startsWith(item.href + '/')
-                  ? 'text-foreground'
-                  : 'text-muted-foreground'
-              }`}
-            >
-              {item.name.toUpperCase()}
-            </Link>
-          ))}
+        <div className="hidden md:flex items-center gap-10">
+          {siteConfig.navigation.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(item.href + '/')
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="transition-colors"
+                style={{
+                  fontFamily: 'var(--font-inter), sans-serif',
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: active ? '#1a1535' : '#9993a8',
+                }}
+              >
+                {item.name}
+              </Link>
+            )
+          })}
           {siteConfig.externalLinks.map((item) => (
             <a
               key={item.name}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm tracking-wide text-muted-foreground transition-opacity hover:opacity-70"
+              className="transition-colors"
+              style={{
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#9993a8',
+              }}
             >
-              {item.name.toUpperCase()}
+              {item.name}
             </a>
           ))}
         </div>
