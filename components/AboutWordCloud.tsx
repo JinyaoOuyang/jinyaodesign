@@ -42,7 +42,12 @@ const FILL_VOCAB = [
   'Job Search Copilot', 'Regional Champion', 'WebVR', 'Automotive UX',
   'Enterprise SaaS', 'Conversion Funnel', 'Experimentation', 'H-1B Ready',
 ]
-const FILL_WORDS = Array.from({ length: 900 }, (_, i) => FILL_VOCAB[i % FILL_VOCAB.length])
+// The portrait IS this field. At ~0.72cqw the type is fine enough for the mask
+// to resolve eyes, lips and jaw out of the words themselves, so no line-art
+// overlay is needed — but it takes far more words to fill the box at that size.
+// 3,500 reach the bottom of the box at the 575px max width; the rest is headroom
+// so a font-metric difference can never leave the sweater unfinished.
+const FILL_WORDS = Array.from({ length: 3800 }, (_, i) => FILL_VOCAB[i % FILL_VOCAB.length])
 
 // Anchors sit in the dark masses (hair, shoulders) and avoid the face oval
 // (~x 38-62%, y 20-55%) so the portrait stays legible underneath.
@@ -144,16 +149,10 @@ export function AboutWordCloud() {
             ))}
           </div>
 
-          {/* A word is wider than an eye, so the type alone can never resolve
-              the features. This layer carries only the fine strokes — lash
-              line, iris, brow, lip seam — over the type. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/about-face-features.png"
-            alt=""
-            aria-hidden="true"
-            className="face-features"
-          />
+          {/* No line-art overlay. /public/about-face-features.png is kept in the
+              repo but deliberately not rendered: at this type size the words
+              draw the features themselves, and compositing a drawing over them
+              made the portrait an illustration with text inside it. */}
 
           {/* Interactive keywords ride above the mask so they stay legible */}
           <div className="face-keys">

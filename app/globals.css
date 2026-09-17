@@ -2560,7 +2560,7 @@ body {
     flex-wrap: wrap;
     align-content: flex-start;
     justify-content: center;
-    gap: 0px 5px;
+    gap: 0px 2px;
     padding: 1% 1.5%;
     overflow: hidden;
     pointer-events: none;
@@ -2572,11 +2572,15 @@ body {
     mask-repeat: no-repeat;
 }
 
+/* Fine enough that the mask resolves features out of the words themselves.
+   Deliberately pure cqw down to phone width: a larger px floor makes the type
+   coarser RELATIVE to the smaller box, and the mask stops resolving the face.
+   The 2.2px floor only guards a pathologically narrow container (<305px). */
 .face-fill span {
     font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: 1.72cqw;
+    font-size: max(2.2px, 0.72cqw);
     font-weight: 700;
-    line-height: 1.06;
+    line-height: 1.02;
     letter-spacing: -0.01em;
     color: var(--foreground);
     white-space: nowrap;
@@ -2593,19 +2597,9 @@ body {
 /* Keywords share the field's typeface so they belong to the portrait; a soft
    page-tinted wash clears the type beneath them so they stay readable, and
    colour is the only cue that they're live. */
-/* Fine facial strokes over the type — the eyes/brows/lips the word grid
-   is too coarse to draw. Never intercepts pointer events. */
-.face-features {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    opacity: 0.55;
-    pointer-events: none;
-    user-select: none;
-}
-
+/* Anchor words, not chips: the keywords are the largest type in the portrait
+   and belong to it. No plate, no ring — the page-coloured halo only clears
+   enough filler for them to stay readable, and never reads as a background. */
 .face-keys .kw {
     position: absolute;
     white-space: nowrap;
@@ -2616,13 +2610,12 @@ body {
     letter-spacing: -0.015em;
     cursor: pointer;
     outline: none;
-    padding: 0.1em 0.32em;
-    border-radius: 3px;
-    background: color-mix(in srgb, var(--background) 88%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--background) 88%, transparent);
+    padding: 0.1em 0.3em;
+    text-shadow:
+        0 0 2px var(--background),
+        0 0 4px var(--background);
     transition: color 0.2s var(--ease-precise),
-        background-color 0.2s var(--ease-precise),
-        box-shadow 0.2s var(--ease-precise);
+        text-shadow 0.2s var(--ease-precise);
 }
 
 .face-keys .kw.c1 { color: #241548; }
@@ -2632,10 +2625,18 @@ body {
 .face-keys .kw:hover,
 .face-keys .kw:focus-visible,
 .face-keys .kw.active {
-    color: #ffffff;
-    background-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary);
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    text-shadow:
+        0 0 2px var(--background),
+        0 0 5px var(--background);
     z-index: 5;
+}
+
+.face-keys .kw:focus-visible {
+    text-decoration-thickness: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
