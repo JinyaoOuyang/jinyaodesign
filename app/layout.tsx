@@ -50,7 +50,6 @@ const personSchema = {
   jobTitle: 'Design Engineer',
   description: siteConfig.description,
   url: siteConfig.url,
-  email: `mailto:${siteConfig.email}`,
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: 'University of Washington',
