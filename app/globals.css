@@ -2644,6 +2644,21 @@ body {
     }
 }
 
+/* Touch: grow the tappable region only — the chip, its font size and
+   KEY_POS are untouched, so nothing moves or looks like a button.
+   Vertical growth is capped by the tightest neighbouring pair
+   (FLEXI-CASA / Design Engineer sit 15.3px apart at 375px). 7px keeps a
+   dead gutter between every pair; forcing the full 44px height would
+   overlap seven pairs and let the wrong word win. Horizontal room is
+   plentiful, so 13px takes even the narrowest label ("Trail", 18px) to 44px. */
+@media (pointer: coarse) {
+    .face-keys .kw::after {
+        content: '';
+        position: absolute;
+        inset: -7px -13px;
+    }
+}
+
 .about-cloud-caption {
     margin-top: 14px;
     font-size: 12px;

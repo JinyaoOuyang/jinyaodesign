@@ -18,7 +18,7 @@ const KEY: KeyStory[] = [
   { w: 'Design Engineer', c: 'c1', kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
   { w: 'Trail', c: 'c2', kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
   { w: 'AI-Native', c: 'c1', kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
-  { w: 'Growth & Tooling', c: 'c2', kicker: "What I'm drawn to", body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
+  { w: 'Growth & Tooling', c: 'c2', kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
   { w: 'University of Washington', c: 'c2', kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
   { w: 'Imagine Cup', c: 'c3', kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
   { w: 'TEAGUE', c: 'c3', kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
