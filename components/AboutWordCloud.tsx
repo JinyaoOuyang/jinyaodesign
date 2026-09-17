@@ -5,29 +5,33 @@ import { ABOUT_FACE_ASPECT } from '@/lib/aboutFaceCloud'
 
 type Tier = 'c1' | 'c2' | 'c3'
 
+type Level = 1 | 2 | 3
+
 type KeyStory = {
   w: string
   c: Tier
+  /** Typographic level: 1 = identity, 2 = formative anchors, 3 = biography. */
+  s: Level
   kicker: string
   body: string
 }
 
 // Stories behind the interactive keywords — indexed by `k` in the placement data.
 const KEY: KeyStory[] = [
-  { w: 'FLEXI-CASA', c: 'c1', kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
-  { w: 'Design Engineer', c: 'c1', kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
-  { w: 'Trail', c: 'c2', kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
-  { w: 'AI-Native', c: 'c1', kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
-  { w: 'Growth & Tooling', c: 'c2', kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
-  { w: 'University of Washington', c: 'c2', kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
-  { w: 'Imagine Cup', c: 'c3', kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
-  { w: 'TEAGUE', c: 'c3', kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
-  { w: 'Silkroad', c: 'c3', kicker: 'Past role', body: 'UX Designer at <b>Silkroad Visual Technology</b>, building enterprise SaaS.' },
-  { w: 'Grand Rapids', c: 'c2', kicker: 'Base', body: 'Based in <b>Grand Rapids, MI</b> — willing to relocate. H-1B transfer-ready.' },
-  { w: 'Medium', c: 'c3', kicker: 'Writing', body: 'I write on <b>Medium</b> about AI-native development workflows.' },
-  { w: 'Mandarin & English', c: 'c3', kicker: 'Background', body: 'Originally from <b>China</b> — fluent in Mandarin and English.' },
-  { w: 'Strength Training', c: 'c3', kicker: 'Off the clock', body: "When I'm not building: <b>strength training</b>, watching chipmunks in the backyard, and eating my way through whatever cuisine I haven't tried yet." },
-  { w: 'Cursor & Claude', c: 'c2', kicker: 'Toolkit', body: 'Figma, Framer, Windsurf, Notion, React, Next.js, TypeScript, Supabase — built daily alongside <b>Cursor and Claude</b>.' },
+  { w: 'FLEXI-CASA', c: 'c1', s: 2, kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
+  { w: 'Design Engineer', c: 'c1', s: 1, kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
+  { w: 'Trail', c: 'c2', s: 2, kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
+  { w: 'AI-Native', c: 'c1', s: 1, kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
+  { w: 'Growth & Tooling', c: 'c2', s: 3, kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
+  { w: 'University of Washington', c: 'c2', s: 2, kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
+  { w: 'Imagine Cup', c: 'c3', s: 2, kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
+  { w: 'TEAGUE', c: 'c3', s: 3, kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
+  { w: 'Silkroad', c: 'c3', s: 3, kicker: 'Past role', body: 'UX Designer at <b>Silkroad Visual Technology</b>, building enterprise SaaS.' },
+  { w: 'Grand Rapids', c: 'c2', s: 3, kicker: 'Base', body: 'Based in <b>Grand Rapids, MI</b> — willing to relocate. H-1B transfer-ready.' },
+  { w: 'Medium', c: 'c3', s: 3, kicker: 'Writing', body: 'I write on <b>Medium</b> about AI-native development workflows.' },
+  { w: 'Mandarin & English', c: 'c3', s: 3, kicker: 'Background', body: 'Originally from <b>China</b> — fluent in Mandarin and English.' },
+  { w: 'Strength Training', c: 'c3', s: 3, kicker: 'Off the clock', body: "When I'm not building: <b>strength training</b>, watching chipmunks in the backyard, and eating my way through whatever cuisine I haven't tried yet." },
+  { w: 'Cursor & Claude', c: 'c2', s: 3, kicker: 'Toolkit', body: 'Figma, Framer, Windsurf, Notion, React, Next.js, TypeScript, Supabase — built daily alongside <b>Cursor and Claude</b>.' },
 ]
 
 // Dense filler field — repeated so the mask always has type to carve.
@@ -160,7 +164,7 @@ export function AboutWordCloud() {
               <span
                 key={i}
                 tabIndex={0}
-                className={`kw ${data.c}${active === i ? ' active' : ''}`}
+                className={`kw ${data.c} s${data.s}${active === i ? ' active' : ''}`}
                 style={{ left: `${KEY_POS[i].x}%`, top: `${KEY_POS[i].y}%` }}
                 onMouseEnter={() => show(data, i)}
                 onFocus={() => show(data, i)}

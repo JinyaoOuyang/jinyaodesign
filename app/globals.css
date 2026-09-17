@@ -2579,7 +2579,9 @@ body {
 .face-fill span {
     font-family: var(--font-inter), system-ui, sans-serif;
     font-size: max(2.2px, 0.72cqw);
-    font-weight: 700;
+    /* 800, not 700: +12% rasterised ink at this size. --foreground is already
+       #1a1033, so weight is the only lever left for darker hair/clothing masses. */
+    font-weight: 800;
     line-height: 1.02;
     letter-spacing: -0.01em;
     color: var(--foreground);
@@ -2605,7 +2607,6 @@ body {
     white-space: nowrap;
     line-height: 1.06;
     font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: 2.05cqw;
     font-weight: 800;
     letter-spacing: -0.015em;
     cursor: pointer;
@@ -2617,6 +2618,13 @@ body {
     transition: color 0.2s var(--ease-precise),
         text-shadow 0.2s var(--ease-precise);
 }
+
+/* Three restrained levels, size only. Filler is 0.72cqw, so even level 3
+   stays ~2.5x the field; level 1 is clearly strongest without becoming a
+   heading placed over the portrait. */
+.face-keys .kw.s1 { font-size: 2.5cqw; }
+.face-keys .kw.s2 { font-size: 2.15cqw; }
+.face-keys .kw.s3 { font-size: 1.85cqw; }
 
 .face-keys .kw.c1 { color: #241548; }
 .face-keys .kw.c2 { color: var(--primary); }
