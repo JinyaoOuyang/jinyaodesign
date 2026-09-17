@@ -63,14 +63,13 @@ const KEY_POS: { x: number; y: number }[] = [
   { x: 34, y: 88 },  // Cursor & Claude
 ]
 
-const DEFAULT_PANEL = {
-  kicker: 'Start here',
-  body: "I'm Jinyao — a <b>Design Engineer</b> building AI-native products. I design the interaction, define the system, and write the code that ships it. <b>Hover any bold word</b> in the portrait to read the story behind it.",
-}
+type Panel = { kicker: string; body: string }
 
 export function AboutWordCloud() {
   const [active, setActive] = useState<number | null>(null)
-  const [panel, setPanel] = useState(DEFAULT_PANEL)
+  // null = resting state: the section shows only the invitation to explore.
+  // Once a story is activated it persists until another keyword replaces it.
+  const [panel, setPanel] = useState<Panel | null>(null)
   const [visible, setVisible] = useState(true)
   const timer = useRef<number | null>(null)
 
@@ -98,27 +97,39 @@ export function AboutWordCloud() {
           About, in the words I&apos;m built from
         </div>
         <h2 className="about-cloud-title">
-          Hover the <em>portrait</em>.
+          I like turning messy ideas
           <br />
-          Every word is a piece of the story.
+          into things that work.
         </h2>
+        <p className="about-cloud-standfirst">
+          Design Engineer working across interaction, systems, and implementation.
+        </p>
 
         <div className="about-cloud-panel">
-        <div className="kicker" style={{ opacity: visible ? 1 : 0 }}>
-          {panel.kicker}
-        </div>
-        <div
-          className="body"
-          style={{ opacity: visible ? 1 : 0 }}
-          dangerouslySetInnerHTML={{ __html: panel.body }}
-        />
-          <div className="hint">
-            Design Engineer — AI-native products, interaction to production.
-          </div>
+          {panel ? (
+            <>
+              <div className="kicker" style={{ opacity: visible ? 1 : 0 }}>
+                {panel.kicker}
+              </div>
+              <div
+                className="body"
+                style={{ opacity: visible ? 1 : 0 }}
+                dangerouslySetInnerHTML={{ __html: panel.body }}
+              />
+            </>
+          ) : (
+            /* Resting state. Pointer-type decides the verb in CSS — no JS,
+               so it stays correct through SSR and hybrid touch/trackpad. */
+            <p className="about-cloud-cue" style={{ opacity: visible ? 1 : 0 }}>
+              <span className="cue-hover">Hover a word</span>
+              <span className="cue-tap">Tap a word</span>{' '}
+              <span aria-hidden="true">→</span>
+            </p>
+          )}
         </div>
       </div>
 
-      <div>
+      <div className="about-cloud-art-col">
         <div
           className="about-face-art"
           style={{ aspectRatio: String(ABOUT_FACE_ASPECT) }}

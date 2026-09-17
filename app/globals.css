@@ -2489,41 +2489,60 @@ body {
 }
 
 .about-cloud-title {
-    margin: 0 0 28px;
+    margin: 0 0 18px;
     font-family: var(--font-display), 'Times New Roman', serif;
     font-size: clamp(30px, 3.4vw, 44px);
     font-weight: 400;
     line-height: 1.06;
     letter-spacing: -0.02em;
+    color: var(--foreground);
 }
 
-.about-cloud-title em {
-    font-style: italic;
-    color: var(--primary);
+/* Quiet second line — states the practice, never swaps on hover. */
+.about-cloud-standfirst {
+    margin: 0 0 28px;
+    max-width: 38ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted-foreground);
 }
 
 .about-cloud-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 620px);
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 575px);
     gap: 56px;
     align-items: start;
 }
 
 @media (max-width: 860px) {
+    /* Statement -> portrait -> story. `display: contents` lets the lead's
+       children take their own place in the column without a DOM change;
+       gap goes to 0 so each element's own margin sets the rhythm. */
     .about-cloud-hero {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        /* Column flex: the cross axis is horizontal, so the base rule's
+           `align-items: start` would shrink-wrap each child. The art column
+           must stretch or .about-face-art's width:100% resolves to 0. */
+        align-items: stretch;
     }
 
-    .about-cloud-hero > :first-child {
-        order: 2;
+    .about-cloud-lead {
+        display: contents;
     }
+
+    .about-cloud-eyebrow { order: 1; }
+    .about-cloud-title { order: 2; }
+    .about-cloud-standfirst { order: 3; margin-bottom: 20px; }
+    .about-cloud-art-col { order: 4; }
+    .about-cloud-panel { order: 5; margin-top: 24px; }
 }
 
 .about-face-art {
     position: relative;
     width: 100%;
-    max-width: 620px;
+    max-width: 575px;
     container-type: inline-size;
     -webkit-user-select: none;
     user-select: none;
@@ -2636,8 +2655,10 @@ body {
 .about-cloud-panel {
     position: sticky;
     top: 96px;
-    padding: 0;
-    min-height: 260px;
+    border-top: 1px solid var(--border);
+    padding: 22px 0 0;
+    /* Reserves room so the first activation doesn't push the page taller. */
+    min-height: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -2672,8 +2693,27 @@ body {
     font-weight: 600;
 }
 
-.about-cloud-panel .hint {
-    margin-top: 22px;
-    font-size: 13px;
+/* Resting state. Only the verb differs by pointer type. */
+.about-cloud-cue {
+    margin: 0;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--muted-foreground);
+    transition: opacity 0.2s var(--ease-precise);
+}
+
+.about-cloud-cue .cue-tap {
+    display: none;
+}
+
+@media (pointer: coarse) {
+    .about-cloud-cue .cue-hover {
+        display: none;
+    }
+
+    .about-cloud-cue .cue-tap {
+        display: inline;
+    }
 }
