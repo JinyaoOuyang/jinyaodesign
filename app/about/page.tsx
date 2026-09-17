@@ -5,7 +5,7 @@ import { AboutWordCloud } from '@/components/AboutWordCloud'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Jinyao Ouyang — PM and Design Engineer at the intersection of AI, product, and engineering. Sole builder at FLEXI-CASA. MS HCI, University of Washington.',
+    'Jinyao Ouyang — Design Engineer. I design the interaction, define the system, and build the product: React, React Native, TypeScript, and AI-assisted development. MS HCI, University of Washington.',
 }
 
 export default function AboutPage() {

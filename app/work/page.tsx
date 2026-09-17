@@ -5,7 +5,8 @@ import { Reveal } from '@/components/Reveal'
 
 export const metadata: Metadata = {
   title: 'Work',
-  description: 'Selected case studies and design projects.',
+  description:
+    'Design engineering work — AI-native products designed, built, and shipped end to end.',
 }
 
 export default function WorkPage() {
