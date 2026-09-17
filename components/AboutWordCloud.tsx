@@ -14,10 +14,10 @@ type KeyStory = {
 
 // Stories behind the interactive keywords — indexed by `k` in the placement data.
 const KEY: KeyStory[] = [
-  { w: 'FLEXI-CASA', c: 'c1', kicker: 'Day job', body: 'Sole <b>PM and Design Engineer</b> at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
+  { w: 'FLEXI-CASA', c: 'c1', kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
   { w: 'Design Engineer', c: 'c1', kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
   { w: 'Trail', c: 'c2', kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
-  { w: 'AI-Native', c: 'c1', kicker: "What I'm looking for", body: 'Actively exploring PM and Design Engineer roles at <b>AI-native companies</b> — teams that value judgment over process, ship fast, and treat AI as a core product discipline, not a feature checkbox.' },
+  { w: 'AI-Native', c: 'c1', kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
   { w: 'Growth & Tooling', c: 'c2', kicker: "What I'm drawn to", body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
   { w: 'University of Washington', c: 'c2', kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
   { w: 'Imagine Cup', c: 'c3', kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
@@ -65,7 +65,7 @@ const KEY_POS: { x: number; y: number }[] = [
 
 const DEFAULT_PANEL = {
   kicker: 'Start here',
-  body: "I'm Jinyao — a PM and builder at the intersection of AI, product, and engineering. I don't hand things off: I design it, build it, and ship it, from system architecture to the final pixel. <b>Hover any bold word</b> in the portrait to read the story behind it.",
+  body: "I'm Jinyao — a <b>Design Engineer</b> building AI-native products. I design the interaction, define the system, and write the code that ships it. <b>Hover any bold word</b> in the portrait to read the story behind it.",
 }
 
 export function AboutWordCloud() {
@@ -113,7 +113,7 @@ export function AboutWordCloud() {
           dangerouslySetInnerHTML={{ __html: panel.body }}
         />
           <div className="hint">
-            Currently exploring PM &amp; Design Engineer roles at AI-native teams.
+            Design Engineer — AI-native products, interaction to production.
           </div>
         </div>
       </div>
