@@ -2510,7 +2510,7 @@ body {
 .about-cloud-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(300px, 575px);
-    gap: 56px;
+    gap: 72px;
     align-items: start;
 }
 
@@ -2680,9 +2680,9 @@ body {
     position: sticky;
     top: 96px;
     border-top: 1px solid var(--border);
-    padding: 22px 0 0;
+    padding: 18px 0 0;
     /* Reserves room so the first activation doesn't push the page taller. */
-    min-height: 200px;
+    min-height: 150px;
     display: flex;
     flex-direction: column;
 }
@@ -2700,15 +2700,18 @@ body {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--primary);
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     transition: opacity 0.2s var(--ease-precise);
 }
 
 .about-cloud-panel .body {
-    font-size: 19px;
-    line-height: 1.6;
+    /* Caption weight: below the standfirst (16px) so the story annotates
+       the portrait instead of competing with the statement. */
+    font-size: 15px;
+    line-height: 1.5;
     font-weight: 400;
-    color: var(--foreground);
+    max-width: 34ch;
+    color: var(--muted-foreground);
     transition: opacity 0.2s var(--ease-precise);
 }
 
