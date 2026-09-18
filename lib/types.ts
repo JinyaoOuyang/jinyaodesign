@@ -1,3 +1,9 @@
+/**
+ * Work-page grouping. Independent of the homepage Selected Work roster,
+ * which is derived from the clay (GLB) assets — see getFeaturedWork().
+ */
+export type WorkTier = 'primary' | 'earlier'
+
 export interface WorkFrontmatter {
   title: string
   description: string
@@ -8,6 +14,8 @@ export interface WorkFrontmatter {
   tools: string[]
   coverImage: string
   featuredOrder: number
+  /** Defaults to 'earlier' when absent, so new work is never silently hidden. */
+  tier?: WorkTier
   metrics?: string[]
 }
 

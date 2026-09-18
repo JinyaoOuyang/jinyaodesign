@@ -6,7 +6,7 @@ import { WritingList } from '@/components/WritingList'
 import { LiquidShipIt } from '@/components/LiquidShipIt'
 
 const homeDescription =
-  'PM and Design Engineer building AI-native products. Shipped Trail, a headless Shopify storefront, and AI content pipelines — solo.'
+  'Design Engineer building AI-native products from interaction to production. Isleo (React Native), Trail (AI job copilot), and a production headless Shopify storefront — designed and shipped solo.'
 
 export const metadata: Metadata = {
   description: homeDescription,

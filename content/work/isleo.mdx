@@ -8,6 +8,7 @@ timeline: "2026 — ongoing"
 tools: ["React Native", "Expo", "TypeScript", "Zustand", "MMKV", "Supabase", "Figma", "Blender", "Replicate Flux", "Cursor"]
 coverImage: "/work/isleo-cover.png"
 featuredOrder: 0
+tier: "primary"
 metrics:
   - "0→1 product"
   - "Clay tile kit + layered reveal"
@@ -173,6 +174,54 @@ AI is allowed to produce materials. Humans define schemas, thresholds, and fallb
   { value: "6", label: "Pipeline nodes, human-owned schema" },
   { value: "1", label: "Design engineer, end to end" }
 ]} />
+
+<Divider />
+
+## The System, Across Figma and Code
+
+A world product accumulates surfaces fast — tiles, day sheets, focus states, an archive. What keeps that maintainable isn't having a design system. It's knowing which repetitions deserve to become one thing.
+
+The implementation settled into four layers: **foundations → UI primitives → product components → screens**. Foundations hold semantic colors, domain-state colors, surfaces, spacing, and radius. Above them, exactly two validated primitives. Above those, the product's own vocabulary — **Paradise**, **Cursed**, **Incomplete** — and the systems built on it.
+
+{/* TODO — insert once the "Isleo — UI System" Figma page is done:
+     05 System Map  -> /work/isleo/system-map.png
+     02 UI Primitives -> /work/isleo/ui-primitives.png
+     Two figures maximum. Do not ship placeholders. */}
+
+<TwoColumn>
+<Column>
+
+**Design / Figma**
+
+- Foundations
+- ClayButton
+- IconButton
+- Paradise / Cursed
+- Focus states
+- Product components
+
+</Column>
+<Column>
+
+**Implementation**
+
+- theme
+- ClayButton
+- IconButton
+- semantic domain states
+- TimerPhase
+- shipped screens
+
+</Column>
+</TwoColumn>
+
+<Callout label="When an abstraction is justified">
+The instances represent the same design decision, they should change together, and they can share a clean API without escape-hatch props. All three, or it's coupling with better branding.
+</Callout>
+
+Not everything repeated should become a component. The **Live\*TileLayered** components look alike but are separate art directions. **StatusPill**, a universal **ScreenHeader**, a universal **DayStateVisual**, **TimerRing** — same story: they shared a shape, not a decision, so they stayed apart.
+
+I didn't start with a system and apply it to the product. I let the abstractions emerge from the product, then aligned the names on both sides.
 
 <Divider />
 

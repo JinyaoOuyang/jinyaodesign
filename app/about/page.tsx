@@ -5,7 +5,7 @@ import { AboutWordCloud } from '@/components/AboutWordCloud'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Jinyao Ouyang — PM and Design Engineer at the intersection of AI, product, and engineering. Sole builder at FLEXI-CASA. MS HCI, University of Washington.',
+    'Jinyao Ouyang — Design Engineer. I design the interaction, define the system, and build the product: React, React Native, TypeScript, and AI-assisted development. MS HCI, University of Washington.',
 }
 
 export default function AboutPage() {
@@ -17,22 +17,31 @@ export default function AboutPage() {
       </div>
 
       <div className="mx-auto max-w-[1100px] px-6 py-20 md:py-28">
-        {/* What I'm looking for */}
+        {/* How I work */}
         <section className="max-w-[720px]">
           <h3 className="font-display text-[clamp(24px,3vw,32px)] font-normal leading-tight tracking-[-0.02em]">
-            What I&apos;m <em className="italic text-primary">looking for</em>
+            How I <em className="italic text-primary">work</em>
           </h3>
           <div className="mt-6 space-y-5 text-base leading-[1.75] text-muted-foreground">
             <p>
-              I&apos;m actively exploring PM and Design Engineer roles at AI-native companies
-              — teams that value judgment over process, ship fast, and treat AI as a core
-              product discipline, not a feature checkbox.
+              I move between Figma, product systems, frontend implementation, and
+              AI-assisted development instead of treating design and engineering as
+              separate handoff stages. The interaction, the state machine, and the code
+              that ships are one job.
             </p>
             <p>
-              I&apos;m especially drawn to{' '}
-              <span className="text-foreground">growth</span>,{' '}
-              <span className="text-foreground">tooling</span>, and{' '}
-              <span className="text-foreground">consumer AI</span> problems.
+              Right now that means <span className="text-foreground">Isleo</span> — an iOS
+              focus product where I own the design language, the Blender and Rive asset
+              pipeline, and the React Native implementation — and production work at{' '}
+              <span className="text-foreground">FLEXI-CASA</span>, where I&apos;m the sole
+              design engineer with end-to-end product ownership and design decisions have
+              to survive contact with a real storefront.
+            </p>
+            <p>
+              I&apos;m drawn to <span className="text-foreground">AI-native products</span>{' '}
+              and <span className="text-foreground">emerging interaction models</span> —
+              where the product question is what a person and a model do together, and no
+              pattern library has the answer yet.
             </p>
           </div>
           <p className="mt-6 border-l-2 border-primary/30 pl-4 text-sm leading-relaxed text-muted-foreground">
@@ -96,34 +105,40 @@ export default function AboutPage() {
         <hr className="my-16 border-border md:my-20" />
 
         {/* Skills & Connect */}
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.6fr_1fr] md:gap-20">
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Skills &amp; Tools
+              Skills &amp; Stack
             </h3>
-            <div className="mt-6 grid grid-cols-2 gap-8">
+            <div className="mt-6 grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div>
                 <h4 className="text-sm font-medium">Design</h4>
                 <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                  <li>Product Design</li>
-                  <li>UX Research</li>
                   <li>Interaction Design</li>
                   <li>Design Systems</li>
                   <li>Prototyping</li>
+                  <li>Product Design</li>
+                  <li>UX Research</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-sm font-medium">Tools</h4>
+                <h4 className="text-sm font-medium">Engineering</h4>
                 <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                  <li>Figma</li>
-                  <li>Framer</li>
-                  <li>Windsurf</li>
-                  <li>Notion</li>
-                  <li>HTML / CSS / JS</li>
                   <li>React / TypeScript</li>
+                  <li>React Native / Expo</li>
                   <li>Next.js</li>
                   <li>Supabase</li>
-                  <li>Cursor / Claude</li>
+                  <li>HTML / CSS / JS</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium">AI &amp; Systems</h4>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  <li>AI-assisted development</li>
+                  <li>Agent-assisted workflows</li>
+                  <li>Generative asset pipelines</li>
+                  <li>Figma / Blender / Rive</li>
+                  <li>Cursor / Claude / Windsurf</li>
                 </ul>
               </div>
             </div>
@@ -134,7 +149,7 @@ export default function AboutPage() {
               Connect
             </h3>
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              Open to PM and Design Engineer conversations at AI-native teams. Say hi.
+              Open to Design Engineer roles at AI-native teams. Say hi.
             </p>
             <div className="mt-6 flex flex-col gap-3">
               <a

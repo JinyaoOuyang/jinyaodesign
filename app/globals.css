@@ -2489,138 +2489,127 @@ body {
 }
 
 .about-cloud-title {
-    margin: 0 0 28px;
+    margin: 0 0 18px;
     font-family: var(--font-display), 'Times New Roman', serif;
     font-size: clamp(30px, 3.4vw, 44px);
     font-weight: 400;
     line-height: 1.06;
     letter-spacing: -0.02em;
+    color: var(--foreground);
 }
 
-.about-cloud-title em {
-    font-style: italic;
-    color: var(--primary);
+/* Quiet second line — states the practice, never swaps on hover. */
+.about-cloud-standfirst {
+    margin: 0 0 28px;
+    max-width: 38ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted-foreground);
 }
 
 .about-cloud-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 620px);
-    gap: 56px;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 575px);
+    gap: 72px;
     align-items: start;
 }
 
 @media (max-width: 860px) {
+    /* Statement -> portrait -> story. `display: contents` lets the lead's
+       children take their own place in the column without a DOM change;
+       gap goes to 0 so each element's own margin sets the rhythm. */
     .about-cloud-hero {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        /* Column flex: the cross axis is horizontal, so the base rule's
+           `align-items: start` would shrink-wrap each child. The art column
+           must stretch or the portrait's width:100% resolves to 0. */
+        align-items: stretch;
     }
 
-    .about-cloud-hero > :first-child {
-        order: 2;
+    .about-cloud-lead {
+        display: contents;
     }
+
+    .about-cloud-eyebrow { order: 1; }
+    .about-cloud-title { order: 2; }
+    .about-cloud-standfirst { order: 3; margin-bottom: 20px; }
+    .about-cloud-art-col { order: 4; }
+    .about-cloud-panel { order: 5; margin-top: 24px; }
 }
 
-.about-face-art {
-    position: relative;
+/* The portrait is one composition: every word — anchors, phrases, face
+   vocabulary — was placed by the generator into a 575x596 field, and the SVG
+   viewBox scales that field as a whole. No mask, no filler, no overlay. */
+.about-cloud-art-col {
     width: 100%;
-    max-width: 620px;
-    container-type: inline-size;
+    max-width: 575px;
+}
+
+.about-portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 575 / 596;
+    overflow: visible;
     -webkit-user-select: none;
     user-select: none;
 }
 
-
-/* The portrait is the type: a dense word field carved by a luminance mask
-   of the sketch. Dark areas (hair, brows, lips) keep the words; skin fades
-   to open paper. No photograph is composited — remove the words and the
-   likeness disappears with them. */
-.face-fill {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: center;
-    gap: 0px 5px;
-    padding: 1% 1.5%;
-    overflow: hidden;
-    pointer-events: none;
-    -webkit-mask-image: url('/about-face-mask.png');
-    mask-image: url('/about-face-mask.png');
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-}
-
-.face-fill span {
+.about-portrait text {
     font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: 1.72cqw;
-    font-weight: 700;
-    line-height: 1.06;
+    fill: var(--foreground);
     letter-spacing: -0.01em;
-    color: var(--foreground);
-    white-space: nowrap;
-}
-
-/* Keywords sit above the mask so they stay readable and clickable */
-.face-keys {
-    position: absolute;
-    inset: 0;
-}
-
-/* Keywords wear the same face as the field so they read as part of the
-   portrait — colour and a hairline rule are the only tells until hover. */
-/* Keywords share the field's typeface so they belong to the portrait; a soft
-   page-tinted wash clears the type beneath them so they stay readable, and
-   colour is the only cue that they're live. */
-/* Fine facial strokes over the type — the eyes/brows/lips the word grid
-   is too coarse to draw. Never intercepts pointer events. */
-.face-features {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    opacity: 0.55;
+    white-space: pre;
     pointer-events: none;
-    user-select: none;
 }
 
-.face-keys .kw {
-    position: absolute;
-    white-space: nowrap;
-    line-height: 1.06;
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: 2.05cqw;
-    font-weight: 800;
-    letter-spacing: -0.015em;
+/* Story-owning phrases are the same type as the field. At rest nothing marks
+   them — hierarchy comes from the composition, discovery from the cue. */
+.about-portrait .pw {
     cursor: pointer;
     outline: none;
-    padding: 0.1em 0.32em;
-    border-radius: 3px;
-    background: color-mix(in srgb, var(--background) 88%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--background) 88%, transparent);
-    transition: color 0.2s var(--ease-precise),
-        background-color 0.2s var(--ease-precise),
-        box-shadow 0.2s var(--ease-precise);
 }
 
-.face-keys .kw.c1 { color: #241548; }
-.face-keys .kw.c2 { color: var(--primary); }
-.face-keys .kw.c3 { color: #b8770a; }
+.about-portrait .pw text {
+    transition: fill 0.2s var(--ease-precise), fill-opacity 0.2s var(--ease-precise);
+}
 
-.face-keys .kw:hover,
-.face-keys .kw:focus-visible,
-.face-keys .kw.active {
-    color: #ffffff;
-    background-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary);
-    z-index: 5;
+/* Invisible tap target. Sized in the data, overlap-checked there too. */
+.about-portrait .pw-hit {
+    fill: transparent;
+    pointer-events: all;
+}
+
+.about-portrait .pw-rule {
+    stroke: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-precise);
+}
+
+/* Active / hover / focus: colour toward primary and a thin rule. The word stays
+   exactly where it is, at exactly its size — nothing else in the portrait moves. */
+.about-portrait .pw:hover text,
+.about-portrait .pw:focus-visible text,
+.about-portrait .pw.active text {
+    fill: var(--primary);
+    fill-opacity: 1;
+}
+
+.about-portrait .pw:hover .pw-rule,
+.about-portrait .pw:focus-visible .pw-rule,
+.about-portrait .pw.active .pw-rule {
+    opacity: 1;
+}
+
+.about-portrait .pw:focus-visible .pw-rule {
+    stroke-width: 1.4;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .face-keys .kw {
+    .about-portrait .pw text,
+    .about-portrait .pw-rule {
         transition: none;
     }
 }
@@ -2636,8 +2625,10 @@ body {
 .about-cloud-panel {
     position: sticky;
     top: 96px;
-    padding: 0;
-    min-height: 260px;
+    border-top: 1px solid var(--border);
+    padding: 18px 0 0;
+    /* Reserves room so the first activation doesn't push the page taller. */
+    min-height: 150px;
     display: flex;
     flex-direction: column;
 }
@@ -2655,15 +2646,18 @@ body {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--primary);
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     transition: opacity 0.2s var(--ease-precise);
 }
 
 .about-cloud-panel .body {
-    font-size: 19px;
-    line-height: 1.6;
+    /* Caption weight: below the standfirst (16px) so the story annotates
+       the portrait instead of competing with the statement. */
+    font-size: 15px;
+    line-height: 1.5;
     font-weight: 400;
-    color: var(--foreground);
+    max-width: 34ch;
+    color: var(--muted-foreground);
     transition: opacity 0.2s var(--ease-precise);
 }
 
@@ -2672,8 +2666,27 @@ body {
     font-weight: 600;
 }
 
-.about-cloud-panel .hint {
-    margin-top: 22px;
-    font-size: 13px;
+/* Resting state. Only the verb differs by pointer type. */
+.about-cloud-cue {
+    margin: 0;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--muted-foreground);
+    transition: opacity 0.2s var(--ease-precise);
+}
+
+.about-cloud-cue .cue-tap {
+    display: none;
+}
+
+@media (pointer: coarse) {
+    .about-cloud-cue .cue-hover {
+        display: none;
+    }
+
+    .about-cloud-cue .cue-tap {
+        display: inline;
+    }
 }

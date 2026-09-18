@@ -43,6 +43,29 @@ export const metadata: Metadata = {
   },
 }
 
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.name,
+  jobTitle: 'Design Engineer',
+  description: siteConfig.description,
+  url: siteConfig.url,
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of Washington',
+  },
+  knowsAbout: [
+    'Design Engineering',
+    'AI-native products',
+    'Interaction Design',
+    'Design Systems',
+    'React',
+    'TypeScript',
+    'React Native',
+  ],
+  sameAs: [siteConfig.linkedin, siteConfig.medium, siteConfig.twitter],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -67,6 +90,11 @@ export default function RootLayout({
             gtag('config', 'G-9WWV08C6KQ');
           `}
         </Script>
+        {/* Person schema — plain script so it ships in the server-rendered HTML */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         <StarCursor />
         <div className="relative flex min-h-screen flex-col">
           <Header />
