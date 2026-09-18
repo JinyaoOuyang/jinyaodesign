@@ -2524,7 +2524,7 @@ body {
         gap: 0;
         /* Column flex: the cross axis is horizontal, so the base rule's
            `align-items: start` would shrink-wrap each child. The art column
-           must stretch or .about-face-art's width:100% resolves to 0. */
+           must stretch or the portrait's width:100% resolves to 0. */
         align-items: stretch;
     }
 
@@ -2539,132 +2539,78 @@ body {
     .about-cloud-panel { order: 5; margin-top: 24px; }
 }
 
-.about-face-art {
-    position: relative;
+/* The portrait is one composition: every word — anchors, phrases, face
+   vocabulary — was placed by the generator into a 575x596 field, and the SVG
+   viewBox scales that field as a whole. No mask, no filler, no overlay. */
+.about-cloud-art-col {
     width: 100%;
     max-width: 575px;
-    container-type: inline-size;
+}
+
+.about-portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 575 / 596;
+    overflow: visible;
     -webkit-user-select: none;
     user-select: none;
 }
 
-
-/* The portrait is the type: a dense word field carved by a luminance mask
-   of the sketch. Dark areas (hair, brows, lips) keep the words; skin fades
-   to open paper. No photograph is composited — remove the words and the
-   likeness disappears with them. */
-.face-fill {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: center;
-    gap: 0px 2px;
-    padding: 1% 1.5%;
-    overflow: hidden;
-    pointer-events: none;
-    -webkit-mask-image: url('/about-face-mask.png');
-    mask-image: url('/about-face-mask.png');
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-}
-
-/* Fine enough that the mask resolves features out of the words themselves.
-   Deliberately pure cqw down to phone width: a larger px floor makes the type
-   coarser RELATIVE to the smaller box, and the mask stops resolving the face.
-   The 2.2px floor only guards a pathologically narrow container (<305px). */
-.face-fill span {
+.about-portrait text {
     font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: max(2.2px, 0.72cqw);
-    /* 800, not 700: +12% rasterised ink at this size. --foreground is already
-       #1a1033, so weight is the only lever left for darker hair/clothing masses. */
-    font-weight: 800;
-    line-height: 1.02;
+    fill: var(--foreground);
     letter-spacing: -0.01em;
-    color: var(--foreground);
-    white-space: nowrap;
+    white-space: pre;
+    pointer-events: none;
 }
 
-/* Keywords sit above the mask so they stay readable and clickable */
-.face-keys {
-    position: absolute;
-    inset: 0;
-}
-
-/* Keywords wear the same face as the field so they read as part of the
-   portrait — colour and a hairline rule are the only tells until hover. */
-/* Keywords share the field's typeface so they belong to the portrait; a soft
-   page-tinted wash clears the type beneath them so they stay readable, and
-   colour is the only cue that they're live. */
-/* Anchor words, not chips: the keywords are the largest type in the portrait
-   and belong to it. No plate, no ring — the page-coloured halo only clears
-   enough filler for them to stay readable, and never reads as a background. */
-.face-keys .kw {
-    position: absolute;
-    white-space: nowrap;
-    line-height: 1.06;
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.015em;
+/* Story-owning phrases are the same type as the field. At rest nothing marks
+   them — hierarchy comes from the composition, discovery from the cue. */
+.about-portrait .pw {
     cursor: pointer;
     outline: none;
-    padding: 0.1em 0.3em;
-    text-shadow:
-        0 0 2px var(--background),
-        0 0 4px var(--background);
-    transition: color 0.2s var(--ease-precise),
-        text-shadow 0.2s var(--ease-precise);
 }
 
-/* Three restrained levels, size only. Filler is 0.72cqw, so even level 3
-   stays ~2.5x the field; level 1 is clearly strongest without becoming a
-   heading placed over the portrait. */
-.face-keys .kw.s1 { font-size: 2.5cqw; }
-.face-keys .kw.s2 { font-size: 2.15cqw; }
-.face-keys .kw.s3 { font-size: 1.85cqw; }
-
-.face-keys .kw.c1 { color: #241548; }
-.face-keys .kw.c2 { color: var(--primary); }
-.face-keys .kw.c3 { color: #b8770a; }
-
-.face-keys .kw:hover,
-.face-keys .kw:focus-visible,
-.face-keys .kw.active {
-    color: var(--primary);
-    text-decoration: underline;
-    text-underline-offset: 0.22em;
-    text-decoration-thickness: 1px;
-    text-shadow:
-        0 0 2px var(--background),
-        0 0 5px var(--background);
-    z-index: 5;
+.about-portrait .pw text {
+    transition: fill 0.2s var(--ease-precise), fill-opacity 0.2s var(--ease-precise);
 }
 
-.face-keys .kw:focus-visible {
-    text-decoration-thickness: 2px;
+/* Invisible tap target. Sized in the data, overlap-checked there too. */
+.about-portrait .pw-hit {
+    fill: transparent;
+    pointer-events: all;
+}
+
+.about-portrait .pw-rule {
+    stroke: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-precise);
+}
+
+/* Active / hover / focus: colour toward primary and a thin rule. The word stays
+   exactly where it is, at exactly its size — nothing else in the portrait moves. */
+.about-portrait .pw:hover text,
+.about-portrait .pw:focus-visible text,
+.about-portrait .pw.active text {
+    fill: var(--primary);
+    fill-opacity: 1;
+}
+
+.about-portrait .pw:hover .pw-rule,
+.about-portrait .pw:focus-visible .pw-rule,
+.about-portrait .pw.active .pw-rule {
+    opacity: 1;
+}
+
+.about-portrait .pw:focus-visible .pw-rule {
+    stroke-width: 1.4;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .face-keys .kw {
+    .about-portrait .pw text,
+    .about-portrait .pw-rule {
         transition: none;
-    }
-}
-
-/* Touch: grow the tappable region only — the chip, its font size and
-   KEY_POS are untouched, so nothing moves or looks like a button.
-   Vertical growth is capped by the tightest neighbouring pair
-   (FLEXI-CASA / Design Engineer sit 15.3px apart at 375px). 7px keeps a
-   dead gutter between every pair; forcing the full 44px height would
-   overlap seven pairs and let the wrong word win. Horizontal room is
-   plentiful, so 13px takes even the narrowest label ("Trail", 18px) to 44px. */
-@media (pointer: coarse) {
-    .face-keys .kw::after {
-        content: '';
-        position: absolute;
-        inset: -7px -13px;
     }
 }
 

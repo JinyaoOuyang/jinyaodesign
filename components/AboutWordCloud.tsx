@@ -1,89 +1,53 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ABOUT_FACE_ASPECT } from '@/lib/aboutFaceCloud'
-
-type Tier = 'c1' | 'c2' | 'c3'
-
-type Level = 1 | 2 | 3
+import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
+import { PORTRAIT_H, PORTRAIT_W, PORTRAIT_WORDS } from '@/lib/aboutPortrait'
 
 type KeyStory = {
   w: string
-  c: Tier
-  /** Typographic level: 1 = identity, 2 = formative anchors, 3 = biography. */
-  s: Level
   kicker: string
   body: string
 }
 
-// Stories behind the interactive keywords — indexed by `k` in the placement data.
+// The 14 stories. Their order is the `s` index in lib/aboutPortrait.ts — the
+// phrases inside the portrait that own each story point back here by number.
 const KEY: KeyStory[] = [
-  { w: 'FLEXI-CASA', c: 'c1', s: 2, kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
-  { w: 'Design Engineer', c: 'c1', s: 1, kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
-  { w: 'Trail', c: 'c2', s: 2, kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
-  { w: 'AI-Native', c: 'c1', s: 1, kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
-  { w: 'Growth & Tooling', c: 'c2', s: 3, kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
-  { w: 'University of Washington', c: 'c2', s: 2, kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
-  { w: 'Imagine Cup', c: 'c3', s: 2, kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
-  { w: 'TEAGUE', c: 'c3', s: 3, kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
-  { w: 'Silkroad', c: 'c3', s: 3, kicker: 'Past role', body: 'UX Designer at <b>Silkroad Visual Technology</b>, building enterprise SaaS.' },
-  { w: 'Grand Rapids', c: 'c2', s: 3, kicker: 'Base', body: 'Based in <b>Grand Rapids, MI</b> — willing to relocate. H-1B transfer-ready.' },
-  { w: 'Medium', c: 'c3', s: 3, kicker: 'Writing', body: 'I write on <b>Medium</b> about AI-native development workflows.' },
-  { w: 'Mandarin & English', c: 'c3', s: 3, kicker: 'Background', body: 'Originally from <b>China</b> — fluent in Mandarin and English.' },
-  { w: 'Strength Training', c: 'c3', s: 3, kicker: 'Off the clock', body: "When I'm not building: <b>strength training</b>, watching chipmunks in the backyard, and eating my way through whatever cuisine I haven't tried yet." },
-  { w: 'Cursor & Claude', c: 'c2', s: 3, kicker: 'Toolkit', body: 'Figma, Framer, Windsurf, Notion, React, Next.js, TypeScript, Supabase — built daily alongside <b>Cursor and Claude</b>.' },
-]
-
-// Dense filler field — repeated so the mask always has type to carve.
-const FILL_VOCAB = [
-  'Product Strategy', 'System Architecture', 'Ship Fast', 'Ownership', 'Craft',
-  'Design Systems', 'Prototyping', 'UX Research', 'Interaction Design',
-  'React', 'TypeScript', 'Next.js', 'Tailwind', 'Supabase', 'Figma', 'Framer',
-  'Cursor', 'Claude', 'Notion', 'Blender', 'Shopify', 'Amazon', 'Etsy',
-  'Consumer AI', 'Full Stack', 'Solo Build', 'Four Days', 'Pixel to Production',
-  'Judgment', 'Taste', 'Growth', 'Tooling', 'Systems', 'Build', 'Ship',
-  'Design', 'Product', 'PM', 'AI', 'UX', 'HCI', 'Multi-Channel DTC',
-  'Job Search Copilot', 'Regional Champion', 'WebVR', 'Automotive UX',
-  'Enterprise SaaS', 'Conversion Funnel', 'Experimentation', 'H-1B Ready',
-]
-// The portrait IS this field. At ~0.72cqw the type is fine enough for the mask
-// to resolve eyes, lips and jaw out of the words themselves, so no line-art
-// overlay is needed — but it takes far more words to fill the box at that size.
-// 3,500 reach the bottom of the box at the 575px max width; the rest is headroom
-// so a font-metric difference can never leave the sweater unfinished.
-const FILL_WORDS = Array.from({ length: 3800 }, (_, i) => FILL_VOCAB[i % FILL_VOCAB.length])
-
-// Anchors sit in the dark masses (hair, shoulders) and avoid the face oval
-// (~x 38-62%, y 20-55%) so the portrait stays legible underneath.
-const KEY_POS: { x: number; y: number }[] = [
-  { x: 44, y: 3 },   // FLEXI-CASA
-  { x: 40, y: 10 },  // Design Engineer
-  { x: 26, y: 17 },  // Trail
-  { x: 62, y: 18 },  // AI-Native
-  { x: 64, y: 26 },  // Growth & Tooling
-  { x: 20, y: 35 },  // University of Washington
-  { x: 72, y: 40 },  // Imagine Cup
-  { x: 20, y: 47 },  // TEAGUE
-  { x: 74, y: 52 },  // Silkroad
-  { x: 22, y: 60 },  // Grand Rapids
-  { x: 72, y: 64 },  // Medium
-  { x: 20, y: 72 },  // Mandarin & English
-  { x: 64, y: 78 },  // Strength Training
-  { x: 34, y: 88 },  // Cursor & Claude
+  { w: 'FLEXI-CASA', kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
+  { w: 'Design Engineer', kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
+  { w: 'Trail', kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
+  { w: 'AI-Native', kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
+  { w: 'Growth & Tooling', kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
+  { w: 'University of Washington', kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
+  { w: 'Imagine Cup', kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
+  { w: 'TEAGUE', kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
+  { w: 'Silkroad', kicker: 'Past role', body: 'UX Designer at <b>Silkroad Visual Technology</b>, building enterprise SaaS.' },
+  { w: 'Grand Rapids', kicker: 'Base', body: 'Based in <b>Grand Rapids, MI</b> — willing to relocate. H-1B transfer-ready.' },
+  { w: 'Medium', kicker: 'Writing', body: 'I write on <b>Medium</b> about AI-native development workflows.' },
+  { w: 'Mandarin & English', kicker: 'Background', body: 'Originally from <b>China</b> — fluent in Mandarin and English.' },
+  { w: 'Strength Training', kicker: 'Off the clock', body: "When I'm not building: <b>strength training</b>, watching chipmunks in the backyard, and eating my way through whatever cuisine I haven't tried yet." },
+  { w: 'Cursor & Claude', kicker: 'Toolkit', body: 'Figma, Framer, Windsurf, Notion, React, Next.js, TypeScript, Supabase — built daily alongside <b>Cursor and Claude</b>.' },
 ]
 
 type Panel = { kicker: string; body: string }
 
+// One composition, one coordinate system. The generator placed every word —
+// anchors, phrases and face vocabulary — into a 575x596 field; the SVG viewBox
+// scales that field as a whole, so the portrait is the same at every width.
+const STATIC_WORDS = PORTRAIT_WORDS.filter((p) => p.s === undefined)
+const STORY_WORDS = PORTRAIT_WORDS.filter((p) => p.s !== undefined)
+
 export function AboutWordCloud() {
   const [active, setActive] = useState<number | null>(null)
   // null = resting state: the section shows only the invitation to explore.
-  // Once a story is activated it persists until another keyword replaces it.
+  // Once a story is activated it persists until another phrase replaces it.
   const [panel, setPanel] = useState<Panel | null>(null)
   const [visible, setVisible] = useState(true)
   const timer = useRef<number | null>(null)
 
-  const show = (data: KeyStory, index: number) => {
+  const show = (index: number) => {
     if (index === active) return
+    const data = KEY[index]
     setActive(index)
     setVisible(false)
     if (timer.current) window.clearTimeout(timer.current)
@@ -91,6 +55,13 @@ export function AboutWordCloud() {
       setPanel({ kicker: data.kicker, body: data.body })
       setVisible(true)
     }, 120)
+  }
+
+  const onKey = (index: number) => (e: ReactKeyboardEvent<SVGGElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      show(index)
+    }
   }
 
   useEffect(() => {
@@ -139,42 +110,59 @@ export function AboutWordCloud() {
       </div>
 
       <div className="about-cloud-art-col">
-        <div
-          className="about-face-art"
-          style={{ aspectRatio: String(ABOUT_FACE_ASPECT) }}
-          role="img"
-          aria-label="Typographic portrait of Jinyao Ouyang — the words of her story arranged into her face"
+        <svg
+          className="about-portrait"
+          viewBox={`0 0 ${PORTRAIT_W} ${PORTRAIT_H}`}
+          aria-labelledby="about-portrait-title"
         >
-          {/* The portrait itself: a dense field of words carved by a luminance
-              mask of the sketch. Remove the words and nothing remains. */}
-          <div className="face-fill" aria-hidden="true">
-            {FILL_WORDS.map((w, i) => (
-              <span key={i}>{w}</span>
+          <title id="about-portrait-title">
+            Typographic portrait of Jinyao Ouyang — the words of her story arranged into her face
+          </title>
+
+          {/* The field: every word that is not interactive. Decorative to AT. */}
+          <g aria-hidden="true" className="pw-field">
+            {STATIC_WORDS.map((p, i) => (
+              <text key={i} x={p.x} y={p.y} fontSize={p.px} fontWeight={p.w} fillOpacity={p.a}>
+                {p.t}
+              </text>
             ))}
-          </div>
+          </g>
 
-          {/* No line-art overlay. /public/about-face-features.png is kept in the
-              repo but deliberately not rendered: at this type size the words
-              draw the features themselves, and compositing a drawing over them
-              made the portrait an illustration with text inside it. */}
-
-          {/* Interactive keywords ride above the mask so they stay legible */}
-          <div className="face-keys">
-            {KEY.map((data, i) => (
-              <span
-                key={i}
+          {/* The same field's story-owning phrases. Same type, same ink — the
+              only difference is that these carry a story. Painted after the
+              field so their hit rects sit on top. */}
+          {STORY_WORDS.map((p, i) => {
+            const s = p.s as number
+            const [hx, hy, hw, hh] = p.hit as [number, number, number, number]
+            const underlineY = p.y + p.px * 0.14
+            return (
+              <g
+                key={`s${i}`}
+                className={`pw${active === s ? ' active' : ''}`}
+                role="button"
                 tabIndex={0}
-                className={`kw ${data.c} s${data.s}${active === i ? ' active' : ''}`}
-                style={{ left: `${KEY_POS[i].x}%`, top: `${KEY_POS[i].y}%` }}
-                onMouseEnter={() => show(data, i)}
-                onFocus={() => show(data, i)}
-                onClick={() => show(data, i)}
+                aria-label={`${KEY[s].w} — ${KEY[s].kicker}`}
+                onMouseEnter={() => show(s)}
+                onFocus={() => show(s)}
+                onClick={() => show(s)}
+                onKeyDown={onKey(s)}
               >
-                {data.w}
-              </span>
-            ))}
-          </div>
-        </div>
+                <text x={p.x} y={p.y} fontSize={p.px} fontWeight={p.w} fillOpacity={p.a}>
+                  {p.t}
+                </text>
+                <line
+                  className="pw-rule"
+                  x1={p.x}
+                  x2={p.x + hw - (hx < p.x ? 2 * (p.x - hx) : 0)}
+                  y1={underlineY}
+                  y2={underlineY}
+                  strokeWidth={Math.max(0.5, p.px * 0.06)}
+                />
+                <rect className="pw-hit" x={hx} y={hy} width={hw} height={hh} />
+              </g>
+            )
+          })}
+        </svg>
       </div>
     </div>
   )

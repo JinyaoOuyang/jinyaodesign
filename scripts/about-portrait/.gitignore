@@ -1,0 +1,4 @@
+# generator artefacts (the committed input is placed_B2.1.json)
+*.png
+metrics_*.json
+__pycache__/
