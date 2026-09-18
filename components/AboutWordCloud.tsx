@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
+import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from 'react'
 import { PORTRAIT_H, PORTRAIT_W, PORTRAIT_WORDS } from '@/lib/aboutPortrait'
 
 type KeyStory = {
@@ -38,37 +38,63 @@ const STATIC_WORDS = PORTRAIT_WORDS.filter((p) => p.s === undefined)
 const STORY_WORDS = PORTRAIT_WORDS.filter((p) => p.s !== undefined)
 
 export function AboutWordCloud() {
-  const [active, setActive] = useState<number | null>(null)
-  // null = resting state: the section shows only the invitation to explore.
-  // Once a story is activated it persists until another phrase replaces it.
+  // Three distinct ways a phrase can be active, kept apart on purpose:
+  //   hover    — fine pointer over the phrase; clears the moment it leaves
+  //   focus    — keyboard focus; clears on blur
+  //   selected — a touch tap; persists (touch has no hover) until another tap
+  // Nothing else persists. Mouse clicks never select.
+  const [hover, setHover] = useState<number | null>(null)
+  const [focus, setFocus] = useState<number | null>(null)
+  const [selected, setSelected] = useState<number | null>(null)
+  const active = hover ?? focus ?? selected
+
+  // The story panel crossfades to follow `active`. This is presentation only:
+  // whenever `active` changes, any pending swap is dropped, so a hover that
+  // leaves within the fade can never surface a stale story.
   const [panel, setPanel] = useState<Panel | null>(null)
   const [visible, setVisible] = useState(true)
   const timer = useRef<number | null>(null)
 
-  const show = (index: number) => {
-    if (index === active) return
-    const data = KEY[index]
-    setActive(index)
-    setVisible(false)
+  useEffect(() => {
     if (timer.current) window.clearTimeout(timer.current)
+    if (active === null) {
+      setPanel(null)
+      setVisible(true)
+      return
+    }
+    const data = KEY[active]
+    setVisible(false)
     timer.current = window.setTimeout(() => {
       setPanel({ kicker: data.kicker, body: data.body })
       setVisible(true)
     }, 120)
-  }
-
-  const onKey = (index: number) => (e: ReactKeyboardEvent<SVGGElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      show(index)
-    }
-  }
-
-  useEffect(() => {
     return () => {
       if (timer.current) window.clearTimeout(timer.current)
     }
-  }, [])
+  }, [active])
+
+  const isTouch = (e: ReactPointerEvent<SVGGElement>) => e.pointerType === 'touch'
+
+  const onPointerEnter = (index: number) => (e: ReactPointerEvent<SVGGElement>) => {
+    if (!isTouch(e)) setHover(index)
+  }
+  const onPointerLeave = (index: number) => (e: ReactPointerEvent<SVGGElement>) => {
+    if (!isTouch(e)) setHover((h) => (h === index ? null : h))
+  }
+  // A mouse click must not leave keyboard focus on the phrase — that would
+  // quietly reintroduce persistence after the pointer leaves.
+  const onPointerDown = (e: ReactPointerEvent<SVGGElement>) => {
+    if (!isTouch(e)) e.preventDefault()
+  }
+  const onPointerUp = (index: number) => (e: ReactPointerEvent<SVGGElement>) => {
+    if (isTouch(e)) setSelected(index)
+  }
+  const onKey = (index: number) => (e: ReactKeyboardEvent<SVGGElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      setFocus(index)
+    }
+  }
 
   return (
     <div className="about-cloud-hero">
@@ -142,9 +168,12 @@ export function AboutWordCloud() {
                 role="button"
                 tabIndex={0}
                 aria-label={`${KEY[s].w} — ${KEY[s].kicker}`}
-                onMouseEnter={() => show(s)}
-                onFocus={() => show(s)}
-                onClick={() => show(s)}
+                onPointerEnter={onPointerEnter(s)}
+                onPointerLeave={onPointerLeave(s)}
+                onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp(s)}
+                onFocus={() => setFocus(s)}
+                onBlur={() => setFocus((f) => (f === s ? null : f))}
                 onKeyDown={onKey(s)}
               >
                 <text x={p.x} y={p.y} fontSize={p.px} fontWeight={p.w} fillOpacity={p.a}>
