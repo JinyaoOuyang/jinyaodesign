@@ -1,0 +1,53 @@
+---
+title: "Context-Aware AI Trip Planner"
+description: "A web prototype exploring natural-language trip input, progressive disclosure, and explicit planning choices."
+date: "2025-10-01"
+tags: ["Dashboard", "Data Visualization", "Context-Aware"]
+role: "UX Designer/Engineer"
+timeline: "1 month"
+tools: ["Figma", "Windsurf", "UserTesting"]
+coverImage: "/work/AI-Trip-Planner-cover.png"
+featuredOrder: 5
+tier: "earlier"
+status: "Web prototype"
+---
+
+## Overview
+
+**Independent web prototype · 1 month**
+
+I designed and built a trip-planning exploration around a short natural-language request, such as “Three days in Paris.” The interface then presents planning context and choices that can be refined as the trip takes shape.
+
+My role covered interaction design and frontend implementation using Figma and Windsurf. The case demonstrates the prototype and design rationale; it does not establish a measured reduction in planning effort.
+
+## The Design Question
+
+Early trip planning often begins with incomplete intent. I explored how to let someone start with a destination and duration, then refine priorities without completing a large configuration form first.
+
+<Figure src="/work/AI-Trip-Planner-workflow.png" alt="Trip-planning workflow from initial request to context and itinerary choices" caption="Prototype workflow: begin with a request, then refine the planning context." />
+
+## Key Design Decisions
+
+### Reveal detail as it becomes useful
+
+Progressive disclosure keeps the starting task small. More context appears when it helps the next decision.
+
+**Trade-off:** hidden detail must remain discoverable, particularly for people who want to set constraints at the start.
+
+### Make inferred context inspectable
+
+The design surfaces trip context and explicit planning choices rather than asking users to accept an opaque itinerary.
+
+**Trade-off:** a simpler first interaction increases the importance of correcting assumptions later. Automatic adaptation needs to stay predictable.
+
+### Keep the interface focused on decisions
+
+I prioritized choosing a direction and refining it over displaying every possible feature. The prototype explores how layout and information density could follow emerging priorities.
+
+<Figure src="/work/AI-Trip-Planner-outcome.png" alt="Trip-planner prototype with natural-language input, trip context, and three selectable travel styles" caption="Prototype screen: visible context and selectable travel styles make the proposal available for review." />
+
+## Outcome & Next Steps
+
+The deliverable is a web prototype showing the input-to-planning flow. Next, I would observe whether people can correct a misunderstood request, find their constraints, and explain why the interface changed.
+
+Those checks would determine whether adaptation helps the task or makes the experience harder to predict.

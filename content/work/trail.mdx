@@ -1,0 +1,95 @@
+---
+title: "Trail"
+description: "A job-search copilot that captures roles, analyzes resume fit, and keeps applications in one place — designed and built solo."
+date: "2026-05-01"
+tags: ["AI Product", "Design Engineering", "Full-Stack", "Chrome Extension"]
+role: "Solo product, design, and engineering"
+timeline: "4-day sprint"
+tools: ["Next.js", "TypeScript", "Tailwind", "Supabase", "OpenRouter", "Chrome Extension (Manifest V3)", "Vercel"]
+coverImage: "/work/trail-portfolio-cover.png"
+featuredOrder: 1
+tier: "primary"
+homepageFeatured: true
+status: "Deployed web app"
+metrics:
+  - "4 days to ship"
+  - "Solo design & engineering"
+  - "Chrome Extension + Web App"
+  - "Structured AI analysis"
+---
+
+## Overview
+
+**Independent project · Web app + Chrome extension · Initial build in 4 days**
+
+Trail brings job capture, resume-fit analysis, and application tracking into one workflow. I designed and built the initial version in a four-day sprint, starting with a problem I was experiencing in my own job search.
+
+The dashboard is the place to compare roles and revisit decisions. A companion Chrome extension captures job descriptions while browsing. The implementation below reflects the current code, including its OpenRouter integration.
+
+<Figure src="/work/trail-portfolio-cover.png" alt="Trail application dashboard presented on a laptop" caption="Product presentation: the dashboard brings application status, fit signals, and recent activity together. Sample records illustrate the interface." />
+
+<Divider />
+
+## The Problem
+
+My process was split across job boards, browser tabs, and a spreadsheet. Saving a role captured its title and company, but lost the reasoning: why it looked promising, where my experience matched, and what I needed to investigate.
+
+The design question was **how to preserve that context at the moment of discovery**, while keeping it easy to review later.
+
+<Divider />
+
+## My Role & Stack
+
+I owned the product scope, interface design, component system, web implementation, browser extension, and AI integration.
+
+**Stack:** Next.js, TypeScript, Tailwind, Supabase, OpenRouter, and a Manifest V3 extension. Paper and AI-assisted development tools supported design exploration and implementation; I set the workflow, reviewed the code, and made the scope decisions.
+
+<Divider />
+
+## Key Design Decisions
+
+### 1. Make the web workflow useful before adding capture
+
+I built the dashboard and analysis workflow first, with manual job-description input. The extension then became a faster entry point into the same system.
+
+**Trade-off:** the first version required more input, but the core workflow could function independently of browser permissions and job-board detection.
+
+### 2. Pair the fit score with reasons
+
+The analysis returns strengths, gaps, resume suggestions, and talking points alongside a score. A number helps scanning; the explanation gives the user something to inspect and act on.
+
+**Trade-off:** generated analysis can be incomplete or wrong. The score is a heuristic for personal review, not a prediction of hiring outcomes. The current API separates job extraction from resume-fit analysis and can return extracted role information when no resume is available.
+
+### 3. Start with broad extraction, then expose its limits
+
+The extension extracts page text and sends it to the analysis workflow, avoiding a separate scraper for every board. It also detects submission signals such as confirmation URLs.
+
+**Trade-off:** page structure and wording still affect reliability. Submission detection records a signal for later use; it does not establish that every application has been successfully tracked. The extension currently installs as an unpacked development build.
+
+<Divider />
+
+## From Design to Code
+
+Reusable cards, status pills, and fit indicators give the dashboard a consistent hierarchy. The dark surface treatment groups dense information; color distinguishes status and fit without replacing text labels.
+
+The web API handles authenticated analysis, input limits, usage controls, and structured responses through OpenRouter. Supabase stores application and resume data. The extension uses browser storage to carry captured job information between its content script, service worker, and popup.
+
+That separation keeps capture, analysis, and review connected while allowing each to evolve independently.
+
+<Divider />
+
+## Demo & Outcome
+
+**Built:** a web application, structured job and resume analysis, application tracking, and a companion extension with job-description capture.
+
+[Open web app →](https://trailai-rose.vercel.app/) · [Request a code walkthrough →](mailto:katherineoyjy@gmail.com?subject=Trail%20code%20walkthrough)
+
+The web workflow requires sign-in. Extension setup instructions are included with the source. The cover uses sample application records to demonstrate the interface.
+
+<Divider />
+
+## Reflection
+
+The four-day constraint helped me prioritize one connected workflow. The next validation should focus on extraction accuracy across job boards, whether people find the analysis actionable, and how reliably captured roles reach the dashboard.
+
+I would address those questions before expanding into calendar integration or automated digests.

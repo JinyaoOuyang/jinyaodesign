@@ -1,0 +1,73 @@
+---
+title: "Tesla Charging Experience"
+description: "An independent strategy concept for explainable charging recommendations, driver control, and a staged MVP."
+date: "2026-03-30"
+tags: ["Product Strategy", "AI", "UX", "Systems Thinking"]
+role: "Product strategy & UX — independent case study"
+timeline: "2 weeks"
+tools: ["Figma", "Claude Code"]
+coverImage: "/work/tesla-charging-cover.png"
+featuredOrder: 4
+tier: "earlier"
+status: "Strategy concept"
+---
+
+## Overview
+
+**Independent PM interview case · 2 weeks · Strategy and prototype**
+
+This project explores how a charging interface could help drivers choose a station under uncertainty. I developed it independently for a Tesla China PM interview, covering the journey, recommendation logic, interface concepts, and a proposed validation plan.
+
+The work is a concept exercise, with no Tesla affiliation or production rollout.
+
+## The Problem
+
+A station list leaves several questions unresolved: will a charger be available on arrival, how long will the stop take, and which option best fits this trip?
+
+I framed the opportunity around reducing the effort of comparing uncertain options while keeping the driver in control.
+
+## Key Design Decisions
+
+### Show a small set of explainable recommendations
+
+The concept ranks two or three options by time, cost, and trip fit. Each recommendation explains its trade-off and can be dismissed.
+
+**Trade-off:** fewer options simplify comparison but depend on reliable station data and a ranking the driver can inspect.
+
+### Explore two levels of detail
+
+A concise recommendation supports a quick decision; a comparison view exposes more detail when needed. Automatic switching between these views remains a hypothesis to validate.
+
+<Figure src="/work/tesla-charging-solution-CarPlay.png" alt="Concept charging recommendations in an in-car interface" caption="Concept screen: charging guidance in an in-car context." />
+
+### Extend the journey beyond station selection
+
+Charging progress, departure reminders, and a summary of the stop connect the recommendation to its outcome. An initial MVP would use explicit rules before introducing predictive models.
+
+<Figure src="/work/tesla-charging-solution-Mobile-App.png" alt="Concept mobile interface for selecting and monitoring a charging stop" caption="Concept screen: the companion mobile charging experience." />
+
+## Proposed Validation
+
+These are evaluation measures, not observed results:
+
+<table>
+  <thead>
+    <tr><th>Question</th><th>Measure to establish</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Is choosing easier?</td><td>Decision time and comparison errors</td></tr>
+    <tr><td>Are recommendations understandable?</td><td>Comprehension of the stated reasons</td></tr>
+    <tr><td>Do drivers trust the choice appropriately?</td><td>Acceptance, overrides, and explanations for both</td></tr>
+    <tr><td>Does the stop match expectations?</td><td>Difference between expected and actual wait and charging time</td></tr>
+  </tbody>
+</table>
+
+Baselines and target values would require real driver sessions and operational data. I would test recommendation clarity and user control before committing to adaptive layouts or broader network optimization.
+
+## Artifacts & Reflection
+
+The deliverables are a strategy deck and interface prototype. The central lesson was to connect every recommendation to an explanation, an override, and a way to evaluate whether it helped.
+
+[View Figma prototype →](https://www.figma.com/design/NWOm8fs7LwkBCOzGAVvvmM/tesla-charging-experience?node-id=0-1)
+
+[View strategy deck →](https://docs.google.com/presentation/d/1u0SLzmb5Kcgm9sJAE6pWD1hKlyXz9wkS/edit)

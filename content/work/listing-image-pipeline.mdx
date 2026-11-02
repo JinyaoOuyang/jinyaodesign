@@ -1,0 +1,80 @@
+---
+title: "FLEXI-CASA Listing Image Pipeline"
+description: "A reusable Figma and AI production workflow that delivered 36 product images across six Amazon SKUs."
+date: "2026-05-01"
+tags: ["Product Design", "AI-powered", "Systems"]
+role: "Sole Design Engineer — end-to-end product ownership"
+timeline: "Ongoing"
+tools: ["Gemini", "Figma", "Amazon Seller Central"]
+coverImage: "/work/listing-image-pipeline-cover.png"
+featuredOrder: 3
+tier: "primary"
+homepageFeatured: true
+status: "36 images delivered"
+---
+
+## Overview
+
+**Commercial workflow · 6 SKUs · 36 images delivered**
+
+I built a repeatable workflow for FLEXI-CASA's Amazon product imagery. A six-image structure, Figma templates, and reference-guided generation turned individual design tasks into a production system I could reuse across products.
+
+I owned the slot structure, layout templates, generation constraints, visual review, and final content preparation.
+
+<Divider />
+
+## The Problem
+
+Each SKU needed a coherent set of images explaining the product. Creating every image independently meant repeatedly deciding what to show, rebuilding layouts, and checking whether the product still looked accurate.
+
+The opportunity was to **standardize each image's purpose while preserving product-specific evidence**.
+
+<Divider />
+
+## Key Design Decisions
+
+### 1. Give each slot a job before generating content
+
+The system separates the hero image, dimensions, product details, and lifestyle scenes. Templates define the hierarchy; each product supplies its own photography, specifications, and copy.
+
+**Trade-off:** a fixed structure constrains composition. It also gives reviewers a clearer basis for judging whether a slot has the right content.
+
+<Figure src="/work/listing-template.png" alt="Six Figma image templates for a product hero, dimensions, lifestyle scenes, features, and set contents" caption="Template exploration: six image roles establish a repeatable structure before final content is produced." />
+
+### 2. Ground generation in the actual product
+
+I used Gemini's multimodal input with product references to constrain appearance. Text prompts alone left too much room for changes to the product's shape or material.
+
+**Trade-off:** reference input improves control but still requires review. Generated output must be checked against the source product, particularly across variants.
+
+### 3. Keep layout and review in Figma
+
+Figma's component control and export workflow made it the production surface for arranging, comparing, and refining a complete listing set.
+
+**Trade-off:** generation and layout remain separate steps. That extra review stage makes inconsistencies visible before export.
+
+<Divider />
+
+## The Production System
+
+The delivered sets use six roles: product-set hero, dimensions, a credibility-led scene, surface detail, grip detail, and a lifestyle scene. The template exploration above shows the earlier structure; the batch below shows how it developed in production.
+
+<Figure src="/work/listings-in-figma.png" alt="Figma batch of six images each for product variants PP-A14 through PP-A19" caption="Delivered batch: six product variants, each with a complete six-image set." />
+
+<Divider />
+
+## Outcome & Limits
+
+**Delivered: 36 images across six SKUs, PP-A14 through PP-A19.** The artifacts show a reusable template system, a complete batch, and imagery on an Amazon listing.
+
+<Figure src="/work/Amazon-showcase.png" alt="Amazon product listing showing the FLEXI-CASA paddle set and its image gallery" caption="Listing example: product imagery in the shopping context it was created for." />
+
+The delivery count measures output. Production-time savings and sales impact would need a consistent baseline and measurement before being reported as results.
+
+## Reflection
+
+Two issues remain: visual consistency across SKUs and copy drifting between slots. My next step is to generate a structured product brief first, then feed every slot from that shared source of facts and language.
+
+The system's value depends on how much review it removes without losing product fidelity. That is the next thing to measure.
+
+[Related work: the production storefront →](/work/e-commerce-content-system)

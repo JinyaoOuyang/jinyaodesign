@@ -1,0 +1,136 @@
+---
+title: "Isleo"
+description: "An iOS focus app that turns daily focus into a growing island — designed and built solo in React Native."
+date: "2026-07-13"
+tags: ["Design Engineering", "AI-Native", "React Native", "Systems", "0→1"]
+role: "Sole design engineer — product, systems, assets, and implementation"
+timeline: "2026 — ongoing"
+tools: ["React Native", "TypeScript", "Figma", "Blender", "MMKV", "Supabase"]
+coverImage: "/work/isleo/portfolio-cover-v2.png"
+featuredOrder: 0
+tier: "primary"
+homepageFeatured: true
+status: "Working iOS build"
+metrics:
+  - "Solo design & engineering"
+  - "Working iOS build"
+  - "Layered island reveals"
+  - "Local-first progress"
+---
+
+## Overview
+
+**Independent project · Working iOS build · 4-minute read**
+
+Isleo is a focus companion where each day becomes a hexagonal island tile and each month becomes a world. Reaching a daily goal grows paradise; missed goals leave cursed terrain, while future days wait under fog.
+
+I designed the experience and built the React Native app, including its map interactions, animated asset system, and session persistence. The current build runs on iOS Simulator and personal devices; beta distribution and App Store release remain ahead.
+
+<Figure
+  src="/work/isleo/portfolio-cover-v2.png"
+  alt="Isleo monthly island map and daily focus detail displayed on two phones"
+  caption="Product mockup based on Figma interface designs: the monthly map and a completed day's detail."
+/>
+
+<Divider />
+
+## The Problem
+
+I designed Isleo around a question: **could a place worth returning to make a focus routine feel more meaningful?**
+
+The starting hypothesis was that a growing world could give accumulated effort a visible identity. This remains a product hypothesis to test with users.
+
+That created two constraints: the world needed enough variety to reward repeated visits, and interrupted sessions needed to preserve progress. As a solo builder, I also needed reusable assets rather than a new illustration for every date.
+
+<Divider />
+
+## My Role & Stack
+
+I owned product framing, screen flows, the Figma design language, Blender assets, interaction behavior, and implementation.
+
+**App:** React Native / Expo, TypeScript, Zustand, MMKV, Supabase, and Reanimated. **Design and assets:** Figma and Blender.
+
+AI-assisted tooling accelerated scaffolding, scripting, and asset experiments. I defined the product rules, reviewed implementation, and set the visual constraints and recovery behavior.
+
+<Divider />
+
+## Key Design Decisions
+
+### 1. Let the artwork overlap; keep tap targets predictable
+
+**Problem.** Island artwork extends beyond its hexagon. Bounding-box hit areas let a neighboring tile capture a tap intended for another day.
+
+**Decision.** I separated visual bounds from interaction geometry. Figma coordinates define the layout; the app resolves taps to the nearest hex center and rejects taps beyond a distance threshold.
+
+**Trade-off.** Tapping an overhanging tree does not necessarily select the tile that owns that artwork. The hex centers provide a consistent rule while preserving the islands' layered appearance.
+
+### 2. Build the reward into the asset structure
+
+**Problem.** A flattened tile image could fade in, but could not show a pond forming before trees grew.
+
+**Decision.** I authored ground, pond, plants, and shadow layers in Blender under shared material and lighting rules. Reanimated stages their appearance in the app: land, lake, then flora.
+
+**Trade-off.** More layers require stricter export conventions and coordination. In return, the same kit supports date-based variations and an editable reveal sequence.
+
+<Figure
+  src="/work/clay/concepts/isleo-vs-concept.png"
+  alt="Blender island asset render compared with the original clay visual concept"
+  caption="Asset development: comparing Blender output with the visual target before composing the layers in the app."
+/>
+
+### 3. Treat returning to a session as part of the experience
+
+**Problem.** A timer's successful completion is only one path. Leaving the app, losing connectivity, or returning after the goal is met also needs a defined outcome.
+
+**Decision.** Local checkpoints preserve counted focus time. Progress below the goal is stored as partial; reaching the goal produces paradise. Local persistence precedes cloud sync, so a slow network does not hold up saving.
+
+**Trade-off.** Recovery and sync add state-management work. I prioritized continuity because the island's reward depends on trusting the progress underneath it.
+
+<TwoColumn>
+<Column>
+<Figure
+  src="/work/isleo/figma-day-paradise.png"
+  alt="Figma day-detail design for a completed focus goal"
+  caption="Figma design: goal reached, with accumulated time visible."
+/>
+</Column>
+<Column>
+<Figure
+  src="/work/isleo/figma-day-cursed.png"
+  alt="Figma day-detail design for a day below its focus goal"
+  caption="Figma design: missed goal, with the day's effort still recorded."
+/>
+</Column>
+</TwoColumn>
+
+<Divider />
+
+## From Design to Code
+
+The implementation follows **foundations → UI primitives → product components → screens**. Semantic colors connect the Figma states to the app; `ClayButton` and `IconButton` share reusable behavior, while tile components retain their own art direction.
+
+For example, the day sheet reads session data to select a domain state and its semantic colors. The corresponding layered tile handles the visual reveal. Keeping those responsibilities separate lets the artwork change without rewriting the progress rules.
+
+Month-world generation is an optional experiment. The core map and focus loop use kit assets and remain usable without a generated month-end image.
+
+<Divider />
+
+## Demo & Outcome
+
+**Delivered:** a working iOS build with a monthly map, focus sessions, day details, layered reveals, and local progress persistence.
+
+**Technical validation:** five automated session-save checks pass. They cover delayed cloud responses, failed sync, upload ordering, logout during pending writes, and local storage failure. These checks validate persistence logic under controlled conditions.
+
+The interface images above show Figma designs; the interactive cover demonstrates the 3D asset. A device recording will document the complete focus-to-reward flow.
+
+{/* Insert the user's actual device recording here when available. Keep the page free of empty video placeholders. */}
+
+**[Request a code walkthrough →](mailto:katherineoyjy@gmail.com?subject=Isleo%20code%20walkthrough)**
+
+<Divider />
+
+## Reflection
+
+The most consequential work was connecting expressive artwork to predictable interaction and durable state. Animation depended on the asset schema; confidence in the reward depended on session recovery.
+
+Next, I want to test whether people understand the map, can reliably select a day, and feel encouraged to return after a missed goal. The cursed state needs particular scrutiny: its emotional effect is still an open question. Beta feedback should guide that decision before I expand the world-generation system.

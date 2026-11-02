@@ -1,10 +1,10 @@
 # Jinyao Ouyang Portfolio
 
-A minimalist, fast, SEO-friendly portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and MDX.
+A minimalist, fast, SEO-friendly portfolio website built with Next.js 16, TypeScript, Tailwind CSS, and MDX.
 
 ## Features
 
-- **Next.js 14 App Router** — Latest React framework with server components
+- **Next.js 16 App Router** — Latest React framework with server components
 - **MDX Content** — Write case studies and blog posts in Markdown with React components
 - **Tailwind CSS** — Utility-first styling with custom design tokens
 - **TypeScript** — Full type safety throughout
@@ -16,7 +16,7 @@ A minimalist, fast, SEO-friendly portfolio website built with Next.js 14, TypeSc
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 22+
 - npm or yarn
 
 ### Installation
@@ -220,3 +220,45 @@ Dark mode is class-based. Add dark mode toggle by managing the `dark` class on `
 ## License
 
 MIT
+
+## Traffic measurement and release checks
+
+GA4 uses the existing property `G-9WWV08C6KQ`. The loader only runs on
+`jinyaodesign.com` and `www.jinyaodesign.com`; previews log `[analytics]` in
+the browser console without sending test visits to GA. Automatic page views
+remain enabled. Custom events are `project_open`, `case_study_view`,
+`resume_click`, `contact_click`, `demo_click`, and `source_click`.
+Custom parameters contain path, project slug, placement, contact method, or
+public destination hostname; they omit link query strings and email addresses.
+
+After deploying, verify these events in GA Realtime. Register `project_slug`
+and `location` as event-scoped custom dimensions if project/placement reports
+are needed. Mark `contact_click` as a key event; a click indicates intent,
+not a completed inquiry. Confirm enhanced measurement's history-change page
+views in the property before relying on route-level traffic reports.
+
+Use tagged links on external channels only; keep internal links untagged:
+
+- Medium article: https://www.jinyaodesign.com/work/isleo?utm_source=medium&utm_medium=referral&utm_campaign=isleo_case_study&utm_content=article_footer
+- LinkedIn post: https://www.jinyaodesign.com/work/isleo?utm_source=linkedin&utm_medium=social&utm_campaign=isleo_case_study&utm_content=project_post
+- Medium profile: https://www.jinyaodesign.com/?utm_source=medium&utm_medium=referral&utm_campaign=portfolio&utm_content=profile
+
+Medium syndications point their canonical to the original Medium URL. Original
+case studies and index pages point to this site. The sitemap includes only local
+canonical pages. After deployment and ownership verification, submit
+https://www.jinyaodesign.com/sitemap.xml in Google Search Console.
+No Search Console verification token is invented or embedded.
+
+Run `npm run check:portfolio` for event classification/privacy and article-source
+checks. Run `npm run build`, start port 3010, then `npm run check:release` to
+check all content routes, metadata, public linked assets, PDF download, share
+image rendering, sitemap, and preview-page noindex. Set `PORTFOLIO_URL` to
+check another running host.
+
+Security maintenance: Next.js, React, and the 3D renderer are upgraded together.
+MDX JavaScript expressions are explicitly blocked; interactive components are
+provided through the reviewed component map. Run `npm audit` after dependency
+updates, `npm run check:security` for the MDX execution regression checks, and
+repeat the production build and release checks. Netlify uses Node 22 and the
+automatically updated OpenNext adapter; the deployed adapter still requires a
+real deployment check.
