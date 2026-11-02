@@ -3,6 +3,7 @@ export type ClaySlug =
   | 'trail'
   | 'listing-image-pipeline'
   | 'tesla-charging'
+  | 'e-commerce-content-system'
 
 export type ClayAsset = {
   slug: ClaySlug
@@ -20,6 +21,12 @@ const CLAY_V = '?v=13'
 export const clayBySlug: Record<string, ClayAsset> = {
   isleo: { slug: 'isleo', glb: `/work/clay/isleo.glb${CLAY_V}`, scale: 0.84, shadowY: -0.44 },
   trail: { slug: 'trail', glb: `/work/clay/trail.glb${CLAY_V}`, scale: 1.55, shadowY: -0.5 },
+  'e-commerce-content-system': {
+    slug: 'e-commerce-content-system',
+    glb: '/work/clay/storefront.glb?v=1',
+    scale: 1.05,
+    shadowY: -0.5,
+  },
   'listing-image-pipeline': {
     slug: 'listing-image-pipeline',
     glb: `/work/clay/listing-pipeline.glb${CLAY_V}`,

@@ -1,12 +1,15 @@
+import { articleSource } from '@/lib/articleSource'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getBlogPosts, getBlogBySlug } from '@/lib/content'
+import { getBlogPosts, getBlogBySlug, getWorkBySlug } from '@/lib/content'
+import { RelatedWork } from '@/components/RelatedWork'
+import type { Work } from '@/lib/types'
 import { MDXContent } from '@/components/MDXContent'
 import { siteConfig } from '@/lib/config'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -15,28 +18,40 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getBlogBySlug(params.slug)
+  const { slug } = await params
+  const post = getBlogBySlug(slug)
   if (!post) return {}
 
   return {
+    alternates: { canonical: articleSource(post.content).sourceUrl ?? `/blog/${post.slug}` },
     title: post.title,
     description: post.description,
+    twitter: { card: 'summary_large_image', title: post.title, description: post.description, images: [post.coverImage || '/opengraph-image'] },
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
       url: `${siteConfig.url}/blog/${post.slug}`,
-      images: post.coverImage ? [{ url: post.coverImage }] : undefined,
+      images: [{ url: post.coverImage || '/opengraph-image', alt: post.title }],
+      publishedTime: post.date,
     },
   }
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = getBlogBySlug(params.slug)
+  const { slug } = await params
+  const post = getBlogBySlug(slug)
   if (!post) notFound()
 
-  
+  const relatedWork = (post.relatedWork ?? [])
+    .map(getWorkBySlug)
+    .filter((work): work is Work => work !== null)
+
+  // Present the imported source notice as a readable link, keeping article prose intact.
+  const { sourceUrl, content: articleContent } = articleSource(post.content)
+
   const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+    timeZone: 'UTC',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -67,12 +82,27 @@ export default async function BlogPostPage({ params }: Props) {
         <p className="mt-4 text-xl text-muted-foreground">
           {post.description}
         </p>
+        {sourceUrl && (
+          <a href={sourceUrl.toString()} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground">
+            Originally published on Medium <span aria-hidden="true">↗</span>
+          </a>
+        )}
       </header>
 
       {/* Content */}
       <div className="prose prose-neutral max-w-none dark:prose-invert">
-        <MDXContent source={post.content} />
+        <MDXContent source={articleContent} />
       </div>
+
+      <RelatedWork works={relatedWork} />
+
+      <aside aria-label="About the author" className="mt-10 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
+        Written by{' '}
+        <Link href="/about" className="font-medium text-foreground underline underline-offset-4">Jinyao Ouyang</Link>,
+        a Design Engineer working across product design and implementation.{' '}
+        <Link href="/work" className="text-foreground underline underline-offset-4">Explore the projects</Link>{' '}
+        or <a href={`mailto:${siteConfig.email}`} className="text-foreground underline underline-offset-4">get in touch</a>.
+      </aside>
 
       {/* Tags */}
       {post.tags.length > 0 && (

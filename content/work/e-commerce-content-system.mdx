@@ -1,66 +1,88 @@
 ---
-title: "Flexi-Casa Headless Shopify Storefront"
-description: "How a Designer Shipped a Full Production Storefront in 3 Weeks — Without a Developer"
+title: "FLEXI-CASA Storefront"
+description: "A custom Next.js storefront on Shopify — designed, implemented, and shipped to production in three weeks."
 date: "2026-01-15"
 tags: ["Product Design", "Web", "AI-powered"]
 role: "Sole Product Designer & Engineer"
 timeline: "3 weeks"
-tools: ["Figma", "Next.js", "Windsurf", "Netlify"]
+tools: ["Figma", "Next.js", "TypeScript", "Shopify Storefront API", "Netlify"]
 coverImage: "/work/flexicasa-cover.png"
 featuredOrder: 2
 tier: "primary"
+homepageFeatured: true
+status: "Shipped to production"
 ---
 
-## The Challenge
+## Overview
 
-As the sole designer at a small e-commerce startup, I asked myself: what's the highest-leverage thing I can actually contribute here? The answer was brand integrity and UX quality — two things the existing Shopify theme was actively working against. Templates constrained layouts, homogenized the visual language, and made every interaction feel generic.
+**Commercial project · Shipped to production · 3-week build**
 
-I proposed switching to a headless architecture — not because it was the obvious solution, but because it was the only way to build the experience the brand actually needed.
+FLEXI-CASA needed a storefront with more control over product presentation and brand expression than its existing Shopify theme allowed. As the sole product designer and engineer, I designed and built a custom Next.js frontend while retaining Shopify for commerce operations.
 
-## Architecture Decision
+The result is a production storefront with reusable collection, product, navigation, and cart interfaces.
 
-**Stack:** Next.js · Shopify Storefront API · Netlify
+**[Visit the storefront →](https://flexi-casa.com/)**
 
-Rather than rebuilding commerce infrastructure from scratch, I chose a clear separation of concerns: Shopify handles inventory, cart, checkout, and authentication. Next.js owns the entire presentation layer — giving full control over UX, performance, and brand expression. This decoupling meant I could design and iterate on the storefront independently, without being constrained by theme limitations or backend dependencies.
+<Divider />
 
-## Process
+## The Problem
 
-### Week 1 — Data first, visuals never
+The theme made it difficult to shape page hierarchy and interactions around the brand's products. At the same time, a small team needed dependable catalog, inventory, and checkout behavior.
 
-I started with local development, validating the full data flow before touching UI: product fetching, cart persistence, checkout handoff, account flows. Designing UI before validating data flow leads to rework and brittle systems. Nothing moved to visual design until the foundation was reliable.
+The question was where custom design would provide enough value to justify owning more frontend code and maintenance.
 
-### Week 2 — Modular systems, not one-off layouts
+<Divider />
 
-Rather than designing individual pages, I built a modular component system — PDP, collection grid, cart drawer, navigation — each designed to be reusable and composable. New product pages can be launched without writing new code. This directly addresses the scalability needs of a small, fast-moving team.
+## My Role & Stack
 
-### Week 3 — Content onboarding and production validation
+I owned experience design, information hierarchy, reusable components, Shopify integration, content onboarding, and deployment.
 
-Added new SKUs, tested edge cases with real inventory data, and refined typography, spacing, and visual rhythm across pages. Final deployment to Netlify with environment variables for secure API token handling.
+**Stack:** Figma, Next.js, TypeScript, Shopify Storefront API, and Netlify. AI-assisted development supported implementation; I worked through data flow, reviewed generated code, and refined the interface against real product content.
 
-## AI-Assisted Development
+<Divider />
 
-I used Windsurf as a collaborator, not a code generator. The most valuable thing it did wasn't write code — it helped me understand what I was building at every step. When scaffolding a component or wiring up a Storefront API call, I'd work through it in real time: reading the output, understanding the reasoning, making actual architectural decisions.
+## Key Design Decisions
 
-This meant I was never blocked waiting for an engineer, and never shipping code I didn't understand. AI reduced execution friction without replacing design judgment.
+### 1. Customize the presentation layer; retain Shopify's commerce backend
 
-## Visual Design
+Next.js controls the storefront experience. Shopify remains responsible for catalog and commerce data, with checkout handed off to Shopify.
 
-With a working system foundation, I refined the brand expression: typography hierarchy, color usage, spacing rhythm, and cross-page consistency. The goal was a storefront that felt intentionally designed — not theme-derived. Every layout decision was made in the context of the component system, ensuring visual consistency at scale.
+**Trade-off:** custom layouts and interactions come with responsibility for frontend integration, loading behavior, and upkeep. I limited the rebuild to the surfaces that needed that control.
 
-## Performance & Quality
+<Figure src="/work/flexi-casa-arch.png" alt="Architecture diagram connecting the Next.js frontend to Shopify products, inventory, cart, and checkout" caption="Architecture: a custom presentation layer connected to Shopify's commerce backend." />
 
-Built on Next.js with Netlify edge deployment, the storefront is optimized for Core Web Vitals: Next.js Image component for lazy loading and automatic image optimization, static generation for product pages, and minimal JavaScript overhead. Accessibility and readability were considered throughout — semantic HTML structure, contrast ratios, and clear CTA hierarchy.
+### 2. Organize product pages around the purchase decision
 
-## Impact
+I separated product identity, visual evidence, price and availability, the primary action, and supporting policy information. Reusable page modules keep that hierarchy consistent as catalog content changes.
 
-The storefront shipped to production in under 3 weeks — a timeline that would typically require a dedicated frontend engineer. The result is a fully custom storefront that reflects the brand rather than a template, with a modular component system flexible enough to support future product growth without additional engineering resources.
+**Trade-off:** a shared structure limits one-off layouts, but makes updates easier to maintain across products.
 
-Most importantly: this project proved that a designer with the right tools and architectural thinking can own the full stack of a production web experience.
+<Figure src="/work/flexi-casa-pdp.png" alt="Annotated product-page wireframe showing product information, images, purchase action, and policy information" caption="Design artifact: the product-page hierarchy, annotated by the job each module performs." />
 
-## Reflection
+### 3. Validate the commerce path before visual polish
 
-Headless commerce works best when UX and system design are aligned from day one. Validating data flow before visual design saved significant rework. And working with AI tools taught me something more valuable than speed — it taught me to read, understand, and own the code I ship.
+I first worked through product retrieval, cart persistence, and the checkout handoff. Component construction and visual refinement followed; the final phase introduced real SKUs and deployment checks.
 
-<Callout>
-The repository is private, but I'm happy to discuss architecture decisions, API integration, and development workflow in detail.
-</Callout>
+**Trade-off:** the early build was less polished, but exposed integration constraints before they spread through the interface.
+
+<Divider />
+
+## From Design to Code
+
+Collection grids, product pages, the cart drawer, and navigation share component patterns. The cart integration connects those interfaces to Shopify, while Next.js handles the storefront routes and product presentation.
+
+Typography, spacing, and content hierarchy were refined across those components rather than independently on every page. The implementation uses image optimization and static rendering where appropriate; measured performance scores are outside this case study's evidence.
+
+<Divider />
+
+## Outcome & Reflection
+
+The storefront shipped to production within the three-week build. The delivery evidence is the running site, commerce integration, and deployment record. This case study does not attribute a conversion or revenue increase to the redesign.
+
+<Figure src="/work/flexi-casa-deploy.png" alt="Netlify project overview showing the FLEXI-CASA storefront deployment" caption="Deployment record: the Next.js storefront published through Netlify." />
+
+The architectural lesson was to put custom effort where it changes the experience, while retaining established commerce infrastructure. Next, I would use funnel data and observed shopping sessions to identify which product-page or cart changes deserve further investment.
+
+The repository is private. I can walk through the architecture and implementation in an interview.
+
+[Related work: the listing image pipeline →](/work/listing-image-pipeline)

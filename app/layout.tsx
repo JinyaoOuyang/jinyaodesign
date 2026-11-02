@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Instrument_Serif, JetBrains_Mono, Playfair_Display } from 'next/font/google'
-import Script from 'next/script'
+import { Analytics } from '@/components/Analytics'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -27,9 +27,11 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: siteConfig.title }],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['/opengraph-image'],
     title: siteConfig.title,
     description: siteConfig.description,
   },
@@ -77,19 +79,7 @@ export default function RootLayout({
       className={`${inter.variable} ${display.variable} ${mono.variable} ${playfair.variable}`}
     >
       <body className="min-h-screen bg-background font-sans antialiased">
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-9WWV08C6KQ"
-          strategy="afterInteractive"
-        />
-        <Script id="ga-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-9WWV08C6KQ');
-          `}
-        </Script>
+        <Analytics />
         {/* Person schema — plain script so it ships in the server-rendered HTML */}
         <script
           type="application/ld+json"

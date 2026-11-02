@@ -24,7 +24,7 @@ export function WorkCard({ work }: WorkCardProps) {
   return (
     <Link
       ref={ref}
-      href={`/work/${work.slug}`}
+      href={`/work/${work.slug}`} data-analytics-location="work_grid"
       className="work-card group block h-full"
       data-variant="orbital-magnet"
       onMouseMove={onMove}
@@ -36,7 +36,7 @@ export function WorkCard({ work }: WorkCardProps) {
             alt={work.title}
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) calc(100vw - 48px), (max-width: 1024px) calc((100vw - 80px) / 2), 472px"
           />
           <span className="label-overlay" aria-hidden="true">
             <span className="label-dot" />
@@ -47,6 +47,7 @@ export function WorkCard({ work }: WorkCardProps) {
         </div>
         <div className="body flex flex-1 flex-col">
           <h3 className="title">{work.title}</h3>
+          {work.status && <p className="text-xs text-muted-foreground">{work.status}</p>}
           <p className="desc">{work.description}</p>
           <div className="tags mt-auto">
             {work.tags.slice(0, 3).map((tag) => (

@@ -1,172 +1,95 @@
 ---
 title: "Trail"
-description: "AI-Powered Job Hunt Copilot"
+description: "A job-search copilot that captures roles, analyzes resume fit, and keeps applications in one place — designed and built solo."
 date: "2026-05-01"
 tags: ["AI Product", "Design Engineering", "Full-Stack", "Chrome Extension"]
 role: "Solo product, design, and engineering"
 timeline: "4-day sprint"
-tools: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Anthropic Claude API", "Chrome Extension (Manifest V3)", "Vercel"]
-coverImage: "/work/trail-dashboard-hero.png"
+tools: ["Next.js", "TypeScript", "Tailwind", "Supabase", "OpenRouter", "Chrome Extension (Manifest V3)", "Vercel"]
+coverImage: "/work/trail-portfolio-cover.png"
 featuredOrder: 1
 tier: "primary"
+homepageFeatured: true
+status: "Deployed web app"
 metrics:
   - "4 days to ship"
-  - "3 AI layers"
+  - "Solo design & engineering"
   - "Chrome Extension + Web App"
-  - "Claude API integration"
+  - "Structured AI analysis"
 ---
 
 ## Overview
 
-I was drowning in tabs during my job search — LinkedIn, Greenhouse, Lever, Ashby — copying company names into spreadsheets and re-reading JDs to remember why I cared. Existing trackers like Huntr and Teal solve recording, not thinking. So I built Trail: a Chrome extension that detects when I'm on a job posting, an AI pipeline that scores fit against my resume, and a glassmorphism dashboard I actually enjoy opening. Shipped in 4 days using Paper for design, Windsurf and Claude Code for engineering, and the Anthropic API for product intelligence — three AI layers, with me as director, not maker.
+**Independent project · Web app + Chrome extension · Initial build in 4 days**
 
-<Callout type="insight" label="Build snapshot">
-Built solo in 4 days using AI-native tooling: Paper MCP for design, Windsurf + Claude Code for engineering, and Anthropic API for runtime intelligence.
-</Callout>
+Trail brings job capture, resume-fit analysis, and application tracking into one workflow. I designed and built the initial version in a four-day sprint, starting with a problem I was experiencing in my own job search.
+
+The dashboard is the place to compare roles and revisit decisions. A companion Chrome extension captures job descriptions while browsing. The implementation below reflects the current code, including its OpenRouter integration.
+
+<Figure src="/work/trail-portfolio-cover.png" alt="Trail application dashboard presented on a laptop" caption="Product presentation: the dashboard brings application status, fit signals, and recent activity together. Sample records illustrate the interface." />
 
 <Divider />
 
 ## The Problem
 
-Tracking ≠ helping. Existing tools (Huntr, Teal, Notion templates) are passive databases.
+My process was split across job boards, browser tabs, and a spreadsheet. Saving a role captured its title and company, but lost the reasoning: why it looked promising, where my experience matched, and what I needed to investigate.
 
-The real friction in a job search isn't recording applications — it's the cognitive load of evaluating each JD against your background, deciding whether it's worth applying, and remembering why you cared a week later.
-
-Manual data entry compounds the problem: every saved role costs 60–90 seconds of copy-paste work.
+The design question was **how to preserve that context at the moment of discovery**, while keeping it easy to review later.
 
 <Divider />
 
-## The Insight
+## My Role & Stack
 
-A tracker should be a **copilot**, not a database. The work happens *while you're browsing JDs*, not after. If the tool can analyze in-context and capture automatically, tracking disappears into the background.
+I owned the product scope, interface design, component system, web implementation, browser extension, and AI integration.
 
-<Divider />
-
-## The Solution
-
-Three integrated layers work together to eliminate friction from job searching:
-
-### 1. Chrome Extension (Capture Layer)
-
-{/* TODO: Add screenshot/video showing extension overlay on LinkedIn JD - trail-extension-linkedin.gif */}
-
-- Detects job postings on LinkedIn, Greenhouse, Lever, Ashby, Workday via Manifest V3 content scripts
-- Generic JD extraction using `document.body.innerText` — no site-specific selectors, letting the LLM handle parsing
-- Auto-detects application submissions via URL pattern matching (`/confirmation`, `/thank-you`, `/submitted`) and confirmation copy in the DOM
-- Non-intrusive overlay: "✨ Detected you applied to [Company] — save to Trail?"
-
-### 2. AI Analysis (Intelligence Layer)
-
-{/* TODO: Add screenshot showing application detail with fit score ring - trail-application-detail.png */}
-
-- `/api/analyze` route accepts JD text + resume ID, calls Claude API
-- Returns structured JSON: fit_score (0–100), strengths, gaps, resume_suggestions, talking_points, red_flags
-- Streaming response for perceived speed
-
-### 3. Dashboard (Review Layer)
-
-{/* TODO: Add hero dashboard screenshot - trail-dashboard-hero.png */}
-
-Glassmorphism visual system:
-- Dark `#0A0A0F` base with mesh gradient (purple `#6B5CFF` → cyan `#00D4FF` → magenta `#FF4D8F`)
-- `bg-white/5` + `backdrop-blur-xl` cards
-- 4 stat cards: Total · This Week · In Progress · Offers
-- Application list with status pills, fit score rings, and recent activity sidebar
-- Application detail page with re-analyze button and full AI breakdown
+**Stack:** Next.js, TypeScript, Tailwind, Supabase, OpenRouter, and a Manifest V3 extension. Paper and AI-assisted development tools supported design exploration and implementation; I set the workflow, reviewed the code, and made the scope decisions.
 
 <Divider />
 
-## Design System
+## Key Design Decisions
 
-{/* TODO: Add design system image showing status pills, score rings, stat cards - trail-design-system.png */}
+### 1. Make the web workflow useful before adding capture
 
-**Colors:** Dark base + glassmorphism + status pill palette (Wishlist gray, Applied blue, Phone Screen purple, Onsite teal, Offer green, Rejected red).
+I built the dashboard and analysis workflow first, with manual job-description input. The extension then became a faster entry point into the same system.
 
-**Fit Score Ring:** SVG `stroke-dasharray`, no extra libraries. Color-coded: 80+ teal, 60–79 amber, &lt;60 red.
+**Trade-off:** the first version required more input, but the core workflow could function independently of browser permissions and job-board detection.
 
-**Typography:** Inter, semibold tracking-tight headers.
+### 2. Pair the fit score with reasons
 
-**Components:** Reusable glass card primitive, status pill, score ring, stat card.
+The analysis returns strengths, gaps, resume suggestions, and talking points alongside a score. A number helps scanning; the explanation gives the user something to inspect and act on.
 
-<Divider />
+**Trade-off:** generated analysis can be incomplete or wrong. The score is a heuristic for personal review, not a prediction of hiring outcomes. The current API separates job extraction from resume-fit analysis and can return extracted role information when no resume is available.
 
-## Process — AI-Native Workflow
+### 3. Start with broad extraction, then expose its limits
 
-This project was built using three AI agents working in concert, with me directing:
+The extension extracts page text and sends it to the analysis workflow, avoiding a separate scraper for every board. It also detects submission signals such as confirmation URLs.
 
-{/* TODO: Add workflow diagram - trail-ai-workflow.svg */}
-
-<Figure 
-  src="/work/3-layers-ai.png" 
-  alt="AI workflow layers" 
-  caption="AI workflow layers"
-/>
+**Trade-off:** page structure and wording still affect reliability. Submission detection records a signal for later use; it does not establish that every application has been successfully tracked. The extension currently installs as an unpacked development build.
 
 <Divider />
 
-## Tradeoffs & Decisions
+## From Design to Code
 
-**Generic content extraction over site-specific scrapers**
-Lets the LLM do the parsing — one extraction path covers every job board, including ones I haven't seen. More resilient than brittle CSS selectors that break when sites redesign.
+Reusable cards, status pills, and fit indicators give the dashboard a consistent hierarchy. The dark surface treatment groups dense information; color distinguishes status and fit without replacing text labels.
 
-**Web app first, extension second**
-Built the AI analysis and dashboard before the extension so I had a working tool from day 1, even with manual JD paste. The extension became the convenience layer, not the foundation.
+The web API handles authenticated analysis, input limits, usage controls, and structured responses through OpenRouter. Supabase stores application and resume data. The extension uses browser storage to carry captured job information between its content script, service worker, and popup.
 
-**Glassmorphism over flat UI**
-Job tracking is grim work; the visual treatment is part of the product — I built something I actually want to open. The dark glass aesthetic with mesh gradients makes an otherwise tedious task feel modern and intentional.
+That separation keeps capture, analysis, and review connected while allowing each to evolve independently.
 
 <Divider />
 
-## What I Shipped (in 4 Days)
+## Demo & Outcome
 
-- Live web app deployed on Vercel
-- Chrome extension (Manifest V3) — detection + analysis + auto-capture
-- Supabase schema for applications and resumes (multi-version support)
-- AI analysis API endpoint with structured output
-- Glassmorphism design system, reusable components
+**Built:** a web application, structured job and resume analysis, application tracking, and a companion extension with job-description capture.
 
-<Stats items={[
-  { value: "4 days", label: "From idea to deployed" },
-  { value: "3 AI layers", label: "Design → Code → Intelligence" },
-  { value: "100%", label: "Solo-built" },
-  { value: "$0", label: "Infrastructure (Vercel hobby tier)" }
-]} />
+[Open web app →](https://trailai-rose.vercel.app/) · [Request a code walkthrough →](mailto:katherineoyjy@gmail.com?subject=Trail%20code%20walkthrough)
+
+The web workflow requires sign-in. Extension setup instructions are included with the source. The cover uses sample application records to demonstrate the interface.
 
 <Divider />
 
 ## Reflection
 
-**What worked:** AI-native workflow compressed weeks of work into days. Being my own user meant feedback loops were instant — I was fixing pain points I actually felt every morning.
+The four-day constraint helped me prioritize one connected workflow. The next validation should focus on extraction accuracy across job boards, whether people find the analysis actionable, and how reliably captured roles reach the dashboard.
 
-**What I'd do next:** PDF resume parsing for multi-format support, Chrome Web Store listing for broader distribution, calendar integration for interview scheduling, weekly digest emails with insights.
-
-**What this project signals:** I can move from problem → design → shipped product end-to-end, using AI not as a feature but as a native part of the building process. The tools change; the product thinking doesn't.
-
-<Divider />
-
-## Live Demo & Code
-
-<TwoColumn>
-<Column>
-
-**<a href="https://trailai-rose.vercel.app/" target="_blank" rel="noopener noreferrer">View Live Demo →</a>**
-
-The deployed application with full AI analysis, dashboard, and glassmorphism UI. Create an account to see the fit scoring in action.
-
-</Column>
-<Column>
-
-**<a href="https://github.com/JinyaoOuyang/trail" target="_blank" rel="noopener noreferrer">View on GitHub →</a>**
-
-Full source code including Next.js app, Chrome extension, Supabase schema, and Claude API integration. README includes setup instructions.
-
-</Column>
-</TwoColumn>
-
-<Callout type="insight" label="Why this">
-Trail is a production-ready tool I use daily in my own job search. It represents how I think about product: identify real friction, build with modern tools, ship fast, iterate based on use.
-</Callout>
-
-<Divider />
-
-{/* TODO: Optional demo video - trail-demo.mp4 - 60-90 second screen recording showing: LinkedIn → extension detects JD → analyze → save → dashboard updates */}
+I would address those questions before expanding into calendar integration or automated digests.

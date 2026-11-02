@@ -65,7 +65,7 @@ interface MDXContentProps {
 export function MDXContent({ source, headings = [] }: MDXContentProps) {
   return (
     <div className="prose prose-neutral max-w-none dark:prose-invert">
-      <MDXRemote source={source} components={makeComponents(headings)} />
+      <MDXRemote source={source} components={makeComponents(headings)} options={{ blockJS: true, blockDangerousJS: true }} />
     </div>
   )
 }

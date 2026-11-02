@@ -1,11 +1,13 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 import { AboutWordCloud } from '@/components/AboutWordCloud'
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: 'About',
   description:
-    'Jinyao Ouyang — Design Engineer. I design the interaction, define the system, and build the product: React, React Native, TypeScript, and AI-assisted development. MS HCI, University of Washington.',
+    'Jinyao Ouyang is a Design Engineer working across product design, React, React Native, and TypeScript. MS in Technology Innovation, University of Washington.',
 }
 
 export default function AboutPage() {
@@ -19,33 +21,35 @@ export default function AboutPage() {
       <div className="mx-auto max-w-[1100px] px-6 py-20 md:py-28">
         {/* How I work */}
         <section className="max-w-[720px]">
-          <h3 className="font-display text-[clamp(24px,3vw,32px)] font-normal leading-tight tracking-[-0.02em]">
+          <h2 className="font-display text-[clamp(24px,3vw,32px)] font-normal leading-tight tracking-[-0.02em]">
             How I <em className="italic text-primary">work</em>
-          </h3>
+          </h2>
           <div className="mt-6 space-y-5 text-base leading-[1.75] text-muted-foreground">
             <p>
-              I move between Figma, product systems, frontend implementation, and
-              AI-assisted development instead of treating design and engineering as
-              separate handoff stages. The interaction, the state machine, and the code
-              that ships are one job.
+              I design the interaction and build the software behind it. My work spans
+              product framing, Figma prototypes, reusable components, and implementation
+              in React, React Native, and TypeScript.
             </p>
             <p>
-              Right now that means <span className="text-foreground">Isleo</span> — an iOS
-              focus product where I own the design language, the Blender and Rive asset
-              pipeline, and the React Native implementation — and production work at{' '}
-              <span className="text-foreground">FLEXI-CASA</span>, where I&apos;m the sole
-              design engineer with end-to-end product ownership and design decisions have
-              to survive contact with a real storefront.
+              At{' '}
+              <Link href="/work/e-commerce-content-system" className="text-foreground underline underline-offset-4">FLEXI-CASA</Link>,
+              I designed and shipped a custom Shopify storefront and built a repeatable
+              product-image workflow. In{' '}
+              <Link href="/work/isleo" className="text-foreground underline underline-offset-4">Isleo</Link>,
+              I connect an expressive island world to map interactions, animation, and
+              persistent focus sessions.{' '}
+              <Link href="/work/trail" className="text-foreground underline underline-offset-4">Trail</Link>{' '}
+              explores AI-assisted job capture and review.
             </p>
             <p>
-              I&apos;m drawn to <span className="text-foreground">AI-native products</span>{' '}
-              and <span className="text-foreground">emerging interaction models</span> —
-              where the product question is what a person and a model do together, and no
-              pattern library has the answer yet.
+              I use AI-assisted tools to explore and implement, then review the result
+              against the product&apos;s rules and visual intent. I care about what happens
+              around the polished screen: confusing inputs, interrupted sessions, and
+              the details that make an experience dependable.
             </p>
           </div>
           <p className="mt-6 border-l-2 border-primary/30 pl-4 text-sm leading-relaxed text-muted-foreground">
-            Based in Grand Rapids, MI.(willing to relocate){' '}
+            Based in Grand Rapids, MI. Open to relocation.{' '}
             <span className="text-foreground">H-1B transfer-ready</span>.
           </p>
         </section>
@@ -54,9 +58,9 @@ export default function AboutPage() {
 
         {/* Beyond the work */}
         <section className="max-w-[720px]">
-          <h3 className="font-display text-[clamp(24px,3vw,32px)] font-normal leading-tight tracking-[-0.02em]">
+          <h2 className="font-display text-[clamp(24px,3vw,32px)] font-normal leading-tight tracking-[-0.02em]">
             Beyond the <em className="italic text-primary">work</em>
-          </h3>
+          </h2>
           <ul className="mt-6 space-y-3 text-base leading-[1.75] text-muted-foreground">
             <li className="flex gap-3">
               <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-primary/60" aria-hidden="true" />
@@ -85,7 +89,7 @@ export default function AboutPage() {
                 >
                   Medium
                 </a>{' '}
-                about AI-native development
+                about product decisions, implementation, and AI-assisted workflows
               </span>
             </li>
             <li className="flex gap-3">
@@ -149,9 +153,14 @@ export default function AboutPage() {
               Connect
             </h3>
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              Open to Design Engineer roles at AI-native teams. Say hi.
+              Open to Design Engineer roles, especially on teams building consumer
+              products and AI tools. I&apos;m happy to walk through the design and code
+              behind a project.
             </p>
             <div className="mt-6 flex flex-col gap-3">
+              <a href={siteConfig.resumePath} target="_blank" rel="noopener noreferrer" className="text-sm font-medium underline underline-offset-4 transition-opacity hover:opacity-70">
+                View resume
+              </a>
               <a
                 href={`mailto:${siteConfig.email}`}
                 className="text-sm font-medium underline underline-offset-4 transition-opacity hover:opacity-70"

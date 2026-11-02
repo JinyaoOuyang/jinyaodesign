@@ -8,6 +8,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post }: BlogCardProps) {
   const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+    timeZone: 'UTC',
     year: 'numeric',
     month: 'long',
     day: 'numeric',

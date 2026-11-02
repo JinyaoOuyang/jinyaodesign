@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { ContactShadows, useGLTF } from '@react-three/drei'
 import { ClayModel } from '@/components/clay/ClayModel'
@@ -56,15 +56,28 @@ export function ClayMiniCanvas({
   reduceMotion,
   phase = 0,
 }: ClayMiniCanvasProps) {
-  const demand = reduceMotion && !hovered
+  const demand = reduceMotion
+  const container = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(false)
+  const [entered, setEntered] = useState(false)
+  useEffect(() => {
+    if (!container.current) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setActive(entry.isIntersecting)
+      if (entry.isIntersecting) setEntered(true)
+    }, { rootMargin: '120px' })
+    observer.observe(container.current)
+    return () => observer.disconnect()
+  }, [])
   const shadowY = getClayAsset(slug)?.shadowY ?? -0.55
 
   useEffect(() => {
-    useGLTF.preload(url)
-  }, [url])
+    if (entered) useGLTF.preload(url)
+  }, [url, entered])
 
   return (
-    <Canvas
+    <div ref={container} style={{ width: '100%', height: '100%' }}>
+    {entered && <Canvas
       dpr={[1, 1.5]}
       camera={{ position: [2.35, 2.05, 2.35], fov: 30, near: 0.1, far: 40 }}
       onCreated={({ camera, gl }) => {
@@ -81,9 +94,9 @@ export function ClayMiniCanvas({
         toneMapping: NoToneMapping,
       }}
       style={{ width: '100%', height: '100%', pointerEvents: 'none', display: 'block' }}
-      frameloop={demand ? 'demand' : 'always'}
+      frameloop={!active ? 'never' : demand ? 'demand' : 'always'}
     >
-      <InvalidateOnce active={demand} />
+      <InvalidateOnce active={active} />
       <SoftStudioLights />
       <Suspense fallback={null}>
         <ClayModel
@@ -104,6 +117,7 @@ export function ClayMiniCanvas({
           color="#4A4038"
         />
       </Suspense>
-    </Canvas>
+    </Canvas>}
+    </div>
   )
 }

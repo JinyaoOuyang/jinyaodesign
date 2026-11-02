@@ -11,6 +11,7 @@ export function WritingList({ posts }: WritingListProps) {
     <Reveal stagger className="flex flex-col">
       {posts.map((post) => {
         const date = new Date(post.date).toLocaleDateString('en-US', {
+          timeZone: 'UTC',
           year: 'numeric',
           month: 'short',
         })
