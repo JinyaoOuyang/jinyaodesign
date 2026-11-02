@@ -62,6 +62,7 @@ type Rig = {
   // tesla
   handle?: { g: Group; home: Vector3; out: Vector3; fwd: Vector3 }
   bars: Pose[]
+  storefrontBag?: { group: Group; home: Vector3 }
 }
 
 const clamp = (v: number, min: number, max: number) =>
@@ -162,6 +163,17 @@ function buildRig(root: Group, slug: ClaySlug): Rig {
       rig.glow.push(std)
     })
   })
+
+  if (slug === 'e-commerce-content-system') {
+    const body = find('Bag_Body')
+    if (body?.parent) {
+      const bag = new Group()
+      bag.position.copy(body.position)
+      body.parent.add(bag)
+      named.filter((obj) => obj.name.startsWith('Bag_')).forEach((obj) => bag.attach(obj))
+      rig.storefrontBag = { group: bag, home: bag.position.clone() }
+    }
+  }
 
   if (slug === 'isleo') {
     for (const prefix of ['TreeL', 'TreeR', 'Pine']) {
@@ -410,6 +422,12 @@ export function ClayModel({
     spin.current += dt * idleSpeed
     g.rotation.y = spin.current
     g.position.y = Math.sin(t * 0.7) * lerp(0.018, 0.008, h)
+
+    if (rig.storefrontBag) {
+      const { group, home } = rig.storefrontBag
+      group.position.copy(home).addScaledVector(rig.up, h * (0.12 + Math.sin(t * 2.2) * 0.025))
+      group.quaternion.setFromAxisAngle(rig.ax2, Math.sin(t * 2.4) * 0.08 * h)
+    }
 
     // —— Isleo: gusts bend whole trees; bushes wobble ——
     if (slug === 'isleo') {

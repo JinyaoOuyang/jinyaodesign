@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 export const alt = 'Jinyao Ouyang — I design it. I build it. I ship it.'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
@@ -10,15 +10,6 @@ const INK = '#1a1535'
 const PURPLE = '#a78bfa'
 
 export default async function Image() {
-  const [playfairBold, playfairItalic] = await Promise.all([
-    fetch(
-      'https://fonts.gstatic.com/s/playfairdisplay/v36/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.ttf'
-    ).then((res) => res.arrayBuffer()),
-    fetch(
-      'https://fonts.gstatic.com/s/playfairdisplay/v36/nuFnD-vYSZviVYUb_rj3ij__anPXDzMezMBO5YQ.ttf'
-    ).then((res) => res.arrayBuffer()),
-  ])
-
   return new ImageResponse(
     (
       <div
@@ -101,6 +92,10 @@ export default async function Image() {
           </g>
         </svg>
 
+        <div style={{ position: 'absolute', top: 58, left: 72, display: 'flex', flexDirection: 'column', color: INK }}>
+          <div style={{ fontSize: 28 }}>Jinyao Ouyang</div>
+          <div style={{ fontSize: 20, marginTop: 10, color: '#6d6084' }}>Design Engineer · jinyaodesign.com</div>
+        </div>
         {/* Hero copy */}
         <div
           style={{
@@ -112,7 +107,7 @@ export default async function Image() {
         >
           <div
             style={{
-              fontFamily: 'Playfair Display',
+              fontFamily: 'sans-serif',
               fontWeight: 700,
               fontSize: 88,
               lineHeight: 1.02,
@@ -124,7 +119,7 @@ export default async function Image() {
           </div>
           <div
             style={{
-              fontFamily: 'Playfair Display',
+              fontFamily: 'sans-serif',
               fontWeight: 700,
               fontSize: 88,
               lineHeight: 1.02,
@@ -136,7 +131,7 @@ export default async function Image() {
           </div>
           <div
             style={{
-              fontFamily: 'Playfair Display',
+              fontFamily: 'sans-serif',
               fontWeight: 400,
               fontStyle: 'italic',
               fontSize: 88,
@@ -152,20 +147,6 @@ export default async function Image() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: 'Playfair Display',
-          data: playfairBold,
-          weight: 700,
-          style: 'normal',
-        },
-        {
-          name: 'Playfair Display',
-          data: playfairItalic,
-          weight: 400,
-          style: 'italic',
-        },
-      ],
     }
   )
 }

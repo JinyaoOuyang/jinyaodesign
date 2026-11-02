@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { Work, WorkFrontmatter, WorkTier, BlogPost, BlogFrontmatter } from './types'
-import { clayBySlug } from './clay'
 import { sanitizeMdx } from './sanitize-mdx'
 
 const workDirectory = path.join(process.cwd(), 'content/work')
@@ -50,16 +49,9 @@ export function getWorkByTier(tier: WorkTier): Work[] {
   return getWorkPosts().filter((post) => (post.tier ?? 'earlier') === tier)
 }
 
-/**
- * Homepage Selected Work roster — the cases that have a clay diorama.
- *
- * Deliberately NOT the top N of featuredOrder: ClayStage silently drops any
- * work without a GLB, so a Work-page reorder used to be able to quietly
- * remove a homepage row. Deriving the roster from the clay assets themselves
- * keeps the two concepts independent and impossible to desync.
- */
+/** Select work by editorial intent; presentation must support static covers too. */
 export function getFeaturedWork(): Work[] {
-  return getWorkPosts().filter((post) => post.slug in clayBySlug)
+  return getWorkPosts().filter((post) => post.homepageFeatured)
 }
 
 export function getAdjacentWork(currentSlug: string): { prev: Work | null; next: Work | null } {

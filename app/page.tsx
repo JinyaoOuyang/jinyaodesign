@@ -4,11 +4,13 @@ import { getFeaturedWork, getLatestBlogPosts } from '@/lib/content'
 import { FeaturedWorkSection } from '@/components/FeaturedWorkSection'
 import { WritingList } from '@/components/WritingList'
 import { LiquidShipIt } from '@/components/LiquidShipIt'
+import { siteConfig } from '@/lib/config'
 
 const homeDescription =
-  'Design Engineer building AI-native products from interaction to production. Isleo (React Native), Trail (AI job copilot), and a production headless Shopify storefront — designed and shipped solo.'
+  'Jinyao Ouyang is a Design Engineer working across interaction design, React, React Native, and TypeScript — from an iOS focus app to AI tools and a production Shopify storefront.'
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/" },
   description: homeDescription,
   openGraph: {
     description: homeDescription,
@@ -140,7 +142,11 @@ export default function HomePage() {
         </svg>
 
         <div className="flex-1" />
-        <div className="mx-auto w-full max-w-5xl px-6 pb-32 md:pb-40">
+        <div className="relative mx-auto w-full max-w-5xl px-6 pb-12 pt-28 md:pb-16">
+          <h1 className="sr-only">Jinyao Ouyang — Design Engineer</h1>
+          <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            Jinyao Ouyang / Design Engineer
+          </p>
           <p
             className="hero-line"
             style={{ color: '#1a1535' }}
@@ -154,11 +160,29 @@ export default function HomePage() {
             I build it.
           </p>
           <LiquidShipIt />
+          <p className="mt-6 max-w-[540px] text-[16px] leading-relaxed text-muted-foreground md:text-[17px]">
+            I design interactions and build working products with React,
+            React Native, and TypeScript — from AI tools to production storefronts.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm">
+            <Link href="#selected-work" className="font-medium underline underline-offset-4 hover:text-primary">
+              View selected work <span aria-hidden="true">↓</span>
+            </Link>
+            <a href={siteConfig.resumePath} target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-4 hover:text-primary">
+              Resume <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <p className="mt-5 text-sm text-muted-foreground">
+            Open to Design Engineer roles.{' '}
+            <a href={`mailto:${siteConfig.email}`} className="underline underline-offset-4 hover:text-primary">
+              Get in touch
+            </a>
+          </p>
         </div>
       </section>
 
       {/* Featured Work — full-width case rows: model left, title right */}
-      <section className="py-24">
+      <section id="selected-work" className="scroll-mt-20 py-24">
         <FeaturedWorkSection works={featuredWork} />
       </section>
 

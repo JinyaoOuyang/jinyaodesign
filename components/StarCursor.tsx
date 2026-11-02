@@ -7,7 +7,7 @@ export function StarCursor() {
 
   useEffect(() => {
     const el = cursorRef.current
-    if (!el) return
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return
 
     const onMove = (e: MouseEvent) => {
       el.style.left = `${e.clientX}px`

@@ -10,7 +10,7 @@ import { extractHeadings } from '@/lib/toc'
 import { siteConfig } from '@/lib/config'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -19,29 +19,35 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const work = getWorkBySlug(params.slug)
+  const { slug } = await params
+  const work = getWorkBySlug(slug)
   if (!work) return {}
 
   return {
+    alternates: { canonical: `/work/${work.slug}` },
     title: work.title,
     description: work.description,
+    twitter: { card: 'summary_large_image', title: work.title, description: work.description, images: [work.coverImage || '/opengraph-image'] },
     openGraph: {
       title: work.title,
       description: work.description,
       type: 'article',
       url: `${siteConfig.url}/work/${work.slug}`,
-      images: work.coverImage ? [{ url: work.coverImage }] : undefined,
+      images: [{ url: work.coverImage || '/opengraph-image', alt: work.title }],
+      publishedTime: work.date,
     },
   }
 }
 
 export default async function WorkDetailPage({ params }: Props) {
-  const work = getWorkBySlug(params.slug)
+  const { slug } = await params
+  const work = getWorkBySlug(slug)
   if (!work) notFound()
 
-  const { prev, next } = getAdjacentWork(params.slug)
+  const { prev, next } = getAdjacentWork(slug)
   
   const formattedDate = new Date(work.date).toLocaleDateString('en-US', {
+    timeZone: 'UTC',
     year: 'numeric',
     month: 'long',
   })
@@ -70,6 +76,12 @@ export default async function WorkDetailPage({ params }: Props) {
           <p className="cs-desc">{work.description}</p>
         </div>
         <div className="cs-side">
+          {work.status && (
+            <div className="row">
+              <span className="k">Status</span>
+              <span className="v">{work.status}</span>
+            </div>
+          )}
           <div className="row">
             <span className="k">Role</span>
             <span className="v">{work.role}</span>

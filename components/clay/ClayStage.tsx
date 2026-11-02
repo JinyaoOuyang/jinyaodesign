@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { Work } from '@/lib/types'
 import { getClayAsset } from '@/lib/clay'
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion'
+import { ClayErrorBoundary } from '@/components/clay/ClayErrorBoundary'
 
 const ClayMiniCanvas = dynamic(
   () =>
@@ -46,6 +47,7 @@ function useInViewOnce<T extends HTMLElement>(rootMargin = '240px') {
 const ROW_ACCENT: Record<string, string> = {
   isleo: '#5f7a4e',
   trail: '#c26a3c',
+  'e-commerce-content-system': '#8c6949',
   'listing-image-pipeline': '#a9772b',
   'tesla-charging': '#2f8f86',
 }
@@ -66,24 +68,28 @@ export function ClayStage({ works }: ClayStageProps) {
     }
   }, [])
 
-  const items = works
-    .map((work) => {
-      const clay = getClayAsset(work.slug)
-      return clay ? { work, clay } : null
-    })
-    .filter(Boolean) as { work: Work; clay: NonNullable<ReturnType<typeof getClayAsset>> }[]
+  const items = works.map((work) => ({ work, clay: getClayAsset(work.slug) }))
 
   if (items.length === 0) return null
 
   return (
-    <div ref={ref} className="clay-stage">
+    <div ref={ref} className="clay-stage" data-analytics-location="selected_work">
       <ul className="clay-rows">
         {items.map(({ work, clay }, i) => {
           const isHovered = hovered === work.slug
           const showCanvas = inView && webglOk
           const accent = ROW_ACCENT[work.slug] ?? 'var(--primary)'
           const index = String(i + 1).padStart(2, '0')
-          const meta = [work.timeline, work.tags[0]].filter(Boolean).join(' · ')
+          const meta = [work.status, work.timeline].filter(Boolean).join(' · ')
+          const staticCover = (
+            <Image
+              src={work.coverImage}
+              alt=""
+              fill
+              className="clay-row-fallback object-contain"
+              sizes="(max-width: 720px) 100vw, 45vw"
+            />
+          )
 
           return (
             <li key={work.slug} className="clay-row min-w-0">
@@ -102,32 +108,28 @@ export function ClayStage({ works }: ClayStageProps) {
                 </span>
 
                 <div className="clay-row-model" aria-hidden="true">
-                  {showCanvas ? (
-                    <ClayMiniCanvas
-                      url={clay.glb}
-                      slug={clay.slug}
-                      scale={clay.scale}
-                      hovered={isHovered}
-                      reduceMotion={reduceMotion}
-                      phase={i * 1.3}
-                    />
+                  {showCanvas && clay ? (
+                    <ClayErrorBoundary key={clay.glb} fallback={staticCover}>
+                      <ClayMiniCanvas
+                        url={clay.glb}
+                        slug={clay.slug}
+                        scale={clay.scale}
+                        hovered={isHovered}
+                        reduceMotion={reduceMotion}
+                        phase={i * 1.3}
+                      />
+                    </ClayErrorBoundary>
                   ) : (
-                    <Image
-                      src={work.coverImage}
-                      alt=""
-                      fill
-                      className="clay-row-fallback object-contain"
-                      sizes="(max-width: 720px) 100vw, 45vw"
-                    />
+                    staticCover
                   )}
                 </div>
 
                 <div className="clay-row-info">
                   <h3 className="clay-row-title">{work.title}</h3>
                   {meta && <p className="clay-row-meta">{meta}</p>}
+                  <p className="clay-row-desc">{work.description}</p>
                   <div className="clay-row-detail">
                     <div className="clay-row-detail-inner">
-                      <p className="clay-row-desc">{work.description}</p>
                       <div className="clay-row-tags">
                         {work.tags.slice(0, 3).map((tag) => (
                           <span key={tag} className="clay-row-tag">

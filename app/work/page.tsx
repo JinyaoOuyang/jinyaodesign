@@ -4,9 +4,10 @@ import { WorkCard } from '@/components/WorkCard'
 import { Reveal } from '@/components/Reveal'
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work" },
   title: 'Work',
   description:
-    'Design engineering work — AI-native products designed, built, and shipped end to end.',
+    'Design engineering case studies by Jinyao Ouyang: working applications, a production Shopify storefront, AI workflows, and earlier design concepts.',
 }
 
 export default function WorkPage() {
@@ -23,8 +24,9 @@ export default function WorkPage() {
           Selected <em className="italic text-primary">work</em>
         </h1>
         <p className="mt-5 max-w-[640px] text-[18px] leading-[1.55] text-muted-foreground">
-          AI-native products, designed and built end to end — interaction, system,
-          implementation, ship. Earlier product and UX work sits below.
+          Working applications, a production storefront, and reusable AI workflows.
+          Each case explains my role, the decisions behind the experience, and what
+          was built or explored.
         </p>
       </header>
 
@@ -44,10 +46,11 @@ export default function WorkPage() {
       {earlier.length > 0 && (
         <section className="mt-20 border-t border-border pt-16 md:mt-24">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Earlier Product &amp; Design Work
+            Earlier Prototypes &amp; Design Concepts
           </h2>
           <p className="mt-3 max-w-[560px] text-[15px] leading-[1.6] text-muted-foreground">
-            Product, UX, and strategy work — the experience I bring with me.
+            Explorations in mobile interaction, adaptive interfaces, and product
+            strategy. Each project is labeled by its scope and delivery status.
           </p>
           <Reveal stagger className="mt-8 grid gap-8 md:grid-cols-2">
             {earlier.map((item) => (

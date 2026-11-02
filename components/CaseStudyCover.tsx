@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { getClayAsset } from '@/lib/clay'
+import { ClayErrorBoundary } from '@/components/clay/ClayErrorBoundary'
 
 const ClayHero = dynamic(
   () => import('@/components/clay/ClayHero').then((m) => m.ClayHero),
@@ -29,11 +30,7 @@ export function CaseStudyCover({ slug, coverImage, title }: CaseStudyCoverProps)
     }
   }, [])
 
-  if (clay && webglOk) {
-    return <ClayHero slug={clay.slug} />
-  }
-
-  return (
+  const staticCover = (
     <Image
       src={coverImage}
       alt={title}
@@ -43,4 +40,14 @@ export function CaseStudyCover({ slug, coverImage, title }: CaseStudyCoverProps)
       sizes="(max-width: 768px) 100vw, 1024px"
     />
   )
+
+  if (clay && webglOk) {
+    return (
+      <ClayErrorBoundary key={clay.glb} fallback={staticCover}>
+        <ClayHero slug={clay.slug} />
+      </ClayErrorBoundary>
+    )
+  }
+
+  return staticCover
 }

@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const Parser = require('rss-parser')
 const TurndownService = require('turndown')
+const matter = require('gray-matter')
 
 const MEDIUM_FEED_URL = process.env.MEDIUM_FEED_URL || 'https://ginouyang.medium.com/feed'
 
@@ -46,39 +47,23 @@ async function main() {
         let existingFm = {}
         if (fs.existsSync(filePath)) {
             const existing = fs.readFileSync(filePath, 'utf8')
-            const fmMatch = existing.match(/^---\n([\s\S]*?)\n---/)
-            if (fmMatch) {
-                for (const line of fmMatch[1].split('\n')) {
-                    const colonIdx = line.indexOf(':')
-                    if (colonIdx > 0) {
-                        const key = line.slice(0, colonIdx).trim()
-                        const val = line.slice(colonIdx + 1).trim()
-                        existingFm[key] = val
-                    }
-                }
-            }
+            existingFm = matter(existing).data
         }
 
-        // Use existing coverImage if present, otherwise use extracted one
-        const finalCoverImage = existingFm['coverImage'] ?
-            existingFm['coverImage'].replace(/^"|"$/g, '') :
-            coverImage
-
-        const fm = [
-            '---',
-            `title: "${title.replace(/"/g, '\\"')}"`,
-            `description: "${(item.contentSnippet || '').replace(/\n/g, ' ').slice(0, 180).replace(/"/g, '\\"')}"`,
-            `date: "${isoDate.slice(0, 10)}"`,
-            'tags: []',
-            `coverImage: "${finalCoverImage}"`,
-            `readingTime: ""`,
-            '---',
-            '',
-        ].join('\n')
+        // Refresh feed fields while preserving curated summaries and project links.
+        const frontmatter = {
+            ...existingFm,
+            title,
+            description: existingFm.description || (item.contentSnippet || '').replace(/\n/g, ' ').slice(0, 180),
+            date: isoDate.slice(0, 10),
+            tags: existingFm.tags || [],
+            coverImage: existingFm.coverImage || coverImage,
+            readingTime: existingFm.readingTime || '',
+        }
 
         const attribution = `\n> Originally published on Medium: ${link}\n\n`
 
-        fs.writeFileSync(filePath, fm + attribution + mdBody, 'utf8')
+        fs.writeFileSync(filePath, matter.stringify(attribution + mdBody, frontmatter), 'utf8')
         console.log(`Saved: ${filePath}`)
     }
 

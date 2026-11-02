@@ -23,7 +23,8 @@ export function FeaturedWorkSection({ works }: FeaturedWorkSectionProps) {
           </Link>
         </div>
         <p className="-mt-2 mb-2 max-w-[560px] text-[15px] leading-[1.6] text-muted-foreground">
-          Products I designed, built, and shipped end to end.
+          From a working iOS build to a production storefront — product design,
+          interaction, and implementation, owned end to end.
         </p>
       </div>
 

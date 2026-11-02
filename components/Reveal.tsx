@@ -9,7 +9,7 @@ interface RevealProps {
   stagger?: boolean
   /** How far into the viewport before triggering (0-1). Default 0.15. */
   threshold?: number
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof React.JSX.IntrinsicElements
 }
 
 /**

@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { siteConfig } from '@/lib/config'
 
 export function Header() {
@@ -17,6 +16,19 @@ export function Header() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => { setMobileMenuOpen(false) }, [pathname])
+
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false)
+        document.getElementById('mobile-menu-toggle')?.focus()
+      }
+    }
+    if (mobileMenuOpen) document.addEventListener('keydown', close)
+    return () => document.removeEventListener('keydown', close)
+  }, [mobileMenuOpen])
 
   const isHome = pathname === '/'
 
@@ -93,7 +105,10 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 -mr-2"
+          id="mobile-menu-toggle"
+          className="md:hidden p-3 -mr-3"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -124,14 +139,14 @@ export function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
+        <div id="mobile-menu" className="md:hidden border-t border-border bg-background">
           <div className="px-6 py-4 space-y-4">
             {siteConfig.navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block text-sm tracking-wide ${
+                className={`block py-2 text-sm tracking-wide ${
                   pathname === item.href || pathname.startsWith(item.href + '/')
                     ? 'text-foreground'
                     : 'text-muted-foreground'
@@ -146,7 +161,8 @@ export function Header() {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-sm tracking-wide text-muted-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-sm tracking-wide text-muted-foreground"
               >
                 {item.name.toUpperCase()}
               </a>

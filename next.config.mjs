@@ -1,5 +1,8 @@
+import { fileURLToPath } from 'node:url'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    outputFileTracingRoot: fileURLToPath(new URL('.', import.meta.url)),
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     // Dev: polling avoids "EMFILE: too many open files" on some macOS setups where native watchers fail.
     webpack: (config, { dev }) => {

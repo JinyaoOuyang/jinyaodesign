@@ -13,17 +13,17 @@ type KeyStory = {
 // The 14 stories. Their order is the `s` index in lib/aboutPortrait.ts — the
 // phrases inside the portrait that own each story point back here by number.
 const KEY: KeyStory[] = [
-  { w: 'FLEXI-CASA', kicker: 'Day job', body: 'Sole <b>Design Engineer</b>, with end-to-end product ownership at FLEXI-CASA — a multi-channel DTC brand spanning a headless Shopify/Next.js storefront, Amazon, and Etsy. I own the full stack: product strategy, conversion funnel, experimentation, and the code that makes it run.' },
-  { w: 'Design Engineer', kicker: 'How I work', body: "I don't hand things off. I <b>design it, build it, and ship it</b> — from system architecture to the final pixel." },
-  { w: 'Trail', kicker: 'Side build', body: "An AI-powered job search copilot. Idea to live product in <b>~4 days</b> — designed, built, and shipped solo. That's how I work." },
-  { w: 'AI-Native', kicker: "What I'm drawn to", body: '<b>AI-native products</b> and emerging interaction models — where the product question is what a person and a model do together, and no pattern library has the answer yet.' },
+  { w: 'FLEXI-CASA', kicker: 'Commercial work', body: 'Sole <b>Product Designer & Engineer</b> for a custom Next.js / Shopify storefront, alongside a reusable Amazon product-image workflow. My work connects product presentation, commerce integration, and implementation.' },
+  { w: 'Design Engineer', kicker: 'How I work', body: 'I take a product from <b>interaction design to working software</b>: defining behavior, building components, and refining the details in code.' },
+  { w: 'Trail', kicker: 'Independent build', body: 'An AI job-search copilot with a web dashboard and Chrome extension. I designed and built the initial version solo in <b>4 days</b>, then continued refining the workflow.' },
+  { w: 'AI-Native', kicker: "What I'm drawn to", body: 'Products where people can <b>inspect, steer, and recover from AI output</b>. I care about the interaction and the rules around the model.' },
   { w: 'Growth & Tooling', kicker: 'How I build', body: 'Especially drawn to <b>growth, tooling, and consumer AI</b> problems.' },
   { w: 'University of Washington', kicker: 'Education', body: '<b>MS in Technology Innovation (HCI)</b>, Global Innovation Exchange, University of Washington.' },
   { w: 'Imagine Cup', kicker: 'Recognition', body: 'Microsoft Imagine Cup 2022 — <b>Americas Regional Champion</b>.' },
   { w: 'TEAGUE', kicker: 'Past role', body: 'Product Design intern at <b>TEAGUE</b>, working on WebVR and automotive UX.' },
   { w: 'Silkroad', kicker: 'Past role', body: 'UX Designer at <b>Silkroad Visual Technology</b>, building enterprise SaaS.' },
   { w: 'Grand Rapids', kicker: 'Base', body: 'Based in <b>Grand Rapids, MI</b> — willing to relocate. H-1B transfer-ready.' },
-  { w: 'Medium', kicker: 'Writing', body: 'I write on <b>Medium</b> about AI-native development workflows.' },
+  { w: 'Medium', kicker: 'Writing', body: 'I write on <b>Medium</b> about product decisions, implementation, and lessons from AI-assisted workflows.' },
   { w: 'Mandarin & English', kicker: 'Background', body: 'Originally from <b>China</b> — fluent in Mandarin and English.' },
   { w: 'Strength Training', kicker: 'Off the clock', body: "When I'm not building: <b>strength training</b>, watching chipmunks in the backyard, and eating my way through whatever cuisine I haven't tried yet." },
   { w: 'Cursor & Claude', kicker: 'Toolkit', body: 'Figma, Framer, Windsurf, Notion, React, Next.js, TypeScript, Supabase — built daily alongside <b>Cursor and Claude</b>.' },
@@ -102,13 +102,13 @@ export function AboutWordCloud() {
         <div className="about-cloud-eyebrow">
           About, in the words I&apos;m built from
         </div>
-        <h2 className="about-cloud-title">
+        <h1 className="about-cloud-title">
           I like turning messy ideas
           <br />
           into things that work.
-        </h2>
+        </h1>
         <p className="about-cloud-standfirst">
-          Design Engineer working across interaction, systems, and implementation.
+          I&apos;m Jinyao, a Design Engineer working across product design, React, and React Native.
         </p>
 
         <div className="about-cloud-panel">
